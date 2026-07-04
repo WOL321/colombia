@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Colombian Empire | DiplomaticaMC Dominion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #06080c;
+            --bg-surface: #0c0f16;
+            --bg-card: #131924;
+            --text-primary: #f0f4f8;
+            --text-muted: #8492a6;
+            --imperial-gold: #ffc837;
+            --colombia-blue: #1d4ed8;
+            --colombia-red: #dc2626;
+            --font-heading: 'Cinzel', serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body { background-color: var(--bg-main); color: var(--text-primary); font-family: var(--font-body); line-height: 1.6; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+        .section { padding: 6rem 0; }
+        .bg-alt { background-color: var(--bg-surface); }
+        .grid { display: grid; gap: 2rem; }
+        .grid-2 { grid-template-columns: repeat(auto-fit, minmax(450px, 1fr)); }
+        .grid-3 { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        .center-header { text-align: center; margin-bottom: 4rem; }
+        .sub-title { color: var(--imperial-gold); text-transform: uppercase; letter-spacing: 4px; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 0.5rem; }
+        .section-title { font-family: var(--font-heading); font-size: 2.8rem; font-weight: 900; margin-bottom: 1rem; }
+        .section-desc { color: var(--text-muted); max-width: 650px; margin: 0 auto; font-size: 1.1rem; }
+
+        /* Navigation */
+        .navbar { display: flex; justify-content: space-between; align-items: center; padding: 2rem 4rem; position: absolute; width: 100%; z-index: 10; }
+        .nav-logo { font-family: var(--font-heading); font-weight: 900; font-size: 1.3rem; letter-spacing: 2px; color: var(--imperial-gold); }
+        .nav-links { display: flex; list-style: none; gap: 2.5rem; }
+        .nav-links a { color: var(--text-primary); text-decoration: none; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--imperial-gold); }
+
+        /* Hero */
+        .hero { height: 90vh; display: flex; align-items: center; justify-content: center; position: relative; text-align: center; background: radial-gradient(circle at center, #0f1626 0%, #030508 100%); }
+        .hero-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, transparent 60%, var(--bg-main)); }
+        .hero-content { position: relative; z-index: 2; max-width: 900px; padding: 0 2rem; }
+        .hero-tag { font-size: 0.9rem; text-transform: uppercase; letter-spacing: 6px; color: var(--imperial-gold); display: block; margin-bottom: 1.5rem; font-weight: 700; }
+        .hero h1 { font-family: var(--font-heading); font-size: 4.5rem; font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: 2px; }
+        .hero p { font-size: 1.35rem; color: var(--text-muted); margin-bottom: 3rem; }
+
+        /* Buttons */
+        .btn { display: inline-block; padding: 1rem 2.5rem; font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; text-decoration: none; border-radius: 2px; transition: transform 0.2s, background-color 0.2s; }
+        .btn:hover { transform: translateY(-2px); }
+        .btn-primary { background-color: var(--imperial-gold); color: #000; }
+        .btn-primary:hover { background-color: #ffd254; }
+        .btn-secondary { border: 1px solid rgba(255,255,255,0.2); color: var(--text-primary); margin-left: 1.5rem; }
+        .btn-secondary:hover { background: rgba(255,255,255,0.05); }
+
+        /* Gallery Grid */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2.5rem; margin-top: 3rem; }
+        .gallery-item { background-color: var(--bg-card); border: 1px solid rgba(255, 204, 0, 0.05); border-radius: 4px; overflow: hidden; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .gallery-item:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); border-color: var(--imperial-gold); }
+        .gallery-img-box { position: relative; height: 240px; overflow: hidden; background-color: #12161f; }
+        .gallery-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .block-palette-overlay { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(to top, rgba(0,0,0,0.9) 70%, transparent); padding: 1.5rem 1rem 0.75rem; transform: translateY(100%); transition: transform 0.3s ease; }
+        .gallery-item:hover .block-palette-overlay { transform: translateY(0); }
+        .block-palette-overlay span { font-size: 0.8rem; color: var(--imperial-gold); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
+        .gallery-info { padding: 1.75rem; }
+        .gallery-info h4 { font-family: var(--font-heading); font-size: 1.3rem; margin-bottom: 0.75rem; color: #fff; }
+        .gallery-info p { color: var(--text-muted); font-size: 0.95rem; }
+
+        /* Throne Section */
+        .throne-showcase { display: flex; justify-content: center; margin-bottom: 4rem; }
+        .emperor-box { background: linear-gradient(180deg, var(--bg-card) 0%, transparent 100%); border: 1px solid rgba(255, 200, 55, 0.2); padding: 3rem 5rem; text-align: center; border-radius: 4px; max-width: 500px; width: 100%; }
+        .crown-badge { background-color: var(--imperial-gold); color: #000; font-weight: 800; font-size: 0.75rem; padding: 0.3rem 1rem; letter-spacing: 2px; border-radius: 20px; }
+        .emperor-box h2 { font-family: var(--font-heading); font-size: 2.5rem; margin: 1rem 0 0.5rem; }
+        .emperor-box p { color: var(--text-muted); font-size: 0.95rem; }
+        
+        /* Gov Pills */
+        .gov-pill { background-color: var(--bg-surface); padding: 2rem; border-left: 3px solid var(--colombia-red); border-radius: 2px; }
+        .gov-pill h4 { font-family: var(--font-heading); font-size: 1.2rem; margin-bottom: 0.5rem; }
+        .gov-pill p { color: var(--text-muted); font-size: 0.9rem; }
+
+        /* CTA Block */
+        .cta-box { background: linear-gradient(rgba(6, 8, 12, 0.9), rgba(6, 8, 12, 0.9)), url('https://images.unsplash.com/photo-1614850523459-c2f4c699c52e?auto=format&fit=crop&w=1200&q=80') center/cover; padding: 6rem 3rem; border-radius: 4px; border: 1px solid rgba(255, 204, 0, 0.1); }
+        .cta-box h2 { font-family: var(--font-heading); font-size: 2.8rem; margin-bottom: 1rem; }
+        .cta-box p { color: var(--text-muted); max-width: 650px; margin: 0 auto 2.5rem; font-size: 1.1rem; }
+
+        .footer { text-align: center; padding: 4rem; background-color: var(--bg-main); border-top: 1px solid rgba(255,255,255,0.02); color: var(--text-muted); font-size: 0.85rem; }
+
+        @media (max-width: 768px) {
+            .navbar { padding: 1.5rem; }
+            .nav-links { display: none; }
+            .hero h1 { font-size: 2.8rem; }
+            .grid-2, .grid-3, .gallery-grid { grid-template-columns: 1fr; }
+            .btn-secondary { margin-left: 0; margin-top: 1rem; display: block; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="nav-logo">COLOMBIAN EMPIRE</div>
+        <ul class="nav-links">
+            <li><a href="#builds">In-Game Showcase</a></li>
+            <li><a href="#ministries">Government</a></li>
+            <li><a href="#join">Enlist</a></li>
+        </ul>
+    </nav>
+
+    <header class="hero">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="hero-tag">DiplomaticaMC Earth Map Dominion</span>
+            <h1>THE COLOMBIAN EMPIRE</h1>
+            <p>Witness the architecture, infrastructure, and absolute power of the New World's premier empire.</p>
+            <div class="hero-buttons">
+                <a href="#builds" class="btn btn-primary">Tour the Empire</a>
+                <a href="#join" class="btn btn-secondary">Enlist Today</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- IN-GAME SHOWCASE GALLERY -->
+    <section id="builds" class="section container">
+        <div class="center-header">
+            <span class="sub-title">Imperial Infrastructure</span>
+            <h2 class="section-title">In-Game Architecture & Styles</h2>
+            <p class="section-desc">We combine raw defense mechanics with majestic design. See how the Colombian Empire shapes its territory block by block.</p>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <div class="gallery-img-box">
+                    <img src="https://images.unsplash.com/photo-1607988795691-3d0147b43231?auto=format&fit=crop&w=600&q=80" alt="Imperial Palace Layout">
+                    <div class="block-palette-overlay"><span>Palette: Mud Bricks | Quartz | Dark Oak</span></div>
+                </div>
+                <div class="gallery-info">
+                    <h4>The Grand Imperial Palace</h4>
+                    <p>The central command zone in Bogotá. Built with high ceilings and monumental arches, showcasing the absolute wealth and scale of Emperor ueq_'s throne room.</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="gallery-img-box">
+                    <img src="https://images.unsplash.com/photo-1518156677180-95a2893f3e9f?auto=format&fit=crop&w=600&q=80" alt="Colonial Town Architecture">
+                    <div class="block-palette-overlay"><span>Palette: White Concrete | Terracotta | Mangrove</span></div>
+                </div>
+                <div class="gallery-info">
+                    <h4>Colonial Citizen Districts</h4>
+                    <p>Standardized, beautiful housing grids inside our town claims. Designed with vibrant roofs and clean white walls, mixing real-world Colombian style with perfect game alignment.</p>
+                </div>
+            </div>
+
+            <div class="gallery-item">
+                <div class="gallery-img-box">
+                    <img src="https://images.unsplash.com/photo-1590073844006-33379778ae09?auto=format&fit=crop&w=600&q=80" alt="Obsidian Bastion Outpost">
+                    <div class="block-palette-overlay"><span>Palette: Deepslate Bricks | Obsidian | Iron Bars</span></div>
+                </div>
+                <div class="gallery-info">
+                    <h4>Border Fortresses & Citadels</h4>
+                    <p>Pure tactical defense. Built with reinforced deepslate walls and obsidian cores to maximize defense against unexpected faction raids or siege machinery.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- THE GOVERNMENT & MINISTRIES -->
+    <section id="ministries" class="section bg-alt">
+        <div class="container">
+            <div class="center-header">
+                <span class="sub-title">The Crown Hierarchy</span>
+                <h2 class="section-title">The Sovereign Hand</h2>
+                <p class="section-desc">How the Crown coordinates with the executive ministries to handle the tasks of statecraft.</p>
+            </div>
+
+            <div class="throne-showcase">
+                <div class="emperor-box">
+                    <span class="crown-badge">👑 EMPEROR</span>
+                    <h2>ueq_</h2>
+                    <p>The absolute source of all law, foreign alliances, and military mobilization decrees.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-3">
+                <div class="gov-pill">
+                    <h4>🏛️ Ministry of Interior</h4>
+                    <p>Oversees home affairs, city borders, chunk claiming, and coordinates building permits to ensure all imperial land is secure and expanding.</p>
+                </div>
+                <div class="gov-pill">
+                    <h4>💰 Ministry of Finance</h4>
+                    <p>Manages the imperial gold supply, nation taxes, market shop setups, and fuels the economy to fund major server projects.</p>
+                </div>
+                <div class="gov-pill">
+                    <h4>🌾 Minister of Agriculture</h4>
+                    <p>Feeds the Empire. Controls massive automated or manual crop and livestock farms, ensuring the military and citizens are always supplied.</p>
+                </div>
+                <div class="gov-pill">
+                    <h4>🎨 Minister of Culture</h4>
+                    <p>Preserves the historical identity of Colombia. Manages server roleplay, national holidays, and the aesthetic look of public spaces.</p>
+                </div>
+                <div class="gov-pill">
+                    <h4>⚖️ Minister of Justice and Law</h4>
+                    <p>Enforces order within our borders. Handles trials, punishes rule-breakers, and resolves active player disputes.</p>
+                </div>
+                <div class="gov-pill">
+                    <h4>⚒️ Minister of Labor</h4>
+                    <p>Organizes the working class of the Empire. Coordinates mining operations, mass resource gathering, and heavy structural build projects.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CALL TO ACTION -->
+    <section id="join" class="section container center" style="text-align: center;">
+        <div class="cta-box">
+            <h2>Serve the Crown</h2>
+            <p>The Empire grows through the passion and grit of its citizens. Secure your citizenship, build historic cities, and claim your legacy under Emperor ueq_.</p>
+            <a href="#" class="btn btn-primary">Connect to Our Discord</a>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2026 The Colombian Empire | DiplomaticaMC. All Rights Reserved.</p>
+    </footer>
+
+</body>
+</html>
