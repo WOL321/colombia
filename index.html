@@ -207,14 +207,27 @@
         </div>
     </section>
 
-     <section id="map" style="padding: 50px 20px; background: #05070a; text-align: center;">
+     <style>
+    /* Pulsing red animation */
+    @keyframes pulse-red {
+        0% { box-shadow: 0 0 15px 2px rgba(220, 38, 38, 0.4); border-color: rgba(220, 38, 38, 0.5); }
+        50% { box-shadow: 0 0 35px 10px rgba(220, 38, 38, 0.8); border-color: rgba(220, 38, 38, 1); }
+        100% { box-shadow: 0 0 15px 2px rgba(220, 38, 38, 0.4); border-color: rgba(220, 38, 38, 0.5); }
+    }
+    .pulsing-map {
+        animation: pulse-red 2.5s infinite ease-in-out;
+    }
+</style>
+
+<section id="map" style="padding: 50px 20px; background: #05070a; text-align: center;">
     <div class="container" style="max-width: 1000px; margin: 0 auto;">
         <h2 style="font-family: 'Cinzel', serif; font-size: 2.5rem; color: #fff; margin-bottom: 2rem;">Geopolitical Claim Map</h2>
-        <div class="map-box" style="
-            border: 1px solid rgba(255,200,55,0.2); 
+        
+        <!-- Interactive Map Container with Pulsing Red Glow & Border -->
+        <div class="map-box pulsing-map" style="
+            border: 3px solid #dc2626; 
             border-radius: 8px; 
             overflow: hidden; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             background: #000;
         ">
             <iframe 
