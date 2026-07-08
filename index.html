@@ -89,13 +89,11 @@
 <body>
 
     <!-- Sidebar Music Player -->
-    <div class="music-sidebar">
-        <button id="musicBtn" class="music-btn" onclick="toggleMusic()">PLAY ANTHEM</button>
-        <audio id="myAudio" loop>
-            <source src="anthem.mp3" type="audio/mpeg">
-        </audio>
-    </div>
-
+<div class="music-sidebar">
+    <button id="musicBtn" class="music-btn" onclick="toggleMusic()">PLAY ANTHEM</button>
+    <!-- YouTube Player Container (Hidden) -->
+    <div id="player" style="display:none;"></div>
+</div>
     <nav class="navbar">
         <div class="nav-brand">
             <img src="Untitled design (3).png" class="nav-logo-img" alt="Imperial Flag Emblem" />
@@ -239,19 +237,38 @@
     </footer>
 
     <a href="#" style="position: fixed; bottom: 20px; right: 20px; background-color: #111622; color: #fff; padding: 10px 15px; text-decoration: none; font-size: 14px; font-weight: bold; border: 1px solid #fff; border-radius: 4px; z-index: 1000;">HOME</a>
+<script>
+    // Load YouTube IFrame API
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-    <script>
-        function toggleMusic() {
-            var audio = document.getElementById("myAudio");
-            var btn = document.getElementById("musicBtn");
-            if (audio.paused) {
-                audio.play();
-                btn.innerHTML = "PAUSE ANTHEM";
-            } else {
-                audio.pause();
-                btn.innerHTML = "PLAY ANTHEM";
-            }
+    var player;
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            height: '0',
+            width: '0',
+            videoId: 'YOUR_YOUTUBE_VIDEO_ID_HERE', // Paste your YouTube ID here
+            events: { 'onReady': onPlayerReady }
+        });
+    }
+
+    function onPlayerReady(event) {
+        // Player is initialized
+    }
+
+    function toggleMusic() {
+        var btn = document.getElementById("musicBtn");
+        // Check if player exists and is playing
+        if (player && player.getPlayerState() === YT.PlayerState.PLAYING) {
+            player.pauseVideo();
+            btn.innerHTML = "PLAY ANTHEM";
+        } else if (player) {
+            player.playVideo();
+            btn.innerHTML = "PAUSE ANTHEM";
         }
-    </script>
+    }
+</script>
 </body>
 </html>
