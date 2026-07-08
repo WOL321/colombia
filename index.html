@@ -88,13 +88,37 @@
 </head>
 <body>
 
-   <div class="music-sidebar" style="position: fixed; right: 0; top: 50%; transform: translateY(-50%); z-index: 2000; background: #000; border: 2px solid #ffc837; border-radius: 8px 0 0 8px;">
-    <!-- We set width/height to 100x50 so the YouTube play button is visible and clickable -->
-    <iframe width="100" height="50" 
-            src="https://www.youtube.com/embed/onFfrB50Y8w?autoplay=1&loop=1&playlist=onFfrB50Y8w" 
-            frameborder="0" 
-            allow="autoplay; encrypted-media">
-    </iframe>
+  <style>
+    /* The Sidebar Toggle Container */
+    .music-sidebar { position: fixed; right: 0; top: 50%; transform: translateY(-50%); z-index: 2000; }
+    
+    /* Hide the checkbox */
+    #music-toggle { display: none; }
+    
+    /* The Button Styles */
+    .music-btn { background: #000; color: #ffc837; border: 2px solid #ffc837; border-right: none; padding: 20px 10px; cursor: pointer; writing-mode: vertical-rl; font-weight: 700; display: block; border-radius: 8px 0 0 8px; }
+    
+    /* The Hidden Iframe Container */
+    .player-container { display: none; }
+    
+    /* When checkbox is checked, show the iframe */
+    #music-toggle:checked ~ .player-container { display: block; }
+    #music-toggle:checked ~ label .music-btn { background: #ffc837; color: #000; }
+</style>
+
+<div class="music-sidebar">
+    <input type="checkbox" id="music-toggle">
+    <label for="music-toggle">
+        <div class="music-btn">TOGGLE ANTHEM</div>
+    </label>
+    
+    <div class="player-container">
+        <!-- The video is 1x1 pixel (hidden) -->
+        <iframe width="1" height="1" 
+                src="https://www.youtube.com/embed/onFfrB50Y8w?autoplay=1" 
+                frameborder="0" allow="autoplay">
+        </iframe>
+    </div>
 </div>
 </div>
     <nav class="navbar">
