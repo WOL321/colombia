@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Empire Sports Hub</title>
+    
+    <style>
+        /* All your design lives here */
+        body {
+            background-color: #0a0a0a;
+            color: white;
+            font-family: sans-serif;
+            text-align: center;
+        }
+
+        h1 { color: #c5a059; padding-top: 40px; }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 40px;
+        }
+
+        .team-card {
+            background-color: #1a1a1a;
+            border: 2px solid #c5a059;
+            padding: 20px;
+            border-radius: 8px;
+            transition: transform 0.3s;
+        }
+
+        .team-card:hover {
+            transform: scale(1.05);
+        }
+
+        .team-card img {
+            max-width: 150px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<section id="sports-hub">
+    <h1>Colombian Empire Sports Federation</h1>
+    
+    <div class="team-grid">
+        <!-- Pijao Jaguars -->
+        <div class="team-card">
+            <img src="jaguars-logo.png" alt="Pijao Jaguars">
+            <h2>Pijao Jaguars</h2>
+            <p>Professional Hockey Club</p>
+        </div>
+
+        <!-- National Hockey Team -->
+        <div class="team-card">
+            <img src="national-hockey-logo.png" alt="National Hockey">
+            <h2>Andean Titans</h2>
+            <p>National Elite Hockey</p>
+        </div>
+
+        <!-- Soccer World Cup Team -->
+        <div class="team-card">
+            <img src="soccer-logo.png" alt="World Cup Soccer">
+            <h2>The Gold Legion</h2>
+            <p>National Soccer Team</p>
+        </div>
+    </div>
+</section>
+
+</body>
+</html>
