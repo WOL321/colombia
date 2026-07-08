@@ -88,11 +88,13 @@
 </head>
 <body>
 
-    <!-- Sidebar Music Player -->
-<div class="music-sidebar">
-    <button id="musicBtn" class="music-btn" onclick="toggleMusic()">PLAY ANTHEM</button>
-    <!-- YouTube Player Container (Hidden) -->
-    <div id="player" style="display:none;"></div>
+   <div class="music-sidebar" style="position: fixed; right: 0; top: 50%; z-index: 2000;">
+    <iframe width="0" height="0" 
+            src="https://www.youtube.com/embed/onFfrB50Y8w?autoplay=1&loop=1&playlist=onFfrB50Y8w" 
+            frameborder="0" 
+            allow="autoplay">
+    </iframe>
+</div>
 </div>
     <nav class="navbar">
         <div class="nav-brand">
