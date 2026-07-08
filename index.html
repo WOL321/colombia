@@ -88,45 +88,30 @@
 </head>
 <body>
 
-  <style>
-    /* Sidebar Container */
-    .music-sidebar-left { 
-        position: fixed; left: 0; top: 50%; transform: translateY(-50%); 
-        z-index: 2000; background: #000; border: 2px solid #ffc837; 
-        border-left: none; border-radius: 0 8px 8px 0; padding: 10px;
-    }
-
-    /* Hide the ugly default player */
-    #audio-player { display: none; }
-
-    /* Style the label as a nice looking button */
-    .music-btn {
-        display: block; width: 40px; height: 100px;
-        background: #000; color: #ffc837;
-        font-family: 'Cinzel', serif; font-weight: 700;
-        cursor: pointer; text-align: center;
-        display: flex; align-items: center; justify-content: center;
-        writing-mode: vertical-rl;
-    }
-
-    /* Logic: If checkbox is checked, show the player and change button text */
-    #audio-toggle:checked ~ #audio-player { display: block; }
-    #audio-toggle:checked ~ label .music-btn { background: #ffc837; color: #000; }
-</style>
-
-<div class="music-sidebar-left">
-    <!-- The Checkbox Toggle -->
-    <input type="checkbox" id="audio-toggle" style="display:none;">
+  <div class="music-sidebar-left">
+    <!-- This is your button -->
+    <button class="music-btn" onclick="document.getElementById('hidden-audio').paused ? document.getElementById('hidden-audio').play() : document.getElementById('hidden-audio').pause()">
+        ANTHEM
+    </button>
     
-    <label for="audio-toggle">
-        <div class="music-btn">ANTHEM</div>
-    </label>
-
-    <!-- The actual audio (starts off because of display: none) -->
-    <audio id="audio-player" controls>
-        <source src="Colombia National Anthem (Instrumental) - National Anthems Channel (128k) (1).mp3" type="audio/mpeg">
-    </audio>
+    <!-- This is the player (hidden) -->
+    <audio id="hidden-audio" src="Colombia National Anthem (Instrumental) - National Anthems Channel (128k) (1).mp3" loop></audio>
 </div>
+
+<style>
+    .music-sidebar-left { position: fixed; left: 0; top: 50%; transform: translateY(-50%); z-index: 2000; }
+    
+    .music-btn {
+        width: 40px; height: 100px;
+        background: #ffc837; color: #000;
+        border: 2px solid #ffc837; border-left: none;
+        border-radius: 0 8px 8px 0;
+        font-family: 'Cinzel', serif; font-weight: 900;
+        cursor: pointer; writing-mode: vertical-rl;
+    }
+    
+    #hidden-audio { display: none; }
+</style>
 </div>
     <nav class="navbar">
         <div class="nav-brand">
