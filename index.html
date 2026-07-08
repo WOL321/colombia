@@ -29,23 +29,21 @@
         .section { padding: 6rem 0; animation: fadeInUp 0.8s ease-out forwards; }
         .bg-alt { background-color: var(--bg-surface); }
         
-        /* Animations */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
         
-        /* Strict Alignment Grids */
+        /* Music Sidebar Styles */
+        .music-sidebar { position: fixed; right: 0; top: 50%; transform: translateY(-50%); z-index: 2000; background: rgba(0, 0, 0, 0.85); border: 2px solid var(--imperial-gold); border-right: none; border-radius: 8px 0 0 8px; }
+        .music-btn { background: transparent; color: var(--imperial-gold); border: none; padding: 20px 10px; font-family: var(--font-heading); cursor: pointer; writing-mode: vertical-rl; text-orientation: mixed; transition: 0.3s; font-weight: 700; }
+        .music-btn:hover { background: var(--imperial-gold); color: #000; }
+
+        /* Existing Styles */
         .grid { display: grid; gap: 2rem; }
         .grid-2 { grid-template-columns: repeat(2, 1fr); }
         .grid-3 { grid-template-columns: repeat(3, 1fr); }
-        
         .center-header { text-align: center; margin-bottom: 4rem; }
         .sub-title { color: var(--imperial-gold); text-transform: uppercase; letter-spacing: 4px; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 0.5rem; }
         .section-title { font-family: var(--font-heading); font-size: 3rem; font-weight: 900; margin-bottom: 1rem; letter-spacing: 1px; }
         .section-desc { color: var(--text-muted); max-width: 700px; margin: 0 auto; font-size: 1.1rem; }
-
-        /* Navigation */
         .navbar { display: flex; justify-content: space-between; align-items: center; padding: 2rem 4rem; position: absolute; width: 100%; z-index: 10; }
         .nav-brand { display: flex; align-items: center; gap: 1rem; }
         .nav-logo-img { height: 40px; width: auto; object-fit: contain; }
@@ -53,65 +51,50 @@
         .nav-links { display: flex; list-style: none; gap: 2.5rem; }
         .nav-links a { color: var(--text-primary); text-decoration: none; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: color 0.2s; }
         .nav-links a:hover { color: var(--imperial-gold); }
-
-        /* Hero */
         .hero { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; text-align: center; background: radial-gradient(circle at center, #0f172a 0%, #030508 100%); }
         .hero-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, transparent 50%, var(--bg-main)); }
         .hero-content { position: relative; z-index: 2; max-width: 950px; padding: 0 2rem; display: flex; flex-direction: column; align-items: center; }
         .hero-flag { height: 120px; width: auto; margin-bottom: 2rem; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border-radius: 2px; }
         .hero h1 { font-family: var(--font-heading); font-size: 5rem; font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: 2px; }
         .hero p { font-size: 1.4rem; color: var(--text-muted); margin-bottom: 3.5rem; max-width: 800px; }
-
-        /* Buttons */
         .btn { display: inline-block; padding: 1.2rem 3rem; font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px; text-decoration: none; border-radius: 2px; transition: all 0.2s ease; }
         .btn:hover { transform: translateY(-2px); }
         .btn-primary { background-color: var(--imperial-gold); color: #000; box-shadow: 0 4px 15px rgba(255, 200, 55, 0.2); }
         .btn-primary:hover { background-color: #ffd254; box-shadow: 0 0 20px rgba(255, 200, 55, 0.6); transform: translateY(-4px); }
         .btn-secondary { border: 1px solid rgba(255,255,255,0.15); color: var(--text-primary); margin-left: 1.5rem; }
         .btn-secondary:hover { background: rgba(255,255,255,0.05); border-color: #fff; }
-
-        /* Pijao Showcase Setup */
         .pijao-showcase { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
         .pijao-img-box { border-radius: 4px; overflow: hidden; border: 1px solid rgba(255, 200, 55, 0.15); box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
         .pijao-img-box img { width: 100%; height: auto; display: block; }
         .pijao-card { background-color: var(--bg-card); border: 1px solid rgba(255,255,255,0.03); padding: 2.5rem; border-radius: 4px; border-left: 4px solid var(--imperial-gold); margin-bottom: 1.5rem; }
         .pijao-card h3 { font-family: var(--font-heading); font-size: 1.4rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.75rem; }
         .pijao-card p { color: var(--text-muted); font-size: 0.95rem; }
-
-        /* Regional Town Cards */
         .town-card { background-color: var(--bg-card); border: 1px solid rgba(255,255,255,0.02); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; height: 100%; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
         .town-img-box { width: 100%; aspect-ratio: 16/9; background-color: #161d2b; display: flex; align-items: center; justify-content: center; font-size: 2rem; border-bottom: 2px solid var(--bg-surface); }
         .town-info { padding: 2rem; flex-grow: 1; display: flex; flex-direction: column; }
         .town-info h3 { font-family: var(--font-heading); font-size: 1.5rem; margin-bottom: 0.5rem; color: #fff; }
         .town-info p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; flex-grow: 1; }
-
-        /* Cabinet Matrix Grid */
         .gov-pill { background-color: var(--bg-card); padding: 2rem; border-top: 3px solid var(--imperial-gold); border-radius: 4px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
         .gov-pill h4 { font-family: var(--font-heading); font-size: 1.15rem; margin-bottom: 0.5rem; color: #fff; letter-spacing: 0.5px; }
         .gov-pill p { color: var(--text-muted); font-size: 0.9rem; }
-
-        /* Law Banner */
         .law-banner { background: linear-gradient(90deg, #5c0606 0%, #1e0303 100%); border: 1px solid var(--colombia-red); border-radius: 4px; padding: 3.5rem; text-align: center; margin-top: 2rem; }
         .law-banner h3 { font-family: var(--font-heading); font-size: 2rem; color: #fff; margin-bottom: 0.75rem; }
         .law-banner p { color: #fca5a5; max-width: 750px; margin: 0 auto; font-size: 1.1rem; font-weight: 600; }
-
-        /* Grant Box */
         .grant-section { text-align: center; background-color: var(--bg-card); border: 1px solid rgba(255, 200, 55, 0.1); padding: 4rem; border-radius: 4px; position: relative; overflow: hidden; }
         .gold-amount { font-family: var(--font-heading); font-size: 4rem; color: var(--imperial-gold); font-weight: 900; margin: 1.5rem 0; display: block; text-shadow: 0 0 20px rgba(255,200,55,0.2); }
-
-        /* Footer */
         .footer { text-align: center; padding: 5rem; background-color: var(--bg-main); border-top: 1px solid rgba(255,255,255,0.02); color: var(--text-muted); font-size: 0.9rem; }
-
-        @media (max-width: 950px) {
-            .navbar { padding: 1.5rem; }
-            .nav-links { display: none; }
-            .hero h1 { font-size: 3.2rem; }
-            .pijao-showcase, .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 2rem; }
-            .btn-secondary { margin-left: 0; margin-top: 1rem; display: block; }
-        }
+        @media (max-width: 950px) { .navbar { padding: 1.5rem; } .nav-links { display: none; } .hero h1 { font-size: 3.2rem; } .pijao-showcase, .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 2rem; } .btn-secondary { margin-left: 0; margin-top: 1rem; display: block; } }
     </style>
 </head>
 <body>
+
+    <!-- Sidebar Music Player -->
+    <div class="music-sidebar">
+        <button id="musicBtn" class="music-btn" onclick="toggleMusic()">PLAY ANTHEM</button>
+        <audio id="myAudio" loop>
+            <source src="anthem.mp3" type="audio/mpeg">
+        </audio>
+    </div>
 
     <nav class="navbar">
         <div class="nav-brand">
@@ -156,7 +139,7 @@
                 <h2 class="section-title">The Heart of the Crown</h2>
             </div>
             <div class="pijao-img-box">
-                <img src="2026-05-23_17.30.55.webp" alt="Secondary Pijao View" style="display: block; width: 100%;">
+                <img src="2026-05-23_17.30.55.webp" alt="Secondary Pijao View">
             </div>
             <div style="margin-top: 2rem;">
                 <h2 class="section-title" style="font-size: 2.5rem; margin-bottom: 1.5rem;">Pijao</h2>
@@ -177,127 +160,98 @@
         <div class="center-header">
             <span class="sub-title">Imperial Settlements</span>
             <h2 class="section-title">Regional Infrastructure</h2>
-            <p class="section-desc">Beyond the capital, our sovereign territory is anchored by beautifully designed regional cities that secure our geopolitical borders. Select a town below to view its full architectural layout.</p>
+            <p class="section-desc">Beyond the capital, our sovereign territory is anchored by beautifully designed regional cities that secure our geopolitical borders.</p>
         </div>
         <div class="grid grid-3">
             <div class="town-card">
                 <div class="town-img-box">🏛️</div>
                 <div class="town-info">
                     <h3>Teguciagalpa</h3>
-                    <p>Our key stronghold in the Central American sector, reinforcing continental stability and territorial presence.</p>
-                    <a href="tegucigalpa.html" class="btn btn-primary" style="padding: 0.8rem; text-align: center; font-size: 0.75rem; margin-top: auto;">Explore Architecture</a>
+                    <p>Our key stronghold in the Central American sector, reinforcing continental stability.</p>
+                    <a href="tegucigalpa.html" class="btn btn-primary" style="padding: 0.8rem; text-align: center; font-size: 0.75rem; margin-top: auto;">Explore</a>
                 </div>
             </div>
             <div class="town-card">
                 <div class="town-img-box">🏔️</div>
                 <div class="town-info">
                     <h3>Salento</h3>
-                    <p>A beautifully constructed interior township showcasing high-tier architectural prowess within Gran Colombia.</p>
-                    <a href="salento.html" class="btn btn-primary" style="padding: 0.8rem; text-align: center; font-size: 0.75rem; margin-top: auto;">Explore Architecture</a>
+                    <p>A beautifully constructed interior township showcasing high-tier architectural prowess.</p>
+                    <a href="salento.html" class="btn btn-primary" style="padding: 0.8rem; text-align: center; font-size: 0.75rem; margin-top: auto;">Explore</a>
                 </div>
             </div>
             <div class="town-card">
                 <div class="town-img-box">⚓</div>
                 <div class="town-info">
                     <h3>Barbados</h3>
-                    <p>Our premier island outpost, maintaining absolute maritime watch over the shipping lines of the Caribbean basin.</p>
-                    <a href="barbados.html" class="btn btn-primary" style="padding: 0.8rem; text-align: center; font-size: 0.75rem; margin-top: auto;">Explore Architecture</a>
+                    <p>Our premier island outpost, maintaining absolute maritime watch over the Caribbean.</p>
+                    <a href="barbados.html" class="btn btn-primary" style="padding: 0.8rem; text-align: center; font-size: 0.75rem; margin-top: auto;">Explore</a>
                 </div>
             </div>
         </div>
     </section>
 
-     <style>
-    /* Pulsing gold animation */
-    @keyframes pulse-gold {
-        0% { box-shadow: 0 0 15px 2px rgba(255, 200, 55, 0.4); border-color: rgba(255, 200, 55, 0.6); }
-        50% { box-shadow: 0 0 40px 12px rgba(255, 200, 55, 0.7); border-color: rgba(255, 200, 55, 1); }
-        100% { box-shadow: 0 0 15px 2px rgba(255, 200, 55, 0.4); border-color: rgba(255, 200, 55, 0.6); }
-    }
-    .pulsing-map {
-        animation: pulse-gold 4s infinite ease-in-out;
-    }
-</style>
+    <style>
+        @keyframes pulse-gold { 0% { box-shadow: 0 0 15px 2px rgba(255, 200, 55, 0.4); border-color: rgba(255, 200, 55, 0.6); } 50% { box-shadow: 0 0 40px 12px rgba(255, 200, 55, 0.7); border-color: rgba(255, 200, 55, 1); } 100% { box-shadow: 0 0 15px 2px rgba(255, 200, 55, 0.4); border-color: rgba(255, 200, 55, 0.6); } }
+        .pulsing-map { animation: pulse-gold 4s infinite ease-in-out; }
+    </style>
 
-<section id="map" style="padding: 50px 20px; background: #05070a; text-align: center;">
-    <div class="container" style="max-width: 1000px; margin: 0 auto;">
-        <h2 style="font-family: 'Cinzel', serif; font-size: 2.5rem; color: #fff; margin-bottom: 2rem;">Geopolitical Claim Map</h2>
-        
-        <!-- Interactive Map Container with Pulsing Gold Glow -->
-        <div class="map-box pulsing-map" style="
-            border: 3px solid #ffc837; 
-            border-radius: 8px; 
-            overflow: hidden; 
-            background: #000;
-        ">
-            <iframe 
-                src="https://map.diplomaticamc.com/?worldname=minecraft_overworld&mapname=surface&zoom=1&x=-17560&z=-2824" 
-                width="100%" 
-                height="600px" 
-                frameborder="0" 
-                allowfullscreen>
-            </iframe>
+    <section id="map" style="padding: 50px 20px; background: #05070a; text-align: center;">
+        <div class="container" style="max-width: 1000px; margin: 0 auto;">
+            <h2 style="font-family: 'Cinzel', serif; font-size: 2.5rem; color: #fff; margin-bottom: 2rem;">Geopolitical Claim Map</h2>
+            <div class="map-box pulsing-map" style="border: 3px solid #ffc837; border-radius: 8px; overflow: hidden; background: #000;">
+                <iframe src="https://map.diplomaticamc.com/?worldname=minecraft_overworld&mapname=surface&zoom=1&x=-17560&z=-2824" width="100%" height="600px" frameborder="0" allowfullscreen></iframe>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 
     <section id="cabinet" class="section bg-alt">
         <div class="container">
             <div class="center-header">
                 <span class="sub-title">The Sovereign Council</span>
                 <h2 class="section-title">The Crown Administration</h2>
-                <p class="section-desc">The official ministerial bodies ensuring total efficiency, organization, and defense of our empire.</p>
             </div>
             <div class="grid grid-3">
-                <div class="gov-pill"><h4>🏛️ Ministry of Interior</h4><p>Coordinates town placements, maps out regional borders across Central America, and handles land claims.</p></div>
-                <div class="gov-pill"><h4>💰 Ministry of Finance</h4><p>Oversees the state treasury, collects shop plot taxes from the underground mall, and manages gold reserves.</p></div>
-                <div class="gov-pill"><h4>⚖️ Ministry of Justice & Law</h4><p>Enforces internal imperial codes, player security regulations, and settles regional legal matters.</p></div>
-                <div class="gov-pill"><h4>🌾 Ministry of Agriculture</h4><p>Manages large-scale resource farming operations, ensuring stable food supplies for the imperial populace.</p></div>
-                <div class="gov-pill"><h4>🎨 Ministry of Culture</h4><p>Preserves imperial history, coordinates architecture styles, and manages server public relations.</p></div>
-                <div class="gov-pill"><h4>🛠️ Ministry of Labor</h4><p>Directs major infrastructure developments, national public works, and resource allocation programs.</p></div>
-                <div class="gov-pill" style="grid-column: span 3; border-top-color: var(--colombia-red); text-align: center;"><h4>🏠 Ministry of Housing</h4><p>Manages residential integration, assists new citizens, and designs housing grids within expanding colonies.</p></div>
+                <div class="gov-pill"><h4>🏛️ Interior</h4><p>Coordinates town placements and regional borders.</p></div>
+                <div class="gov-pill"><h4>💰 Finance</h4><p>Manages treasury, shop taxes, and gold reserves.</p></div>
+                <div class="gov-pill"><h4>⚖️ Justice</h4><p>Enforces imperial code and settles legal matters.</p></div>
+                <div class="gov-pill"><h4>🌾 Agriculture</h4><p>Manages resource farming for the populace.</p></div>
+                <div class="gov-pill"><h4>🎨 Culture</h4><p>Preserves history and server relations.</p></div>
+                <div class="gov-pill"><h4>🛠️ Labor</h4><p>Directs infrastructure and public works.</p></div>
             </div>
         </div>
     </section>
 
     <section id="expansion" class="section container">
-        <div class="center-header">
-            <span class="sub-title">Imperial Expansion</span>
-            <h2 class="section-title">Do You Want A Town?</h2>
-        </div>
         <div class="grant-section">
             <span class="sub-title" style="color: #fff;">The Mayor Funding Directive</span>
             <span class="gold-amount">100 - 200 GOLD</span>
-            <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 2.5rem; font-size: 1.1rem;">Approved citizens looking to establish a colony town under our banner receive up to 200 gold in starting capital directly from the Crown treasury.</p>
+            <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 2.5rem;">Approved citizens establishing a colony town receive starting capital from the Crown.</p>
             <a href="https://discord.gg/YUyHgnpXwj" class="btn btn-primary" target="_blank">Apply For a Grant</a>
         </div>
         <div class="law-banner">
             <h3>⚠️ IMPERIAL EDICT: THE ACTIVITY LAW</h3>
-            <p>The Crown holds zero respect for inactivity. There is no chunk upkeep on DiplomaticaMC, meaning every piece of land must be actively utilized. If you become inactive without prior leave... you are gone, and your assets are dissolved back into the Crown.</p>
+            <p>The Crown holds zero respect for inactivity. Every piece of land must be utilized. Inactivity leads to asset dissolution.</p>
         </div>
     </section>
 
     <footer class="footer">
         <p>&copy; 2026 The Colombian Empire | DiplomaticaMC. All Rights Reserved.</p>
     </footer>
-    <a href="#" style="
-    position: fixed; 
-    bottom: 20px; 
-    right: 20px; 
-    background-color: #111622; 
-    color: #ffffff; 
-    padding: 10px 15px; 
-    text-decoration: none; 
-    font-size: 14px;
-    font-weight: bold; 
-    border: 1px solid #ffffff;
-    border-radius: 4px; 
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    z-index: 1000;
-    transition: 0.3s;
-" onmouseover="this.style.boxShadow='0 0 20px rgba(255, 255, 255, 0.6)'" 
-   onmouseout="this.style.boxShadow='0 0 10px rgba(255, 255, 255, 0.3)'">
-   HOME
-</a>
+
+    <a href="#" style="position: fixed; bottom: 20px; right: 20px; background-color: #111622; color: #fff; padding: 10px 15px; text-decoration: none; font-size: 14px; font-weight: bold; border: 1px solid #fff; border-radius: 4px; z-index: 1000;">HOME</a>
+
+    <script>
+        function toggleMusic() {
+            var audio = document.getElementById("myAudio");
+            var btn = document.getElementById("musicBtn");
+            if (audio.paused) {
+                audio.play();
+                btn.innerHTML = "PAUSE ANTHEM";
+            } else {
+                audio.pause();
+                btn.innerHTML = "PLAY ANTHEM";
+            }
+        }
+    </script>
 </body>
 </html>
