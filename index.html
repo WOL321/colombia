@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -8,8 +8,246 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="empire.css">
-<link rel="stylesheet" href="home.css">
+<style>
+/* ============================================
+   THE COLOMBIAN EMPIRE — Shared Design System
+   ============================================ */
+
+
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background-color: #05070a;
+  color: #f1f5f9;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  line-height: 1.6;
+  background-image:
+    radial-gradient(circle at 15% 10%, rgba(255,200,55,0.05) 0%, transparent 35%),
+    radial-gradient(circle at 85% 30%, rgba(29,78,216,0.06) 0%, transparent 40%),
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: auto, auto, 44px 44px, 44px 44px;
+  background-attachment: fixed;
+}
+
+/* Ornamental divider under section headers — a wax-seal-style mark, CSS-only so it applies everywhere automatically */
+.center-header { position: relative; }
+.center-header .section-title { position: relative; padding-bottom: 1.5rem; }
+.center-header .section-title::after {
+  content: '';
+  position: absolute; bottom: 0; left: 50%; transform: translateX(-50%) rotate(45deg);
+  width: 8px; height: 8px; background: #ffc837; box-shadow: 0 0 10px rgba(255,200,55,0.6);
+}
+.center-header .section-title::before {
+  content: '';
+  position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%);
+  width: 110px; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,200,55,0.55) 45%, rgba(255,200,55,0.55) 55%, transparent);
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+.section { padding: 6rem 0; animation: fadeInUp 0.8s ease-out forwards; }
+.bg-alt { background-color: #0b0e14; }
+
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-8px); } }
+@keyframes glow-pulse {
+  0% { box-shadow: 0 8px 25px rgba(255, 200, 55, 0.4); }
+  50% { box-shadow: 0 12px 40px rgba(255, 200, 55, 0.8); }
+  100% { box-shadow: 0 8px 25px rgba(255, 200, 55, 0.4); }
+}
+
+/* ---------- Navbar ---------- */
+.navbar { display: flex; justify-content: space-between; align-items: center; padding: 2rem 4rem; position: relative; width: 100%; z-index: 10; }
+.navbar.solid { background-color: #0b0e14; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.nav-brand { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+.nav-logo-img { height: 40px; width: auto; object-fit: contain; }
+.nav-logo { font-family: 'Cinzel', serif; font-weight: 900; font-size: 1.4rem; letter-spacing: 2px; color: #ffc837; }
+.nav-links { display: flex; list-style: none; gap: 2.5rem; }
+.nav-links a { color: #f1f5f9; text-decoration: none; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease; position: relative; }
+.nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: #ffc837; transition: width 0.3s ease; }
+.nav-links a:hover { color: #ffc837; }
+.nav-links a:hover::after { width: 100%; }
+@media (max-width: 950px) { .navbar { padding: 1.5rem; } .nav-links { display: none; } }
+
+/* ---------- Buttons ---------- */
+.btn { display: inline-block; padding: 1.2rem 3rem; font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px; text-decoration: none; border-radius: 4px; transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1); cursor: pointer; border: none; position: relative; overflow: hidden; }
+.btn:hover { transform: translateY(-3px); }
+.btn-primary { background: linear-gradient(160deg, #ffd868 0%, #ffc837 45%, #e6a916 100%); color: #1a1200; box-shadow: 0 8px 20px rgba(255, 200, 55, 0.3); }
+.btn-primary:hover { box-shadow: 0 12px 32px rgba(255, 200, 55, 0.5); transform: translateY(-4px); }
+.btn-secondary { border: 1px solid rgba(255,255,255,0.15); color: #f1f5f9; margin-left: 1.5rem; transition: all 0.3s ease; }
+.btn-secondary:hover { background: rgba(255,255,255,0.05); border-color: #ffc837; color: #ffc837; }
+@media (max-width: 950px) { .btn-secondary { margin-left: 0; margin-top: 1rem; display: block; } }
+
+.back-link { color: #ffc837; text-decoration: none; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.5rem; transition: gap 0.3s ease; }
+.back-link:hover { gap: 0.9rem; }
+
+/* ---------- Section headers ---------- */
+.center-header { text-align: center; margin-bottom: 4rem; }
+.sub-title { color: #ffc837; text-transform: uppercase; letter-spacing: 4px; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 0.5rem; }
+.section-title { font-family: 'Cinzel', serif; font-size: 3rem; font-weight: 900; margin-bottom: 1rem; letter-spacing: 1px; }
+.section-desc { color: #8898aa; max-width: 700px; margin: 0 auto; font-size: 1.1rem; }
+
+/* ---------- Cards ---------- */
+.grid { display: grid; gap: 2rem; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 950px) { .grid-2, .grid-3 { grid-template-columns: 1fr; gap: 2rem; } }
+
+.pijao-card { background-color: #111622; border: 1px solid rgba(255,255,255,0.03); padding: 2.5rem; border-radius: 4px; border-left: 4px solid #ffc837; margin-bottom: 1.5rem; transition: all 0.3s ease; }
+.pijao-card:hover { background-color: #141a24; border-left-color: #ffd254; box-shadow: 0 8px 20px rgba(255, 200, 55, 0.1); }
+.pijao-card h3 { font-family: 'Cinzel', serif; font-size: 1.4rem; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.75rem; }
+.pijao-card p { color: #8898aa; font-size: 0.95rem; }
+
+.gov-pill { background-color: #111622; padding: 2.25rem 2rem; border-radius: 4px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); transition: box-shadow 0.3s ease, transform 0.3s ease; will-change: transform; text-align: center; position: relative; border: 1px solid rgba(255,255,255,0.03); }
+.gov-pill:hover { box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 24px rgba(255, 200, 55, 0.12); transform: translateY(-4px); }
+.gov-pill .medallion { width: 56px; height: 56px; margin: 0 auto 1rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: radial-gradient(circle at 35% 30%, #1c2130, #0b0e14); border: 1px solid rgba(255,200,55,0.35); box-shadow: inset 0 0 12px rgba(255,200,55,0.08), 0 4px 12px rgba(0,0,0,0.3); }
+.gov-pill h4 { font-family: 'Cinzel', serif; font-size: 1.05rem; margin-bottom: 0.5rem; color: #fff; letter-spacing: 1px; text-transform: uppercase; }
+.gov-pill p { color: #8898aa; font-size: 0.88rem; }
+
+/* ---------- Stat pills (used on town pages) ---------- */
+.stat-row { display: flex; flex-wrap: wrap; gap: 1rem; margin: 2rem 0; }
+.stat-pill { background-color: #111622; border: 1px solid rgba(255,200,55,0.15); border-radius: 4px; padding: 0.9rem 1.5rem; }
+.stat-pill .stat-label { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: #8898aa; margin-bottom: 0.25rem; }
+.stat-pill .stat-value { font-family: 'Cinzel', serif; font-weight: 700; color: #ffc837; font-size: 1.1rem; }
+
+/* ---------- Image gallery (town pages) ---------- */
+.gallery-box { border-radius: 4px; overflow: hidden; border: 1px solid rgba(255, 200, 55, 0.15); box-shadow: 0 10px 25px rgba(0,0,0,0.4); transition: all 0.4s ease; }
+.gallery-box:hover { border-color: rgba(255, 200, 55, 0.4); box-shadow: 0 20px 50px rgba(255, 200, 55, 0.15), 0 0 30px rgba(255, 200, 55, 0.1); }
+.gallery-box img { width: 100%; height: auto; display: block; }
+
+/* ---------- Footer ---------- */
+.footer { text-align: center; padding: 4rem 2rem 3rem; background-color: #05070a; position: relative; color: #8898aa; font-size: 0.9rem; }
+.footer::before { content: ''; display: block; width: 60px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,200,55,0.5), transparent); margin: 0 auto 2rem; }
+.footer .footer-brand { font-family: 'Cinzel', serif; color: #ffc837; letter-spacing: 2px; font-size: 0.95rem; margin-bottom: 0.75rem; text-transform: uppercase; }
+.home-btn { position: fixed; bottom: 20px; right: 20px; background-color: #111622; color: #fff; padding: 10px 15px; text-decoration: none; font-size: 14px; font-weight: bold; border: 1px solid rgba(255, 200, 55, 0.3); border-radius: 4px; z-index: 1000; transition: all 0.3s ease; }
+.home-btn:hover { border-color: #ffc837; color: #ffc837; box-shadow: 0 4px 12px rgba(255, 200, 55, 0.2); }
+
+/* ---------- Music sidebar ---------- */
+.music-sidebar-left { position: fixed; left: 0; top: 50%; transform: translateY(-50%); z-index: 2000; }
+.music-btn { width: 40px; height: 100px; background: #ffc837; color: #000; border: 2px solid #ffc837; border-left: none; border-radius: 0 8px 8px 0; font-family: 'Cinzel', serif; font-weight: 900; cursor: pointer; writing-mode: vertical-rl; box-shadow: 0 8px 25px rgba(255, 200, 55, 0.4); transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1); font-size: 0.7rem; text-orientation: mixed; }
+.music-btn:hover { animation: glow-pulse 1.5s infinite; background: #fff; box-shadow: 0 12px 35px rgba(255, 200, 55, 0.6); }
+#hidden-audio { display: none; }
+
+/* Homepage-only layout — hero, capital showcase, town cards, law banner, map */
+
+.navbar.transparent { position: absolute; }
+
+.hero { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; text-align: center; background: radial-gradient(circle at 50% 40%, #131c30 0%, #060810 55%, #030407 100%); background-attachment: fixed; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; background: repeating-conic-gradient(from 0deg, rgba(255,200,55,0.025) 0deg 1deg, transparent 1deg 12deg); animation: rotate-rays 90s linear infinite; opacity: 0.6; }
+@keyframes rotate-rays { to { transform: rotate(360deg); } }
+.hero-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, transparent 45%, #05070a); }
+
+/* Rising embers — signature ambient detail */
+.embers { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 1; }
+.embers span { position: absolute; bottom: -20px; width: 3px; height: 3px; border-radius: 50%; background: #ffc837; box-shadow: 0 0 6px 1px rgba(255,200,55,0.8); opacity: 0; animation: ember-rise linear infinite; }
+.embers span:nth-child(1) { left: 8%; width: 2px; height: 2px; animation-duration: 11s; animation-delay: 0.5s; }
+.embers span:nth-child(2) { left: 18%; animation-duration: 14s; animation-delay: 3s; }
+.embers span:nth-child(3) { left: 27%; width: 2px; height: 2px; animation-duration: 9s; animation-delay: 1.5s; }
+.embers span:nth-child(4) { left: 39%; animation-duration: 16s; animation-delay: 6s; }
+.embers span:nth-child(5) { left: 52%; width: 2px; height: 2px; animation-duration: 12s; animation-delay: 2s; }
+.embers span:nth-child(6) { left: 64%; animation-duration: 15s; animation-delay: 4.5s; }
+.embers span:nth-child(7) { left: 74%; width: 2px; height: 2px; animation-duration: 10s; animation-delay: 0s; }
+.embers span:nth-child(8) { left: 83%; animation-duration: 13s; animation-delay: 5.5s; }
+.embers span:nth-child(9) { left: 92%; width: 2px; height: 2px; animation-duration: 17s; animation-delay: 2.5s; }
+.embers span:nth-child(10) { left: 46%; animation-duration: 18s; animation-delay: 7.5s; }
+@keyframes ember-rise {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  8% { opacity: 0.9; }
+  50% { transform: translateY(-48vh) translateX(12px); }
+  92% { opacity: 0.3; }
+  100% { transform: translateY(-92vh) translateX(-8px); opacity: 0; }
+}
+
+.hero-content { position: relative; z-index: 2; max-width: 950px; padding: 0 2rem; display: flex; flex-direction: column; align-items: center; }
+
+/* Impact flash at the moment the seal lands */
+.hero::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 38%, rgba(255,220,140,0.5), transparent 45%); opacity: 0; animation: impact-flash 0.5s ease-out 0.78s forwards; pointer-events: none; z-index: 1; }
+@keyframes impact-flash { 0% { opacity: 0; } 15% { opacity: 1; } 100% { opacity: 0; } }
+
+/* The crest drops and stamps down like a wax seal, with a small settling bounce */
+.hero-flag-frame { position: relative; width: 150px; height: 150px; margin-bottom: 2rem; display: flex; align-items: center; justify-content: center; opacity: 0; animation: stamp-drop 0.95s cubic-bezier(0.34, 1.15, 0.64, 1) 0.1s forwards; }
+@keyframes stamp-drop {
+  0%   { opacity: 0; transform: translateY(-160px) scale(1.5) rotate(-10deg); }
+  55%  { opacity: 1; transform: translateY(0) scale(0.92) rotate(2deg); }
+  72%  { transform: translateY(5px) scale(1.06) rotate(-1deg); }
+  86%  { transform: translateY(-2px) scale(0.99) rotate(0.5deg); }
+  100% { opacity: 1; transform: translateY(0) scale(1) rotate(0deg); }
+}
+.hero-flag-frame::before { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 1px solid rgba(255,200,55,0.4); box-shadow: 0 0 40px rgba(255,200,55,0.25), inset 0 0 30px rgba(255,200,55,0.1); opacity: 0; animation: glow-pulse 3s ease-in-out 0.95s infinite, ring-fade-in 0.3s ease-out 0.95s forwards; }
+@keyframes ring-fade-in { to { opacity: 1; } }
+
+/* Shockwave ring expanding outward on impact */
+.hero-flag-frame .shockwave { position: absolute; inset: 0; margin: auto; width: 100%; height: 100%; border-radius: 50%; border: 1px solid rgba(255,200,55,0.7); opacity: 0; animation: shockwave 0.7s ease-out 0.62s forwards; pointer-events: none; }
+@keyframes shockwave { 0% { opacity: 0.8; transform: scale(0.5); } 100% { opacity: 0; transform: scale(2.4); } }
+
+/* Spark burst radiating from the impact point */
+.impact-sparks { position: absolute; inset: 0; pointer-events: none; }
+.impact-sparks span { position: absolute; top: 50%; left: 50%; width: 3px; height: 3px; border-radius: 50%; background: #ffc837; box-shadow: 0 0 6px 1px rgba(255,200,55,0.9); opacity: 0; animation: spark-burst 0.65s ease-out 0.62s forwards; }
+.impact-sparks span:nth-child(1) { animation-name: spark-burst-1; }
+.impact-sparks span:nth-child(2) { animation-name: spark-burst-2; }
+.impact-sparks span:nth-child(3) { animation-name: spark-burst-3; }
+.impact-sparks span:nth-child(4) { animation-name: spark-burst-4; }
+.impact-sparks span:nth-child(5) { animation-name: spark-burst-5; }
+.impact-sparks span:nth-child(6) { animation-name: spark-burst-6; }
+@keyframes spark-burst-1 { 0% { opacity: 1; transform: translate(0,0); } 100% { opacity: 0; transform: translate(-70px, -30px); } }
+@keyframes spark-burst-2 { 0% { opacity: 1; transform: translate(0,0); } 100% { opacity: 0; transform: translate(-40px, 55px); } }
+@keyframes spark-burst-3 { 0% { opacity: 1; transform: translate(0,0); } 100% { opacity: 0; transform: translate(60px, -45px); } }
+@keyframes spark-burst-4 { 0% { opacity: 1; transform: translate(0,0); } 100% { opacity: 0; transform: translate(75px, 25px); } }
+@keyframes spark-burst-5 { 0% { opacity: 1; transform: translate(0,0); } 100% { opacity: 0; transform: translate(-15px, -75px); } }
+@keyframes spark-burst-6 { 0% { opacity: 1; transform: translate(0,0); } 100% { opacity: 0; transform: translate(20px, 75px); } }
+
+.hero-flag { height: 90px; width: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border-radius: 2px; position: relative; z-index: 1; }
+
+.hero .sub-title { display: block; margin-bottom: 1rem; opacity: 0; animation: hero-reveal 0.7s ease-out 0.95s forwards; }
+
+/* Headline wipes in left-to-right, like being engraved into a plaque */
+.hero h1 { font-family: 'Cinzel', serif; font-size: 5rem; font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: 6px; text-shadow: 0 0 40px rgba(255,200,55,0.15); clip-path: inset(0 100% 0 0); opacity: 0; animation: title-wipe 1s cubic-bezier(0.65, 0, 0.35, 1) 1.05s forwards; }
+@keyframes title-wipe {
+  0%   { clip-path: inset(0 100% 0 0); opacity: 1; letter-spacing: 6px; }
+  100% { clip-path: inset(0 0% 0 0); opacity: 1; letter-spacing: 2px; }
+}
+
+.hero p { font-size: 1.4rem; color: #8898aa; margin-bottom: 3.5rem; max-width: 800px; opacity: 0; animation: hero-reveal 0.8s ease-out 1.7s forwards; }
+.hero-buttons { opacity: 0; animation: hero-reveal 0.8s ease-out 1.9s forwards; }
+@keyframes hero-reveal { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+
+@media (max-width: 950px) { .hero h1 { font-size: 3.2rem; } }
+
+.pijao-showcase { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+.pijao-img-box { border-radius: 4px; overflow: hidden; border: 1px solid rgba(255, 200, 55, 0.15); box-shadow: 0 10px 25px rgba(0,0,0,0.4); transition: all 0.4s ease; }
+.pijao-img-box:hover { border-color: rgba(255, 200, 55, 0.4); box-shadow: 0 20px 50px rgba(255, 200, 55, 0.15), 0 0 30px rgba(255, 200, 55, 0.1); }
+.pijao-img-box img { width: 100%; height: auto; display: block; }
+@media (max-width: 950px) { .pijao-showcase { grid-template-columns: 1fr; gap: 2rem; } }
+
+.town-card { background-color: #111622; border: 1px solid rgba(255,255,255,0.02); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; height: 100%; box-shadow: 0 10px 20px rgba(0,0,0,0.3); transition: box-shadow 0.4s ease, border-color 0.4s ease, transform 0.4s ease; }
+.town-card:hover { box-shadow: 0 25px 40px rgba(0,0,0,0.5), 0 0 30px rgba(255, 200, 55, 0.15); border-color: rgba(255,200,55,0.3); transform: translateY(-6px); }
+.town-img-box { width: 100%; aspect-ratio: 16/9; background-color: #161d2b; display: flex; align-items: center; justify-content: center; font-size: 3rem; border-bottom: 2px solid #0b0e14; position: relative; overflow: hidden; }
+.town-img-box::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(5,7,10,0.5) 0%, transparent 45%); pointer-events: none; }
+.town-img-box img { transition: transform 0.6s ease; }
+.town-card:hover .town-img-box img { transform: scale(1.06); }
+.town-info { padding: 2rem; flex-grow: 1; display: flex; flex-direction: column; }
+.town-info h3 { font-family: 'Cinzel', serif; font-size: 1.5rem; margin-bottom: 0.5rem; color: #fff; }
+.town-info p { color: #8898aa; font-size: 0.95rem; margin-bottom: 1.5rem; flex-grow: 1; }
+
+.law-banner { background: linear-gradient(90deg, #5c0606 0%, #1e0303 100%); border: 1px solid #dc2626; border-radius: 4px; padding: 3.5rem; text-align: center; margin-top: 2rem; transition: all 0.3s ease; }
+.law-banner:hover { box-shadow: 0 10px 30px rgba(220, 38, 38, 0.2); }
+.law-banner h3 { font-family: 'Cinzel', serif; font-size: 2rem; color: #fff; margin-bottom: 0.75rem; }
+.law-banner p { color: #fca5a5; max-width: 750px; margin: 0 auto; font-size: 1.1rem; font-weight: 600; }
+
+.grant-section { text-align: center; background-color: #111622; border: 1px solid rgba(255, 200, 55, 0.1); padding: 4rem; border-radius: 4px; position: relative; overflow: hidden; transition: all 0.3s ease; }
+.grant-section:hover { border-color: rgba(255, 200, 55, 0.3); box-shadow: 0 10px 30px rgba(255, 200, 55, 0.1); }
+.gold-amount { font-family: 'Cinzel', serif; font-size: 4rem; color: #ffc837; font-weight: 900; margin: 1.5rem 0; display: block; text-shadow: 0 0 20px rgba(255,200,55,0.2); }
+
+.map-box { border: 3px solid #ffc837; border-radius: 8px; overflow: hidden; background: #000; animation: pulse-border 4s infinite ease-in-out; }
+@keyframes pulse-border {
+  0% { box-shadow: 0 0 15px 2px rgba(255, 200, 55, 0.4); border-color: rgba(255, 200, 55, 0.6); }
+  50% { box-shadow: 0 0 40px 12px rgba(255, 200, 55, 0.7); border-color: rgba(255, 200, 55, 1); }
+  100% { box-shadow: 0 0 15px 2px rgba(255, 200, 55, 0.4); border-color: rgba(255, 200, 55, 0.6); }
+}
+
+</style>
 </head>
 <body>
 
@@ -78,7 +316,7 @@
     </div>
     <div style="margin-top: 2rem;">
       <h2 class="section-title" style="font-size: 2.5rem; margin-bottom: 1.5rem;">Pijao</h2>
-      <p style="color: var(--text-muted); margin-bottom: 2rem; font-size: 1.1rem;">Our primary seat of power represents the ultimate blend of imperial beauty and high-end server commerce. We don't just build; we engineer civilizations.</p>
+      <p style="color: #8898aa; margin-bottom: 2rem; font-size: 1.1rem;">Our primary seat of power represents the ultimate blend of imperial beauty and high-end server commerce. We don't just build; we engineer civilizations.</p>
       <div class="pijao-card">
         <h3>🌊 The Coastal Surface</h3>
         <p>Above ground, Pijao stretches across a pristine coastline. A beautiful colonial town built to high architectural standards, serving as the proud, scenic face of our global empire.</p>
@@ -125,7 +363,7 @@
   </div>
 </section>
 
-<section id="map" style="padding: 50px 20px; background: var(--bg-main);">
+<section id="map" style="padding: 50px 20px; background: #05070a;">
   <div class="container" style="max-width: 1000px; margin: 0 auto;">
     <h2 class="section-title" style="text-align: center; margin-bottom: 2rem;">Geopolitical Claim Map</h2>
     <div class="map-box">
@@ -155,7 +393,7 @@
   <div class="grant-section">
     <span class="sub-title" style="color: #fff;">The Mayor Funding Directive</span>
     <span class="gold-amount">100 - 200 GOLD</span>
-    <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 2.5rem;">Approved citizens establishing a colony town receive starting capital from the Crown.</p>
+    <p style="color: #8898aa; max-width: 600px; margin: 0 auto 2.5rem;">Approved citizens establishing a colony town receive starting capital from the Crown.</p>
     <a href="https://discord.gg/YUyHgnpXwj" class="btn btn-primary" target="_blank">Apply For a Grant</a>
   </div>
   <div class="law-banner">
