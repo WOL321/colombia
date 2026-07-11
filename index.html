@@ -198,7 +198,13 @@ body {
 @keyframes spark-burst-5 { 0% { opacity: 1; transform: translate(0,0); } 100% { opacity: 0; transform: translate(-15px, -75px); } }
 @keyframes spark-burst-6 { 0% { opacity: 1; transform: translate(0,0); } 100% { opacity: 0; transform: translate(20px, 75px); } }
 
-.hero-flag { height: 90px; width: auto; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border-radius: 2px; position: relative; z-index: 1; }
+.hero-flag {
+    height: 120px;
+    width: 120px;       /* Set width equal to height */
+    object-fit: cover;  /* Crops the image to fill the space */
+    border-radius: 50%; /* Turns the box into a circle */
+    border: 2px solid var(--imperial-gold); /* Optional: Adds a gold ring around it */
+}
 
 .hero .sub-title { display: block; margin-bottom: 1rem; opacity: 0; animation: hero-reveal 0.7s ease-out 0.95s forwards; }
 
