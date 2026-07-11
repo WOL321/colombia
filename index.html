@@ -30,6 +30,10 @@
        .bg-alt { background-color: var(--bg-surface); }
        
        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+       @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+       .town-card { animation: float 6s ease-in-out infinite; }
+       .gov-pill { animation: float 7s ease-in-out infinite; }
+       .pijao-card { animation: float 8s ease-in-out infinite; }
        
        /* Music Sidebar Styles */
        .music-sidebar-left { position: fixed; left: 0; top: 50%; transform: translateY(-50%); z-index: 2000; }
@@ -78,7 +82,7 @@
        .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: var(--imperial-gold); transition: width 0.3s ease; }
        .nav-links a:hover { color: var(--imperial-gold); }
        .nav-links a:hover::after { width: 100%; }
-       .hero { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; text-align: center; background: radial-gradient(circle at center, #0f172a 0%, #030508 100%); }
+       .hero { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; text-align: center; background: radial-gradient(circle at center, #0f172a 0%, #030508 100%); background-attachment: fixed; }
        .hero-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, transparent 50%, var(--bg-main)); }
        .hero-content { position: relative; z-index: 2; max-width: 950px; padding: 0 2rem; display: flex; flex-direction: column; align-items: center; }
        .hero-flag { height: 120px; width: auto; margin-bottom: 2rem; box-shadow: 0 10px 25px rgba(0,0,0,0.5); border-radius: 2px; }
@@ -277,6 +281,23 @@
    </footer>
 
    <a href="#" class="home-btn">HOME</a>
+
+   <script>
+       const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+       const observer = new IntersectionObserver((entries) => {
+           entries.forEach(entry => {
+               if (entry.isIntersecting) {
+                   entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+                   observer.unobserve(entry.target);
+               }
+           });
+       }, observerOptions);
+
+       document.querySelectorAll('.section, .town-card, .gov-pill').forEach(el => {
+           el.style.opacity = '0';
+           observer.observe(el);
+       });
+   </script>
 
 </body>
 </html>
