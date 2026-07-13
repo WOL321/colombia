@@ -31,7 +31,6 @@ body {
   background-attachment: fixed;
 }
 
-/* Ornamental divider under section headers — a wax-seal-style mark, CSS-only so it applies everywhere automatically */
 .center-header { position: relative; }
 .center-header .section-title { position: relative; padding-bottom: 1.5rem; }
 .center-header .section-title::after {
@@ -58,7 +57,6 @@ body {
   100% { box-shadow: 0 8px 25px rgba(255, 200, 55, 0.4); }
 }
 
-/* ---------- Navbar ---------- */
 .navbar { display: flex; justify-content: space-between; align-items: center; padding: 2rem 4rem; position: relative; width: 100%; z-index: 10; }
 .navbar.solid { background-color: #0b0e14; border-bottom: 1px solid rgba(255,255,255,0.05); }
 .nav-brand { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
@@ -71,7 +69,6 @@ body {
 .nav-links a:hover::after { width: 100%; }
 @media (max-width: 950px) { .navbar { padding: 1.5rem; } .nav-links { display: none; } }
 
-/* ---------- Buttons ---------- */
 .btn { display: inline-block; padding: 1.2rem 3rem; font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px; text-decoration: none; border-radius: 4px; transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1); cursor: pointer; border: none; position: relative; overflow: hidden; }
 .btn:hover { transform: translateY(-3px); }
 .btn-primary { background: linear-gradient(160deg, #ffd868 0%, #ffc837 45%, #e6a916 100%); color: #1a1200; box-shadow: 0 8px 20px rgba(255, 200, 55, 0.3); }
@@ -83,13 +80,11 @@ body {
 .back-link { color: #ffc837; text-decoration: none; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 0.5rem; transition: gap 0.3s ease; }
 .back-link:hover { gap: 0.9rem; }
 
-/* ---------- Section headers ---------- */
 .center-header { text-align: center; margin-bottom: 4rem; }
 .sub-title { color: #ffc837; text-transform: uppercase; letter-spacing: 4px; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 0.5rem; }
 .section-title { font-family: 'Cinzel', serif; font-size: 3rem; font-weight: 900; margin-bottom: 1rem; letter-spacing: 1px; }
 .section-desc { color: #8898aa; max-width: 700px; margin: 0 auto; font-size: 1.1rem; }
 
-/* ---------- Cards ---------- */
 .grid { display: grid; gap: 2rem; }
 .grid-2 { grid-template-columns: repeat(2, 1fr); }
 .grid-3 { grid-template-columns: repeat(3, 1fr); }
@@ -106,31 +101,25 @@ body {
 .gov-pill h4 { font-family: 'Cinzel', serif; font-size: 1.05rem; margin-bottom: 0.5rem; color: #fff; letter-spacing: 1px; text-transform: uppercase; }
 .gov-pill p { color: #8898aa; font-size: 0.88rem; }
 
-/* ---------- Stat pills (used on town pages) ---------- */
 .stat-row { display: flex; flex-wrap: wrap; gap: 1rem; margin: 2rem 0; }
 .stat-pill { background-color: #111622; border: 1px solid rgba(255,200,55,0.15); border-radius: 4px; padding: 0.9rem 1.5rem; }
 .stat-pill .stat-label { display: block; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1.5px; color: #8898aa; margin-bottom: 0.25rem; }
 .stat-pill .stat-value { font-family: 'Cinzel', serif; font-weight: 700; color: #ffc837; font-size: 1.1rem; }
 
-/* ---------- Image gallery (town pages) ---------- */
 .gallery-box { border-radius: 4px; overflow: hidden; border: 1px solid rgba(255, 200, 55, 0.15); box-shadow: 0 10px 25px rgba(0,0,0,0.4); transition: all 0.4s ease; }
 .gallery-box:hover { border-color: rgba(255, 200, 55, 0.4); box-shadow: 0 20px 50px rgba(255, 200, 55, 0.15), 0 0 30px rgba(255, 200, 55, 0.1); }
 .gallery-box img { width: 100%; height: auto; display: block; }
 
-/* ---------- Footer ---------- */
 .footer { text-align: center; padding: 4rem 2rem 3rem; background-color: #05070a; position: relative; color: #8898aa; font-size: 0.9rem; }
 .footer::before { content: ''; display: block; width: 60px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,200,55,0.5), transparent); margin: 0 auto 2rem; }
 .footer .footer-brand { font-family: 'Cinzel', serif; color: #ffc837; letter-spacing: 2px; font-size: 0.95rem; margin-bottom: 0.75rem; text-transform: uppercase; }
 .home-btn { position: fixed; bottom: 20px; right: 20px; background-color: #111622; color: #fff; padding: 10px 15px; text-decoration: none; font-size: 14px; font-weight: bold; border: 1px solid rgba(255, 200, 55, 0.3); border-radius: 4px; z-index: 1000; transition: all 0.3s ease; }
 .home-btn:hover { border-color: #ffc837; color: #ffc837; box-shadow: 0 4px 12px rgba(255, 200, 55, 0.2); }
 
-/* ---------- Music sidebar ---------- */
 .music-sidebar-left { position: fixed; left: 0; top: 50%; transform: translateY(-50%); z-index: 2000; }
 .music-btn { width: 40px; height: 100px; background: #ffc837; color: #000; border: 2px solid #ffc837; border-left: none; border-radius: 0 8px 8px 0; font-family: 'Cinzel', serif; font-weight: 900; cursor: pointer; writing-mode: vertical-rl; box-shadow: 0 8px 25px rgba(255, 200, 55, 0.4); transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1); font-size: 0.7rem; text-orientation: mixed; }
 .music-btn:hover { animation: glow-pulse 1.5s infinite; background: #fff; box-shadow: 0 12px 35px rgba(255, 200, 55, 0.6); }
 #hidden-audio { display: none; }
-
-/* Homepage-only layout — hero, capital showcase, town cards, law banner, map */
 
 .navbar.transparent { position: absolute; }
 
@@ -139,7 +128,6 @@ body {
 @keyframes rotate-rays { to { transform: rotate(360deg); } }
 .hero-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, transparent 45%, #05070a); }
 
-/* Rising embers — signature ambient detail */
 .embers { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 1; }
 .embers span { position: absolute; bottom: -20px; width: 3px; height: 3px; border-radius: 50%; background: #ffc837; box-shadow: 0 0 6px 1px rgba(255,200,55,0.8); opacity: 0; animation: ember-rise linear infinite; }
 .embers span:nth-child(1) { left: 8%; width: 2px; height: 2px; animation-duration: 11s; animation-delay: 0.5s; }
@@ -162,11 +150,9 @@ body {
 
 .hero-content { position: relative; z-index: 2; max-width: 950px; padding: 0 2rem; display: flex; flex-direction: column; align-items: center; }
 
-/* Impact flash at the moment the seal lands */
 .hero::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 38%, rgba(255,220,140,0.5), transparent 45%); opacity: 0; animation: impact-flash 0.5s ease-out 0.78s forwards; pointer-events: none; z-index: 1; }
 @keyframes impact-flash { 0% { opacity: 0; } 15% { opacity: 1; } 100% { opacity: 0; } }
 
-/* The crest drops and stamps down like a wax seal, with a small settling bounce */
 .hero-flag-frame { position: relative; width: 150px; height: 150px; margin-bottom: 2rem; display: flex; align-items: center; justify-content: center; opacity: 0; animation: stamp-drop 0.95s cubic-bezier(0.34, 1.15, 0.64, 1) 0.1s forwards; }
 @keyframes stamp-drop {
   0%   { opacity: 0; transform: translateY(-160px) scale(1.5) rotate(-10deg); }
@@ -178,11 +164,9 @@ body {
 .hero-flag-frame::before { content: ''; position: absolute; inset: 0; border-radius: 50%; border: 1px solid rgba(255,200,55,0.4); box-shadow: 0 0 40px rgba(255,200,55,0.25), inset 0 0 30px rgba(255,200,55,0.1); opacity: 0; animation: glow-pulse 3s ease-in-out 0.95s infinite, ring-fade-in 0.3s ease-out 0.95s forwards; }
 @keyframes ring-fade-in { to { opacity: 1; } }
 
-/* Shockwave ring expanding outward on impact */
 .hero-flag-frame .shockwave { position: absolute; inset: 0; margin: auto; width: 100%; height: 100%; border-radius: 50%; border: 1px solid rgba(255,200,55,0.7); opacity: 0; animation: shockwave 0.7s ease-out 0.62s forwards; pointer-events: none; }
 @keyframes shockwave { 0% { opacity: 0.8; transform: scale(0.5); } 100% { opacity: 0; transform: scale(2.4); } }
 
-/* Spark burst radiating from the impact point */
 .impact-sparks { position: absolute; inset: 0; pointer-events: none; }
 .impact-sparks span { position: absolute; top: 50%; left: 50%; width: 3px; height: 3px; border-radius: 50%; background: #ffc837; box-shadow: 0 0 6px 1px rgba(255,200,55,0.9); opacity: 0; animation: spark-burst 0.65s ease-out 0.62s forwards; }
 .impact-sparks span:nth-child(1) { animation-name: spark-burst-1; }
@@ -200,15 +184,14 @@ body {
 
 .hero-flag {
     height: 120px;
-    width: 120px;       /* Set width equal to height */
-    object-fit: cover;  /* Crops the image to fill the space */
-    border-radius: 50%; /* Turns the box into a circle */
-    border: 2px solid var(--imperial-gold); /* Optional: Adds a gold ring around it */
+    width: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--imperial-gold);
 }
 
 .hero .sub-title { display: block; margin-bottom: 1rem; opacity: 0; animation: hero-reveal 0.7s ease-out 0.95s forwards; }
 
-/* Headline wipes in left-to-right, like being engraved into a plaque */
 .hero h1 { font-family: 'Cinzel', serif; font-size: 5rem; font-weight: 900; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: 6px; text-shadow: 0 0 40px rgba(255,200,55,0.15); clip-path: inset(0 100% 0 0); opacity: 0; animation: title-wipe 1s cubic-bezier(0.65, 0, 0.35, 1) 1.05s forwards; }
 @keyframes title-wipe {
   0%   { clip-path: inset(0 100% 0 0); opacity: 1; letter-spacing: 6px; }
@@ -253,6 +236,21 @@ body {
   100% { box-shadow: 0 0 15px 2px rgba(255, 200, 55, 0.4); border-color: rgba(255, 200, 55, 0.6); }
 }
 
+/* ---------- Citizen Roster ---------- */
+.leader-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1.25rem; margin-bottom: 3rem; }
+@media (max-width: 950px) { .leader-grid { grid-template-columns: repeat(2, 1fr); } }
+.citizen-card { background-color: #111622; border: 1px solid rgba(255,255,255,0.03); border-radius: 4px; padding: 1.5rem 1.25rem; text-align: center; transition: all 0.3s ease; }
+.citizen-card:hover { border-color: rgba(255,200,55,0.3); box-shadow: 0 10px 25px rgba(0,0,0,0.35), 0 0 20px rgba(255,200,55,0.08); transform: translateY(-4px); }
+.citizen-card img { width: 64px; height: 64px; image-rendering: pixelated; border-radius: 6px; border: 1px solid rgba(255,200,55,0.3); margin-bottom: 0.85rem; background: #0b0e14; }
+.citizen-card.leader img { width: 76px; height: 76px; border-color: #ffc837; box-shadow: 0 0 16px rgba(255,200,55,0.25); }
+.citizen-card .name { font-family: 'Cinzel', serif; font-weight: 700; font-size: 1rem; color: #fff; margin-bottom: 0.25rem; }
+.citizen-card .role { font-size: 0.75rem; color: #ffc837; text-transform: uppercase; letter-spacing: 1px; }
+.citizen-card.leader .role { font-size: 0.7rem; letter-spacing: 0.5px; line-height: 1.3; }
+.citizen-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1.25rem; }
+@media (max-width: 950px) { .citizen-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 600px) { .citizen-grid { grid-template-columns: repeat(2, 1fr); } }
+.roster-subhead { font-family: 'Cinzel', serif; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; color: #8898aa; margin-bottom: 1.25rem; text-align: center; }
+
 </style>
 </head>
 <body>
@@ -273,6 +271,7 @@ body {
     <li><a href="/#domain">Territory</a></li>
     <li><a href="/#showcase">The Capital</a></li>
     <li><a href="/#cabinet">The Cabinet</a></li>
+    <li><a href="/#citizens">Citizens</a></li>
     <li><a href="/#expansion">Grants &amp; Law</a></li>
     <li><a href="sports.html">Sports Hub</a></li>
     <li><a href="https://discord.gg/YUyHgnpXwj" target="_blank">Discord</a></li>
@@ -395,6 +394,20 @@ body {
   </div>
 </section>
 
+<section id="citizens" class="section container">
+  <div class="center-header">
+    <span class="sub-title">The Populace</span>
+    <h2 class="section-title">Citizen Roster</h2>
+    <p class="section-desc">The leadership and players who call the Empire home.</p>
+  </div>
+
+  <div class="roster-subhead">Imperial Leadership</div>
+  <div class="leader-grid" id="leaderGrid"></div>
+
+  <div class="roster-subhead">Citizens</div>
+  <div class="citizen-grid" id="citizenGrid"></div>
+</section>
+
 <section id="expansion" class="section container">
   <div class="grant-section">
     <span class="sub-title" style="color: #fff;">The Mayor Funding Directive</span>
@@ -429,7 +442,80 @@ document.querySelectorAll('.section, .town-card, .gov-pill').forEach(el => {
   el.style.opacity = '0';
   observer.observe(el);
 });
-   
+
+/* ---------- Citizen Roster ----------
+   Leaders show up bigger, at the top, in their own row.
+   Everyone else goes in the regular citizens list below.
+   Just add/remove lines — the player head image loads automatically from their
+   exact Minecraft username, no upload needed.
+*/
+const leaders = [
+  { username: "ueq_",       role: "Emperor of Colombia" },
+  { username: "OliveTree315", role: "Prime Minister of Colombia" },
+  { username: "pikagamer55", role: "President of Central America" },
+  { username: "zaity1",     role: "Prime Minister of Central America" },
+];
+
+const citizens = [
+  { username: "Novum_Vetus",       role: "Citizen" },
+  { username: "Crowlia",           role: "Citizen" },
+  { username: "jumping_lobster",   role: "Citizen" },
+  { username: "INeedBagels",       role: "Citizen" },
+  { username: "AzureBuster",       role: "Citizen" },
+  { username: "IcyStraw9509602",   role: "Citizen" },
+  { username: "ProdigyMster100",   role: "Citizen" },
+  { username: "PokeFrame",         role: "Citizen" },
+  { username: "StormChaser234",    role: "Citizen" },
+  { username: "85Kohai",           role: "Citizen" },
+  { username: "BoscGIaa",          role: "Citizen" },
+  { username: "Birdyboa",          role: "Citizen" },
+  { username: "Amismash82",        role: "Citizen" },
+  { username: "blucknock_",        role: "Citizen" },
+  { username: "K_Nightfall",       role: "Citizen" },
+  { username: "extirpator",        role: "Citizen" },
+  { username: "nadea1",            role: "Citizen" },
+  { username: "4gal",              role: "Citizen" },
+  { username: "chezburgercool",    role: "Citizen" },
+  { username: "zattercal",         role: "Citizen" },
+  { username: "rcksa",             role: "Citizen" },
+  { username: "tigerm354",         role: "Citizen" },
+  { username: "MoGalPro",          role: "Citizen" },
+  { username: "HASSANBLUE15",      role: "Citizen" },
+  { username: "reg0es",            role: "Citizen" },
+  { username: "Khaledmctry",       role: "Citizen" },
+  { username: "Amberology",        role: "Citizen" },
+  { username: "RealWonOne",        role: "Citizen" },
+  { username: "PixelMonkey08",     role: "Citizen" },
+  { username: "Cryoshot_",         role: "Citizen" },
+  { username: "Nagitoboy",         role: "Citizen" },
+  { username: "achenalia",         role: "Citizen" },
+  { username: "_28ms",             role: "Citizen" },
+  { username: "Stefieprobs",       role: "Citizen" },
+  { username: "ItsEnes",           role: "Citizen" },
+  { username: "stonislav",         role: "Citizen" },
+  { username: "SimuWeltSA",        role: "Citizen" },
+  { username: "wewakm2",           role: "Citizen" },
+  { username: "AnythingIsFinee",   role: "Citizen" },
+  { username: "ThyCoolio",         role: "Citizen" },
+];
+
+function renderPlayerCards(list, containerId, isLeader) {
+  const grid = document.getElementById(containerId);
+  if (!grid) return;
+  list.forEach(c => {
+    const el = document.createElement('div');
+    el.className = 'citizen-card' + (isLeader ? ' leader' : '');
+    el.innerHTML = `
+      <img src="https://mc-heads.net/avatar/${encodeURIComponent(c.username)}/64" alt="${c.username}">
+      <div class="name">${c.username}</div>
+      <div class="role">${c.role}</div>
+    `;
+    grid.appendChild(el);
+  });
+}
+
+renderPlayerCards(leaders, 'leaderGrid', true);
+renderPlayerCards(citizens, 'citizenGrid', false);
 </script>
 
 </body>
