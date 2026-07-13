@@ -250,19 +250,6 @@ body {
 @media (max-width: 600px) { .citizen-grid { grid-template-columns: repeat(2, 1fr); } }
 .roster-subhead { font-family: 'Cinzel', serif; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; color: #8898aa; margin-bottom: 1.25rem; text-align: center; }
 
-/* ---------- Gallery ---------- */
-.gallery-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
-@media (max-width: 950px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 600px) { .gallery-grid { grid-template-columns: 1fr; } }
-.gallery-item { border-radius: 4px; overflow: hidden; border: 1px solid rgba(255, 200, 55, 0.15); box-shadow: 0 10px 25px rgba(0,0,0,0.4); transition: all 0.4s ease; cursor: pointer; position: relative; aspect-ratio: 4/3; }
-.gallery-item:hover { border-color: rgba(255, 200, 55, 0.4); box-shadow: 0 20px 45px rgba(255, 200, 55, 0.15); transform: translateY(-4px); }
-.gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
-.gallery-item:hover img { transform: scale(1.08); }
-.gallery-item .cap { position: absolute; bottom: 0; left: 0; right: 0; padding: 0.8rem 1rem; background: linear-gradient(to top, rgba(5,7,10,0.85), transparent); font-family: 'Cinzel', serif; font-size: 0.85rem; color: #ffc837; letter-spacing: 0.5px; }
-.lightbox { position: fixed; inset: 0; background: rgba(5,7,10,0.92); z-index: 5000; display: none; align-items: center; justify-content: center; padding: 3rem; cursor: zoom-out; }
-.lightbox.open { display: flex; }
-.lightbox img { max-width: 90vw; max-height: 85vh; border-radius: 4px; border: 1px solid rgba(255,200,55,0.3); box-shadow: 0 20px 60px rgba(0,0,0,0.6); }
-.lightbox-close { position: absolute; top: 24px; right: 32px; color: #ffc837; font-family: 'Cinzel', serif; font-size: 1rem; letter-spacing: 2px; cursor: pointer; }
 
 /* ---------- Citizen Profile Modal (wiki page) ---------- */
 .profile-overlay { position: fixed; inset: 0; background: rgba(5,7,10,0.88); z-index: 5000; display: none; align-items: center; justify-content: center; padding: 2rem; }
@@ -314,7 +301,6 @@ body {
   <ul class="nav-links">
     <li><a href="/#domain">Territory</a></li>
     <li><a href="/#showcase">The Capital</a></li>
-    <li><a href="/#gallery">Gallery</a></li>
     <li><a href="/#wiki">Wiki</a></li>
     <li><a href="/#cabinet">The Cabinet</a></li>
     <li><a href="/#citizens">Citizens</a></li>
@@ -413,17 +399,6 @@ body {
   </div>
 </section>
 
-<section id="gallery" class="section bg-alt">
-  <div class="container">
-    <div class="center-header">
-      <span class="sub-title">Imperial Archives</span>
-      <h2 class="section-title">Gallery</h2>
-      <p class="section-desc">A closer look at the Empire's builds. Click any image to enlarge.</p>
-    </div>
-    <div class="gallery-grid" id="galleryGrid"></div>
-  </div>
-</section>
-
 <section id="map" style="padding: 50px 20px; background: #05070a;">
   <div class="container" style="max-width: 1000px; margin: 0 auto;">
     <h2 class="section-title" style="text-align: center; margin-bottom: 2rem;">Geopolitical Claim Map</h2>
@@ -500,11 +475,6 @@ body {
 </footer>
 
 <a href="#" class="home-btn">HOME</a>
-
-<div class="lightbox" id="lightbox">
-  <span class="lightbox-close" id="lightboxClose">CLOSE ✕</span>
-  <img id="lightboxImg" src="" alt="">
-</div>
 
 <div class="profile-overlay" id="profileOverlay">
   <div class="profile-modal">
@@ -629,46 +599,12 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') profileOve
 renderPlayerCards(leaders, 'leaderGrid', true);
 renderPlayerCards(citizens, 'citizenGrid', false);
 
-/* ---------- Gallery ----------
-   Add/remove entries here — each needs an image filename (must be uploaded next to
-   index.html, same as your other site images) and a short caption.
-*/
-const galleryImages = [
-  { src: "2026-05-23_17.30.55.webp", caption: "Pijao — Coastal Surface" },
-  { src: "2026-07-03_20.59.29.webp", caption: "Tegucigalpa" },
-  { src: "2026-07-03_21.15.17.webp", caption: "Salento" },
-  { src: "2026-07-03_21.59.12.webp", caption: "Barbados" },
-];
-
-const galleryGrid = document.getElementById('galleryGrid');
-const lightbox = document.getElementById('lightbox');
-const lightboxImg = document.getElementById('lightboxImg');
-
-if (galleryGrid) {
-  galleryImages.forEach(g => {
-    const el = document.createElement('div');
-    el.className = 'gallery-item';
-    el.innerHTML = `<img src="${g.src}" alt="${g.caption}" loading="lazy" decoding="async"><div class="cap">${g.caption}</div>`;
-    el.addEventListener('click', () => {
-      lightboxImg.src = g.src;
-      lightboxImg.alt = g.caption;
-      lightbox.classList.add('open');
-    });
-    galleryGrid.appendChild(el);
-  });
-}
-
-function closeLightbox() { lightbox.classList.remove('open'); lightboxImg.src = ''; }
-document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
-lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
-
 /* ---------- DMC Wiki Widget ----------
    Pulls a live preview (image + intro text) straight from a page on the official
    DiplomaticaMC Wiki using MediaWiki's public API. Change WIKI_PAGE_TITLE to
    whatever your nation's wiki page is actually called (spaces are fine).
 */
-const WIKI_PAGE_TITLE = "Colombia"; // <-- change to your actual wiki page title
+const WIKI_PAGE_TITLE = "Colombian Empire"; // <-- change to your actual wiki page title
 const wikiWidgetBody = document.getElementById('wikiWidgetBody');
 
 async function loadWikiWidget() {
