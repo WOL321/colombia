@@ -1,3 +1,17 @@
+/* Add this block to the very top of home.css (or a shared variables.css loaded before it).
+   These are the exact values already used throughout index.html, so home.css will now
+   render identically to the rest of the site instead of falling back to nothing. */
+ 
+:root {
+  --bg-main: #05070a;
+  --bg-surface: #0b0e14;
+  --bg-card: #111622;
+  --imperial-gold: #ffc837;
+  --colombia-red: #dc2626;
+  --text-muted: #8898aa;
+  --font-heading: 'Cinzel', serif;
+}
+ 
 /* Homepage-only layout — hero, capital showcase, town cards, law banner, map */
 
 .navbar.transparent { position: absolute; }
