@@ -459,74 +459,96 @@ window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-/* ---------- UI click sound ----------
-   A tiny synthesized "blip" on nav links and buttons — no audio file needed.
-   Uses the Web Audio API, so it's silent-safe (browsers block audio until the
-   user has interacted with the page once, which is normal/expected).
-   To mute this entirely, just delete this block.
+/* ---------- UI sounds — "colonial" set ----------
+   Click = coin clink (two metallic overtones, like gold changing hands)
+   Hover = soft bell tink (single quiet harmonic ping)
+   Modal = hand-bell chime with real overtones, like an old clock/hand bell
+   All synthesized live via Web Audio — no audio files needed.
+   Browsers block audio until the user's first interaction with the page;
+   that's normal, not a bug — everything works after the first click.
 */
 let audioCtx;
+function getCtx() {
+  audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+// Coin clink — two closely-tuned metallic tones with a fast, bright decay
 function playUiClick() {
   try {
-    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(720, audioCtx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(420, audioCtx.currentTime + 0.08);
-    gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.1);
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start();
-    osc.stop(audioCtx.currentTime + 0.1);
-  } catch (e) { /* Web Audio not available — fail silently */ }
+    const ctx = getCtx();
+    const now = ctx.currentTime;
+    [1450, 2150].forEach((freq, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(freq, now);
+      osc.frequency.exponentialRampToValueAtTime(freq * 0.85, now + 0.09);
+      gain.gain.setValueAtTime(i === 0 ? 0.045 : 0.025, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.13);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.13);
+    });
+  } catch (e) { /* fail silently */ }
 }
 document.querySelectorAll('.nav-links a, .btn, .home-btn, .nav-toggle, .citizen-card').forEach(el => {
   el.addEventListener('click', playUiClick);
 });
 
-/* ---------- Hover sound (lighter, higher-pitched, throttled) ---------- */
+// Soft bell tink — quiet single harmonic ping, throttled for fast mouse movement
 let lastHoverSound = 0;
 function playUiHover() {
-  const now = performance.now();
-  if (now - lastHoverSound < 90) return; // throttle so fast mouse movement doesn't spam sound
-  lastHoverSound = now;
+  const now0 = performance.now();
+  if (now0 - lastHoverSound < 100) return;
+  lastHoverSound = now0;
   try {
-    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'sine';
-    osc.frequency.setValueAtTime(980, audioCtx.currentTime);
-    gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.06);
+    const ctx = getCtx();
+    const now = ctx.currentTime;
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = 'triangle';
+    osc.frequency.setValueAtTime(1600, now);
+    gain.gain.setValueAtTime(0.018, now);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.09);
     osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start();
-    osc.stop(audioCtx.currentTime + 0.06);
+    gain.connect(ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.09);
   } catch (e) { /* fail silently */ }
 }
 document.querySelectorAll('.nav-links a, .btn, .citizen-card').forEach(el => {
   el.addEventListener('mouseenter', playUiHover);
 });
 
-/* ---------- Modal open/close chime ---------- */
+// Hand-bell chime — fundamental + two harmonic overtones with a slow resonant
+// decay, like an old clock bell. Rising = brighter open, falling = softer close.
 function playChime(rising) {
   try {
-    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
-    const osc = audioCtx.createOscillator();
-    const gain = audioCtx.createGain();
-    osc.type = 'triangle';
-    const start = rising ? 500 : 700;
-    const end = rising ? 800 : 380;
-    osc.frequency.setValueAtTime(start, audioCtx.currentTime);
-    osc.frequency.exponentialRampToValueAtTime(end, audioCtx.currentTime + 0.14);
-    gain.gain.setValueAtTime(0.045, audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.18);
-    osc.connect(gain);
-    gain.connect(audioCtx.destination);
-    osc.start();
-    osc.stop(audioCtx.currentTime + 0.18);
+    const ctx = getCtx();
+    const now = ctx.currentTime;
+    const base = rising ? 520 : 460;
+    const overtones = [1, 2.4, 3.9]; // approximate bell partials, not a pure harmonic series
+    const gains = [0.05, 0.022, 0.012];
+    overtones.forEach((mult, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = 'sine';
+      const freq = base * mult;
+      osc.frequency.setValueAtTime(freq, now);
+      if (rising) {
+        osc.frequency.exponentialRampToValueAtTime(freq * 1.15, now + 0.12);
+      } else {
+        osc.frequency.exponentialRampToValueAtTime(freq * 0.9, now + 0.2);
+      }
+      gain.gain.setValueAtTime(gains[i], now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.45 - i * 0.08);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.45);
+    });
   } catch (e) { /* fail silently */ }
 }
 
