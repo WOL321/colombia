@@ -15,7 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
 body {
   background-color: #05070a;
   color: #f1f5f9;
@@ -40,7 +40,7 @@ body {
   background: linear-gradient(90deg, transparent, rgba(255,200,55,0.55) 45%, rgba(255,200,55,0.55) 55%, transparent);
 }
 .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
-.section { padding: 6rem 0; animation: fadeInUp 0.8s ease-out forwards; content-visibility: auto; contain-intrinsic-size: 1px 800px; }
+.section { padding: 6rem 0; animation: fadeInUp 0.8s ease-out forwards; }
 .bg-alt { background-color: #0b0e14; }
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes glow-pulse { 0% { box-shadow: 0 8px 25px rgba(255, 200, 55, 0.4); } 50% { box-shadow: 0 12px 40px rgba(255, 200, 55, 0.8); } 100% { box-shadow: 0 8px 25px rgba(255, 200, 55, 0.4); } }
@@ -56,6 +56,7 @@ body {
 .nav-links a:hover::after { width: 100%; }
 .nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; z-index: 100; }
 .nav-toggle span { display: block; width: 24px; height: 2px; background: #ffc837; transition: all 0.3s ease; }
+.nav-toggle:hover span { background: #ffd868; }
 .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .nav-toggle.open span:nth-child(2) { opacity: 0; }
 .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
@@ -72,7 +73,7 @@ body {
   .nav-links li { border-bottom: 1px solid rgba(255,255,255,0.05); }
   .nav-links a { display: block; padding: 1.1rem 0; }
 }
-.btn { display: inline-block; padding: 1.2rem 3rem; font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px; text-decoration: none; border-radius: 4px; transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1); cursor: pointer; border: none; position: relative; overflow: hidden; }
+.btn { display: inline-block; padding: 1.2rem 3rem; font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px; text-decoration: none; border-radius: 4px; transition: transform 0.25s cubic-bezier(0.23, 1, 0.320, 1), box-shadow 0.3s ease; cursor: pointer; border: none; position: relative; overflow: hidden; will-change: transform; }
 .btn:hover { transform: translateY(-3px); }
 .btn-primary { background: linear-gradient(160deg, #ffd868 0%, #ffc837 45%, #e6a916 100%); color: #1a1200; box-shadow: 0 8px 20px rgba(255, 200, 55, 0.3); }
 .btn-primary:hover { box-shadow: 0 12px 32px rgba(255, 200, 55, 0.5); transform: translateY(-4px); }
@@ -160,6 +161,14 @@ body {
 .hero-buttons { opacity: 0; animation: hero-reveal 0.8s ease-out 1.9s forwards; }
 @keyframes hero-reveal { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
 @media (max-width: 950px) { .hero h1 { font-size: 3.2rem; } }
+@media (max-width: 480px) { .hero h1 { font-size: 2.4rem; letter-spacing: 2px; } .hero p { font-size: 1.1rem; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .embers, .hero::before, .hero-flag-frame, .hero-flag-frame::before,
+  .impact-sparks, .hero::after { animation: none !important; }
+  .hero h1, .hero .sub-title, .hero p, .hero-buttons { animation: none !important; opacity: 1 !important; clip-path: none !important; }
+  * { scroll-behavior: auto !important; }
+}
 .pijao-img-box { border-radius: 4px; overflow: hidden; border: 1px solid rgba(255, 200, 55, 0.15); box-shadow: 0 10px 25px rgba(0,0,0,0.4); transition: all 0.4s ease; }
 .pijao-img-box:hover { border-color: rgba(255, 200, 55, 0.4); box-shadow: 0 20px 50px rgba(255, 200, 55, 0.15), 0 0 30px rgba(255, 200, 55, 0.1); }
 .pijao-img-box img { width: 100%; height: auto; display: block; }
@@ -226,11 +235,9 @@ body {
 .nav-scrim { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 98; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
 .nav-scrim.open { opacity: 1; pointer-events: auto; }
 
-
 </style>
 </head>
 <body>
-
 
 <div class="music-sidebar-left">
   <button class="music-btn" onclick="document.getElementById('hidden-audio').paused ? document.getElementById('hidden-audio').play() : document.getElementById('hidden-audio').pause()">ANTHEM</button>
@@ -442,16 +449,103 @@ navToggle.addEventListener('click', () => {
 navScrim.addEventListener('click', closeNav);
 navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
 
-/* ---------- Scroll progress bar + back-to-top ---------- */
+/* ---------- Back-to-top button ---------- */
 const backToTop = document.getElementById('backToTop');
 function onScroll() {
   const scrollTop = window.scrollY;
-  const docHeight = document.documentElement.scrollHeight - window.innerHeight;
   backToTop.classList.toggle('visible', scrollTop > 500);
 }
 window.addEventListener('scroll', onScroll, { passive: true });
 onScroll();
 backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+/* ---------- UI click sound ----------
+   A tiny synthesized "blip" on nav links and buttons — no audio file needed.
+   Uses the Web Audio API, so it's silent-safe (browsers block audio until the
+   user has interacted with the page once, which is normal/expected).
+   To mute this entirely, just delete this block.
+*/
+let audioCtx;
+function playUiClick() {
+  try {
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(720, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(420, audioCtx.currentTime + 0.08);
+    gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.1);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.1);
+  } catch (e) { /* Web Audio not available — fail silently */ }
+}
+document.querySelectorAll('.nav-links a, .btn, .home-btn, .nav-toggle, .citizen-card').forEach(el => {
+  el.addEventListener('click', playUiClick);
+});
+
+/* ---------- Hover sound (lighter, higher-pitched, throttled) ---------- */
+let lastHoverSound = 0;
+function playUiHover() {
+  const now = performance.now();
+  if (now - lastHoverSound < 90) return; // throttle so fast mouse movement doesn't spam sound
+  lastHoverSound = now;
+  try {
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(980, audioCtx.currentTime);
+    gain.gain.setValueAtTime(0.02, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.06);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.06);
+  } catch (e) { /* fail silently */ }
+}
+document.querySelectorAll('.nav-links a, .btn, .citizen-card').forEach(el => {
+  el.addEventListener('mouseenter', playUiHover);
+});
+
+/* ---------- Modal open/close chime ---------- */
+function playChime(rising) {
+  try {
+    audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)();
+    const osc = audioCtx.createOscillator();
+    const gain = audioCtx.createGain();
+    osc.type = 'triangle';
+    const start = rising ? 500 : 700;
+    const end = rising ? 800 : 380;
+    osc.frequency.setValueAtTime(start, audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(end, audioCtx.currentTime + 0.14);
+    gain.gain.setValueAtTime(0.045, audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.18);
+    osc.connect(gain);
+    gain.connect(audioCtx.destination);
+    osc.start();
+    osc.stop(audioCtx.currentTime + 0.18);
+  } catch (e) { /* fail silently */ }
+}
+
+/* ---------- Magnetic buttons ----------
+   Primary/secondary buttons gently follow the cursor while hovered, and
+   snap back to center on mouse leave. Skipped on touch devices automatically
+   since there's no hover/mousemove there.
+*/
+document.querySelectorAll('.btn').forEach(btn => {
+  btn.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    btn.style.transform = `translate(${x * 0.18}px, ${y * 0.35 - 3}px)`;
+  });
+  btn.addEventListener('mouseleave', () => {
+    btn.style.transform = '';
+  });
+});
 
 const leaders = [
   { username: "ueq_",       role: "Emperor of Colombia", town: "Pijao", joined: "Est. 2026", bio: "Founder and Emperor of the Colombian Empire." },
@@ -509,7 +603,7 @@ const citizens = [
 function renderPlayerCards(list, containerId, isLeader) {
   const grid = document.getElementById(containerId);
   if (!grid) return;
-  list.forEach(c => {
+  list.forEach((c, i) => {
     const el = document.createElement('div');
     el.className = 'citizen-card' + (isLeader ? ' leader' : '');
     el.innerHTML = `
@@ -518,9 +612,21 @@ function renderPlayerCards(list, containerId, isLeader) {
       <div class="role">${c.role}</div>
     `;
     el.addEventListener('click', () => openProfile(c));
+    el.style.opacity = '0';
+    el.style.animationDelay = (i % 10) * 0.05 + 's';
+    cardObserver.observe(el);
     grid.appendChild(el);
   });
 }
+const cardObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animation = 'fadeInUp 0.5s ease-out forwards';
+      entry.target.style.animationDelay = entry.target.style.animationDelay || '0s';
+      cardObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
 
 const profileOverlay = document.getElementById('profileOverlay');
 function openProfile(c) {
@@ -531,10 +637,11 @@ function openProfile(c) {
   document.getElementById('pTown').textContent = c.town || "Unassigned";
   document.getElementById('pJoined').textContent = c.joined || "Unknown";
   profileOverlay.classList.add('open');
+  playChime(true);
 }
-document.getElementById('profileClose').addEventListener('click', () => profileOverlay.classList.remove('open'));
-profileOverlay.addEventListener('click', (e) => { if (e.target === profileOverlay) profileOverlay.classList.remove('open'); });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') profileOverlay.classList.remove('open'); });
+document.getElementById('profileClose').addEventListener('click', () => { profileOverlay.classList.remove('open'); playChime(false); });
+profileOverlay.addEventListener('click', (e) => { if (e.target === profileOverlay) { profileOverlay.classList.remove('open'); playChime(false); } });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && profileOverlay.classList.contains('open')) { profileOverlay.classList.remove('open'); playChime(false); } });
 
 renderPlayerCards(leaders, 'leaderGrid', true);
 renderPlayerCards(citizens, 'citizenGrid', false);
