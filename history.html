@@ -11,6 +11,8 @@
 <meta property="og:image" content="https://colombiadmc.site/download.png">
 <meta property="og:url" content="https://colombiadmc.site/history.html">
 <meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://colombiadmc.site/history.html">
+<meta name="theme-color" content="#05070a">
 <meta name="twitter:image" content="https://colombiadmc.site/download.png">
 <link rel="icon" type="image/x-icon" href="85a75eff-17b3-45b3-9636-bbbb34f43c23-removebg-preview.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -94,6 +96,22 @@ body {
 .page-hero h1 { font-family: 'Cinzel', serif; font-size: 3.6rem; font-weight: 900; letter-spacing: 3px; margin-bottom: 1rem; position: relative; }
 .page-hero p { color: #8898aa; max-width: 650px; margin: 0 auto; font-size: 1.15rem; position: relative; }
 @media (max-width: 700px) { .page-hero h1 { font-size: 2.3rem; } }
+.embers { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+.embers span { position: absolute; bottom: -20px; width: 3px; height: 3px; border-radius: 50%; background: #ffc837; box-shadow: 0 0 6px 1px rgba(255,200,55,0.8); opacity: 0; animation: ember-rise linear infinite; }
+.embers span:nth-child(1) { left: 12%; animation-duration: 11s; animation-delay: 0.5s; }
+.embers span:nth-child(2) { left: 28%; width: 2px; height: 2px; animation-duration: 14s; animation-delay: 3s; }
+.embers span:nth-child(3) { left: 47%; animation-duration: 9s; animation-delay: 1.5s; }
+.embers span:nth-child(4) { left: 63%; width: 2px; height: 2px; animation-duration: 16s; animation-delay: 6s; }
+.embers span:nth-child(5) { left: 80%; animation-duration: 12s; animation-delay: 2s; }
+@keyframes ember-rise {
+  0% { transform: translateY(0) translateX(0); opacity: 0; }
+  8% { opacity: 0.9; }
+  50% { transform: translateY(-38vh) translateX(10px); }
+  92% { opacity: 0.3; }
+  100% { transform: translateY(-70vh) translateX(-6px); opacity: 0; }
+}
+.event, .standing-card, .perk-card, .town-card { transition: transform 0.35s cubic-bezier(0.23,1,0.32,1), box-shadow 0.35s ease; }
+.event:hover h3, .standing-card:hover h3 { color: #ffc837; transition: color 0.25s ease; }
 
 /* Timeline */
 .timeline { position: relative; max-width: 800px; margin: 0 auto; }
@@ -141,9 +159,16 @@ body {
 .home-btn.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
 .home-btn:hover { border-color: #ffc837; color: #ffc837; box-shadow: 0 4px 12px rgba(255, 200, 55, 0.2); }
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.skip-link { position: absolute; left: -9999px; top: 0; background: #ffc837; color: #1a1200; padding: 1rem 1.5rem; z-index: 10000; font-weight: 700; text-decoration: none; border-radius: 0 0 4px 0; }
+.skip-link:focus { left: 0; }
+a:focus-visible, button:focus-visible { outline: 2px solid #ffc837; outline-offset: 3px; }
+@media (prefers-reduced-motion: reduce) {
+  * { scroll-behavior: auto !important; animation: none !important; transition: none !important; }
+}
 </style>
 </head>
 <body>
+<a href="#main-content" class="skip-link">Skip to main content</a>
 
 <nav class="navbar">
   <a href="index.html" class="nav-brand">
@@ -163,7 +188,8 @@ body {
 </nav>
 <div class="nav-scrim" id="navScrim"></div>
 
-<header class="page-hero container">
+<header class="page-hero container" id="main-content">
+  <div class="embers"><span></span><span></span><span></span><span></span><span></span></div>
   <span class="sub-title">Imperial Archives</span>
   <h1>Chronicles of the Empire</h1>
   <p>From a single colonial claim to dominion over the Caribbean, Central America, and Gran Colombia — the record of how the Crown was built.</p>
@@ -289,6 +315,43 @@ document.querySelectorAll('.btn').forEach(btn => {
     btn.style.transform = `translate(${x * 0.18}px, ${y * 0.35 - 3}px)`;
   });
   btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+});
+
+/* ---------- UI sounds — coin clink + bell tink (Web Audio, no files) ---------- */
+let audioCtx;
+function getCtx() { audioCtx = audioCtx || new (window.AudioContext || window.webkitAudioContext)(); return audioCtx; }
+function playUiClick() {
+  try {
+    const ctx = getCtx(); const now = ctx.currentTime;
+    [1450, 2150].forEach((freq, i) => {
+      const osc = ctx.createOscillator(); const gain = ctx.createGain();
+      osc.type = 'triangle'; osc.frequency.setValueAtTime(freq, now);
+      osc.frequency.exponentialRampToValueAtTime(freq * 0.85, now + 0.09);
+      gain.gain.setValueAtTime(i === 0 ? 0.045 : 0.025, now);
+      gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.13);
+      osc.connect(gain); gain.connect(ctx.destination);
+      osc.start(now); osc.stop(now + 0.13);
+    });
+  } catch (e) {}
+}
+let lastHoverSound = 0;
+function playUiHover() {
+  const now0 = performance.now();
+  if (now0 - lastHoverSound < 100) return;
+  lastHoverSound = now0;
+  try {
+    const ctx = getCtx(); const now = ctx.currentTime;
+    const osc = ctx.createOscillator(); const gain = ctx.createGain();
+    osc.type = 'triangle'; osc.frequency.setValueAtTime(1600, now);
+    gain.gain.setValueAtTime(0.018, now);
+    gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.09);
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.start(now); osc.stop(now + 0.09);
+  } catch (e) {}
+}
+document.querySelectorAll('.btn, .nav-links a, .event, .standing-card, .perk-card').forEach(el => {
+  el.addEventListener('click', playUiClick);
+  el.addEventListener('mouseenter', playUiHover);
 });
 </script>
 
