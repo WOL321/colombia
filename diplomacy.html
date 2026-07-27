@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diplomacy | The Colombian Empire</title>
+<meta name="description" content="Allies, treaties, and standing rivalries of The Colombian Empire on DiplomaticaMC.">
+<meta property="og:title" content="Diplomacy | The Colombian Empire">
+<meta property="og:description" content="The alliance network, treaties, and political standing that protect the Crown's borders.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://colombiadmc.site/download.png">
+<meta property="og:url" content="https://colombiadmc.site/diplomacy.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://colombiadmc.site/download.png">
+<link rel="icon" type="image/x-icon" href="85a75eff-17b3-45b3-9636-bbbb34f43c23-removebg-preview.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 90px; }
+body {
+  background-color: #05070a; color: #f1f5f9; font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1.6;
+  background-image:
+    radial-gradient(circle at 15% 10%, rgba(255,200,55,0.05) 0%, transparent 35%),
+    radial-gradient(circle at 85% 30%, rgba(29,78,216,0.06) 0%, transparent 40%),
+    linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
+  background-size: auto, auto, 44px 44px, 44px 44px;
+}
+.container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+.section { padding: 5rem 0; }
+.bg-alt { background-color: #0b0e14; }
+.center-header { position: relative; text-align: center; margin-bottom: 4rem; }
+.center-header .section-title { position: relative; padding-bottom: 1.5rem; }
+.center-header .section-title::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%) rotate(45deg); width: 8px; height: 8px; background: #ffc837; box-shadow: 0 0 10px rgba(255,200,55,0.6); }
+.center-header .section-title::before { content: ''; position: absolute; bottom: 3px; left: 50%; transform: translateX(-50%); width: 110px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,200,55,0.55) 45%, rgba(255,200,55,0.55) 55%, transparent); }
+.sub-title { color: #ffc837; text-transform: uppercase; letter-spacing: 4px; font-size: 0.85rem; font-weight: 700; display: block; margin-bottom: 0.5rem; }
+.section-title { font-family: 'Cinzel', serif; font-size: 3rem; font-weight: 900; margin-bottom: 1rem; letter-spacing: 1px; }
+.section-desc { color: #8898aa; max-width: 700px; margin: 0 auto; font-size: 1.1rem; }
+.grid { display: grid; gap: 1.75rem; }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 950px) { .grid-3 { grid-template-columns: 1fr; } }
+
+/* Nav (shared) */
+.navbar { display: flex; justify-content: space-between; align-items: center; padding: 2rem 4rem; position: relative; width: 100%; z-index: 10; }
+.nav-brand { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
+.nav-logo-img { height: 40px; width: auto; object-fit: contain; }
+.nav-logo { font-family: 'Cinzel', serif; font-weight: 900; font-size: 1.4rem; letter-spacing: 2px; color: #ffc837; }
+.nav-links { display: flex; list-style: none; gap: 2.2rem; }
+.nav-links a { color: #f1f5f9; text-decoration: none; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; position: relative; }
+.nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: #ffc837; transition: width 0.3s ease; }
+.nav-links a:hover { color: #ffc837; }
+.nav-links a:hover::after { width: 100%; }
+.nav-links a.active { color: #ffc837; }
+.nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; z-index: 100; }
+.nav-toggle span { display: block; width: 24px; height: 2px; background: #ffc837; }
+.nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle.open span:nth-child(2) { opacity: 0; }
+.nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+@media (max-width: 950px) {
+  .navbar { padding: 1.5rem; }
+  .nav-toggle { display: flex; }
+  .nav-links { display: flex; flex-direction: column; gap: 0; position: fixed; top: 0; right: 0; width: min(320px, 80vw); height: 100vh; background: #0b0e14; padding: 6rem 2rem 2rem; box-shadow: -10px 0 40px rgba(0,0,0,0.5); transform: translateX(100%); transition: transform 0.35s ease; z-index: 99; border-left: 1px solid rgba(255,200,55,0.15); }
+  .nav-links.open { transform: translateX(0); }
+  .nav-links li { border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .nav-links a { display: block; padding: 1.1rem 0; }
+}
+.nav-scrim { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 98; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
+.nav-scrim.open { opacity: 1; pointer-events: auto; }
+
+.page-hero { padding: 7rem 0 4rem; text-align: center; position: relative; overflow: hidden; }
+.page-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 50% 0%, rgba(255,200,55,0.08), transparent 55%); pointer-events: none; }
+.page-hero h1 { font-family: 'Cinzel', serif; font-size: 3.6rem; font-weight: 900; letter-spacing: 3px; margin-bottom: 1rem; position: relative; }
+.page-hero p { color: #8898aa; max-width: 650px; margin: 0 auto; font-size: 1.15rem; position: relative; }
+@media (max-width: 700px) { .page-hero h1 { font-size: 2.3rem; } }
+
+/* Standing cards */
+.standing-card { background-color: #111622; border: 1px solid rgba(255,255,255,0.03); border-radius: 6px; padding: 2rem; transition: all 0.3s ease; position: relative; overflow: hidden; }
+.standing-card::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; }
+.standing-card.ally::before { background: #4ade80; box-shadow: 0 0 12px rgba(74,222,128,0.5); }
+.standing-card.neutral::before { background: #8898aa; }
+.standing-card.rival::before { background: #ef4444; box-shadow: 0 0 12px rgba(239,68,68,0.4); }
+.standing-card:hover { transform: translateY(-4px); box-shadow: 0 15px 30px rgba(0,0,0,0.35); }
+.standing-tag { font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; font-weight: 700; padding: 0.3rem 0.7rem; border-radius: 3px; display: inline-block; margin-bottom: 1rem; }
+.standing-tag.ally { background: rgba(74,222,128,0.12); color: #4ade80; }
+.standing-tag.neutral { background: rgba(136,152,170,0.12); color: #8898aa; }
+.standing-tag.rival { background: rgba(239,68,68,0.12); color: #f87171; }
+.standing-card h3 { font-family: 'Cinzel', serif; font-size: 1.35rem; margin-bottom: 0.6rem; color: #fff; }
+.standing-card p { color: #8898aa; font-size: 0.92rem; }
+.standing-card .placeholder-note { color: #ffc837; font-size: 0.78rem; font-style: italic; margin-top: 0.85rem; }
+
+.treaty-list { max-width: 800px; margin: 0 auto; }
+.treaty-item { display: flex; gap: 1.25rem; align-items: flex-start; padding: 1.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+.treaty-item:last-child { border-bottom: none; }
+.treaty-icon { flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #1c2130, #0b0e14); border: 1px solid rgba(255,200,55,0.35); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+.treaty-text h4 { font-family: 'Cinzel', serif; font-size: 1.1rem; color: #fff; margin-bottom: 0.3rem; }
+.treaty-text p { color: #8898aa; font-size: 0.92rem; }
+
+.doctrine-banner { background: linear-gradient(90deg, #1a1200 0%, #0b0e14 100%); border: 1px solid rgba(255,200,55,0.3); border-radius: 4px; padding: 3rem; text-align: center; }
+.doctrine-banner h3 { font-family: 'Cinzel', serif; font-size: 1.9rem; color: #ffc837; margin-bottom: 0.75rem; }
+.doctrine-banner p { color: #d8dee6; max-width: 700px; margin: 0 auto; font-size: 1.05rem; }
+
+.footer { text-align: center; padding: 4rem 2rem 3rem; background-color: #05070a; color: #8898aa; font-size: 0.9rem; }
+.footer::before { content: ''; display: block; width: 60px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,200,55,0.5), transparent); margin: 0 auto 2rem; }
+.footer .footer-brand { font-family: 'Cinzel', serif; color: #ffc837; letter-spacing: 2px; font-size: 0.95rem; margin-bottom: 0.75rem; text-transform: uppercase; }
+.footer-nav { display: flex; justify-content: center; gap: 1.75rem; flex-wrap: wrap; margin-bottom: 2rem; }
+.footer-nav a { color: #8898aa; text-decoration: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.2s ease; }
+.footer-nav a:hover { color: #ffc837; }
+.home-btn { position: fixed; bottom: 20px; right: 20px; background-color: #111622; color: #fff; padding: 10px 15px; text-decoration: none; font-size: 14px; font-weight: bold; border: 1px solid rgba(255, 200, 55, 0.3); border-radius: 4px; z-index: 1000; transition: all 0.3s ease; cursor: pointer; opacity: 0; pointer-events: none; transform: translateY(10px); }
+.home-btn.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.home-btn:hover { border-color: #ffc837; color: #ffc837; box-shadow: 0 4px 12px rgba(255, 200, 55, 0.2); }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">
+    <img src="Untitled design (3).png" class="nav-logo-img" alt="Imperial Flag Emblem" />
+    <div class="nav-logo">COLOMBIAN EMPIRE</div>
+  </a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="index.html#domain">Territory</a></li>
+    <li><a href="history.html">Chronicles</a></li>
+    <li><a href="diplomacy.html" class="active">Diplomacy</a></li>
+    <li><a href="join.html">Join Us</a></li>
+    <li><a href="index.html#citizens">Citizens</a></li>
+    <li><a href="sports.html">Sports Hub</a></li>
+    <li><a href="https://discord.gg/YUyHgnpXwj" target="_blank">Discord</a></li>
+  </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+</nav>
+<div class="nav-scrim" id="navScrim"></div>
+
+<header class="page-hero container">
+  <span class="sub-title">Foreign Affairs</span>
+  <h1>Diplomacy</h1>
+  <p>The alliance network, treaties, and political standing that protect the Crown's borders and project its influence across the region.</p>
+</header>
+
+<section class="section container">
+  <div class="center-header">
+    <span class="sub-title">Standing</span>
+    <h2 class="section-title">Political Relations</h2>
+    <p class="section-desc">Replace each card below with the actual nations on your server. Keep the ally / neutral / rival color coding — it lets visitors scan your standing at a glance.</p>
+  </div>
+  <div class="grid grid-3">
+    <div class="standing-card ally">
+      <span class="standing-tag ally">Ally</span>
+      <h3>Nation Name</h3>
+      <p>One line on why this alliance exists — mutual defense, trade, shared founding history, etc.</p>
+      <p class="placeholder-note">Replace with a real allied nation.</p>
+    </div>
+    <div class="standing-card neutral">
+      <span class="standing-tag neutral">Neutral</span>
+      <h3>Nation Name</h3>
+      <p>Nations you have no formal relationship with — no conflict, no treaty, just coexistence.</p>
+      <p class="placeholder-note">Replace with a real neutral nation.</p>
+    </div>
+    <div class="standing-card rival">
+      <span class="standing-tag rival">Rival</span>
+      <h3>Nation Name</h3>
+      <p>Open tension, border disputes, or active rivalry. Keep this factual, not inflammatory.</p>
+      <p class="placeholder-note">Replace with a real rival, or delete this card if you have none.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section bg-alt">
+  <div class="container">
+    <div class="center-header">
+      <span class="sub-title">Signed Agreements</span>
+      <h2 class="section-title">Treaties &amp; Pacts</h2>
+      <p class="section-desc">A running record of formal agreements the Crown has entered into.</p>
+    </div>
+    <div class="treaty-list">
+      <div class="treaty-item">
+        <div class="treaty-icon">🤝</div>
+        <div class="treaty-text">
+          <h4>Placeholder — Mutual Defense Pact</h4>
+          <p>Name the two nations, the date signed, and what each side commits to (military support, non-aggression, shared borders).</p>
+        </div>
+      </div>
+      <div class="treaty-item">
+        <div class="treaty-icon">⚖️</div>
+        <div class="treaty-text">
+          <h4>Placeholder — Trade Agreement</h4>
+          <p>Describe the trade terms — shared market access, tariff-free goods, shop partnerships between towns.</p>
+        </div>
+      </div>
+      <div class="treaty-item">
+        <div class="treaty-icon">🏳️</div>
+        <div class="treaty-text">
+          <h4>Placeholder — Non-Aggression Pact</h4>
+          <p>Use this for former rivals who de-escalated into a formal truce.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section container">
+  <div class="doctrine-banner">
+    <h3>The Crown's Foreign Policy</h3>
+    <p>Write one paragraph here on how the Empire actually approaches diplomacy — aggressive expansion, defensive alliances only, open borders for trade, whatever is actually true. This is the paragraph new nations read before deciding whether to approach you.</p>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-brand">The Colombian Empire</div>
+  <nav class="footer-nav">
+    <a href="index.html#domain">Territory</a>
+    <a href="history.html">Chronicles</a>
+    <a href="diplomacy.html">Diplomacy</a>
+    <a href="join.html">Join Us</a>
+    <a href="index.html#citizens">Citizens</a>
+    <a href="sports.html">Sports Hub</a>
+    <a href="https://discord.gg/YUyHgnpXwj" target="_blank">Discord</a>
+  </nav>
+  <p>&copy; 2026 DiplomaticaMC. All Rights Reserved.</p>
+</footer>
+
+<button class="home-btn" id="backToTop">↑ TOP</button>
+
+<script>
+const navToggle = document.getElementById('navToggle');
+const navLinks = document.getElementById('navLinks');
+const navScrim = document.getElementById('navScrim');
+function closeNav() { navToggle.classList.remove('open'); navLinks.classList.remove('open'); navScrim.classList.remove('open'); }
+navToggle.addEventListener('click', () => {
+  const isOpen = navLinks.classList.toggle('open');
+  navToggle.classList.toggle('open', isOpen);
+  navScrim.classList.toggle('open', isOpen);
+});
+navScrim.addEventListener('click', closeNav);
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.style.animation = 'fadeInUp 0.8s ease-out forwards';
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.section, .standing-card, .treaty-item').forEach(el => {
+  el.style.opacity = '0';
+  revealObserver.observe(el);
+});
+
+const backToTop = document.getElementById('backToTop');
+function onScroll() { backToTop.classList.toggle('visible', window.scrollY > 500); }
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+document.querySelectorAll('.btn').forEach(btn => {
+  btn.addEventListener('mousemove', (e) => {
+    const rect = btn.getBoundingClientRect();
+    const x = e.clientX - rect.left - rect.width / 2;
+    const y = e.clientY - rect.top - rect.height / 2;
+    btn.style.transform = `translate(${x * 0.18}px, ${y * 0.35 - 3}px)`;
+  });
+  btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
+});
+</script>
+
+</body>
+</html>
