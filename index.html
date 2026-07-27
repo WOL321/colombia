@@ -8,11 +8,24 @@
 <meta property="og:title" content="The Colombian Empire | DiplomaticaMC">
 <meta property="og:description" content="Dominion over the Caribbean, Central America, and Gran Colombia. Built for the active, the loyal, and the elite.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="https://colombiadmc.site/download_1200x630.png">
+<meta property="og:image" content="https://colombiadmc.site/download.png">
 <meta property="og:url" content="https://colombiadmc.site/">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://colombiadmc.site/download_1200x630.png">
+<meta name="twitter:image" content="https://colombiadmc.site/download.png">
 <link rel="icon" type="image/x-icon" href="85a75eff-17b3-45b3-9636-bbbb34f43c23-removebg-preview.png">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "The Colombian Empire",
+  "url": "https://colombiadmc.site/",
+  "logo": "https://colombiadmc.site/download.png",
+  "description": "A sovereign nation on DiplomaticaMC spanning the Caribbean, Central America, and Gran Colombia.",
+  "sameAs": [
+    "https://discord.gg/YUyHgnpXwj"
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -101,6 +114,13 @@ body {
 .footer { text-align: center; padding: 4rem 2rem 3rem; background-color: #05070a; position: relative; color: #8898aa; font-size: 0.9rem; }
 .footer::before { content: ''; display: block; width: 60px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,200,55,0.5), transparent); margin: 0 auto 2rem; }
 .footer .footer-brand { font-family: 'Cinzel', serif; color: #ffc837; letter-spacing: 2px; font-size: 0.95rem; margin-bottom: 0.75rem; text-transform: uppercase; }
+.stat-item { display: flex; flex-direction: column; gap: 0.35rem; }
+.stat-num { font-family: 'Cinzel', serif; font-weight: 900; font-size: 2.4rem; color: #ffc837; text-shadow: 0 0 20px rgba(255,200,55,0.2); }
+.stat-label { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 1.5px; color: #8898aa; }
+@media (max-width: 700px) { #stats-bar .container { grid-template-columns: repeat(2, 1fr); gap: 1.75rem; } .stat-num { font-size: 1.9rem; } }
+.footer-nav { display: flex; justify-content: center; gap: 1.75rem; flex-wrap: wrap; margin-bottom: 2rem; }
+.footer-nav a { color: #8898aa; text-decoration: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.2s ease; }
+.footer-nav a:hover { color: #ffc837; }
 .home-btn { position: fixed; bottom: 20px; right: 20px; background-color: #111622; color: #fff; padding: 10px 15px; text-decoration: none; font-size: 14px; font-weight: bold; border: 1px solid rgba(255, 200, 55, 0.3); border-radius: 4px; z-index: 1000; transition: all 0.3s ease; cursor: pointer; opacity: 0; pointer-events: none; transform: translateY(10px); }
 .home-btn.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
 .home-btn:hover { border-color: #ffc837; color: #ffc837; box-shadow: 0 4px 12px rgba(255, 200, 55, 0.2); }
@@ -257,6 +277,9 @@ body {
     <li><a href="/#showcase">The Capital</a></li>
     <li><a href="/#wiki">Wiki</a></li>
     <li><a href="/#cabinet">The Cabinet</a></li>
+    <li><a href="history.html">Chronicles</a></li>
+    <li><a href="diplomacy.html">Diplomacy</a></li>
+    <li><a href="join.html">Join Us</a></li>
     <li><a href="/#citizens">Citizens</a></li>
     <li><a href="/#expansion">Grants &amp; Law</a></li>
     <li><a href="sports.html">Sports Hub</a></li>
@@ -284,6 +307,15 @@ body {
     </div>
   </div>
 </header>
+
+<section id="stats-bar" style="padding: 3rem 2rem; background: #0b0e14; border-top: 1px solid rgba(255,200,55,0.08); border-bottom: 1px solid rgba(255,200,55,0.08);">
+  <div class="container" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 2rem; text-align: center;">
+    <div class="stat-item"><span class="stat-num" id="statTowns">0</span><span class="stat-label">Towns</span></div>
+    <div class="stat-item"><span class="stat-num" id="statCitizens">0</span><span class="stat-label">Citizens</span></div>
+    <div class="stat-item"><span class="stat-num" id="statLeaders">0</span><span class="stat-label">Cabinet Roles</span></div>
+    <div class="stat-item"><span class="stat-num">2026</span><span class="stat-label">Founded</span></div>
+  </div>
+</section>
 
 <section id="domain" class="section container">
   <div class="center-header">
@@ -396,6 +428,15 @@ body {
 
 <footer class="footer">
   <div class="footer-brand">The Colombian Empire</div>
+  <nav class="footer-nav">
+    <a href="/#domain">Territory</a>
+    <a href="history.html">Chronicles</a>
+    <a href="diplomacy.html">Diplomacy</a>
+    <a href="join.html">Join Us</a>
+    <a href="/#citizens">Citizens</a>
+    <a href="sports.html">Sports Hub</a>
+    <a href="https://discord.gg/YUyHgnpXwj" target="_blank">Discord</a>
+  </nav>
   <p>&copy; 2026 DiplomaticaMC. All Rights Reserved.</p>
 </footer>
 
@@ -671,6 +712,34 @@ document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && profileO
 
 renderPlayerCards(leaders, 'leaderGrid', true);
 renderPlayerCards(citizens, 'citizenGrid', false);
+
+/* ---------- Animated stat counters ---------- */
+function animateCount(el, target, duration = 1200) {
+  const start = performance.now();
+  function tick(now) {
+    const progress = Math.min((now - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    el.textContent = Math.round(eased * target);
+    if (progress < 1) requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+}
+const statsBar = document.getElementById('stats-bar');
+if (statsBar) {
+  let statsAnimated = false;
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !statsAnimated) {
+        statsAnimated = true;
+        animateCount(document.getElementById('statTowns'), 4);
+        animateCount(document.getElementById('statCitizens'), citizens.length + leaders.length);
+        animateCount(document.getElementById('statLeaders'), 6);
+        statsObserver.disconnect();
+      }
+    });
+  }, { threshold: 0.4 });
+  statsObserver.observe(statsBar);
+}
 
 const WIKI_PAGE_TITLE = "Colombia";
 const wikiWidgetBody = document.getElementById('wikiWidgetBody');
