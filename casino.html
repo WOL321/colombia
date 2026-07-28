@@ -26,6 +26,35 @@
     min-height:100vh;
     overflow-x:hidden;
   }
+  
+  /* ---- casino navigation ---- */
+  .casino-nav{
+    background:rgba(0,0,0,0.4);
+    border-bottom:1px solid rgba(201,162,39,0.25);
+    padding:12px 24px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:12px;
+  }
+  .casino-nav a{
+    color:var(--parchment);
+    text-decoration:none;
+    font-size:13px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    transition:color 0.2s ease;
+  }
+  .casino-nav a:hover{
+    color:var(--gold-bright);
+  }
+  .casino-links{
+    display:flex;
+    gap:18px;
+    flex-wrap:wrap;
+  }
+
   .stage{
     max-width:880px;
     margin:0 auto;
@@ -316,9 +345,10 @@
   }
 </style>
 </head>
-  <nav class="casino-nav">
-    <a href="index.html">← Home</a>
+<body>
 
+<nav class="casino-nav">
+    <a href="index.html">← Home</a>
     <div class="casino-links">
         <a href="history.html">Chronicles</a>
         <a href="diplomacy.html">Diplomacy</a>
@@ -328,7 +358,7 @@
         <a href="https://discord.gg/YUyHgnpXwj" target="_blank">Discord</a>
     </div>
 </nav>
-<body>
+
 <div class="stage">
 
   <div class="crest">
