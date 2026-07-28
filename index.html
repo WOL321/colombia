@@ -60,34 +60,7 @@ body {
 .bg-alt { background-color: #0b0e14; }
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes glow-pulse { 0% { box-shadow: 0 8px 25px rgba(255, 200, 55, 0.4); } 50% { box-shadow: 0 12px 40px rgba(255, 200, 55, 0.8); } 100% { box-shadow: 0 8px 25px rgba(255, 200, 55, 0.4); } }
-.navbar{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:2rem;
-    padding:1.2rem 2rem;
-}
-
-.nav-links{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    gap:1.5rem;
-    flex:1;
-    list-style:none;
-    margin:0;
-    padding:0;
-    flex-wrap:nowrap;
-}
-
-.nav-links li{
-    white-space:nowrap;
-}
-
-.nav-links a{
-    display:block;
-    padding:.45rem .7rem;
-}
+.navbar { display: flex; justify-content: space-between; align-items: center; padding: 2rem 4rem; position: relative; width: 100%; z-index: 10; }
 .navbar.transparent { position: absolute; }
 .nav-brand { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
 .nav-logo-img { height: 40px; width: auto; object-fit: contain; }
