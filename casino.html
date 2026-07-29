@@ -62,6 +62,32 @@
     position:relative;
   }
 
+  /* ---- sound toggle ---- */
+  .sound-toggle{
+    position:absolute;
+    top:0;
+    right:20px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:11px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:rgba(241,231,208,0.55);
+    cursor:pointer;
+    user-select:none;
+    padding:6px 10px;
+    border:1px solid rgba(201,162,39,0.3);
+    border-radius:20px;
+    background:rgba(0,0,0,0.25);
+    transition:color 0.2s ease, border-color 0.2s ease;
+  }
+  .sound-toggle:hover{
+    color:var(--gold-bright);
+    border-color:rgba(201,162,39,0.6);
+  }
+  .sound-toggle .icon{font-size:14px;line-height:1;}
+
   /* ---- crest header ---- */
   .crest{
     text-align:center;
@@ -338,6 +364,7 @@
     .playing-card{width:62px;height:88px;}
     .playing-card .pip{font-size:20px;}
     .ledger .card-box{min-width:100px;padding:8px 14px;}
+    .sound-toggle{position:static;margin:0 auto 10px;width:fit-content;}
   }
 
   @media (prefers-reduced-motion: reduce){
@@ -360,6 +387,11 @@
 </nav>
 
 <div class="stage">
+
+  <div class="sound-toggle" id="soundToggle">
+    <span class="icon" id="soundIcon">♪</span>
+    <span id="soundLabel">Sound On</span>
+  </div>
 
   <div class="crest">
     <div class="mark">♛</div>
@@ -420,6 +452,195 @@
 </div>
 
 <script>
+/* =========================================================
+   IMPERIAL CASINO — SOUND ENGINE
+   Fully synthesized with the Web Audio API (no external
+   audio files), so it works instantly and offline. Tuned
+   for a warm, physical "real casino" feel rather than
+   cheap 8-bit beeps: filtered noise for felt/card textures,
+   short percussive envelopes for chips, and a layered
+   major-key fanfare for wins.
+   ========================================================= */
+const CasinoSFX = (function(){
+  let ctx = null;
+  let enabled = true;
+  let master = null;
+
+  function ensureCtx(){
+    if(!ctx){
+      ctx = new (window.AudioContext || window.webkitAudioContext)();
+      master = ctx.createGain();
+      master.gain.value = 0.85;
+      master.connect(ctx.destination);
+    }
+    if(ctx.state === 'suspended') ctx.resume();
+    return ctx;
+  }
+
+  function noiseBuffer(duration, c){
+    const n = c.sampleRate * duration;
+    const buf = c.createBuffer(1, n, c.sampleRate);
+    const data = buf.getChannelData(0);
+    for(let i=0;i<n;i++){
+      data[i] = (Math.random()*2-1) * (1 - i/n); // decaying noise
+    }
+    return buf;
+  }
+
+  function tone(freq, {type='sine', start=0, dur=0.15, vol=0.3, glideTo=null, attack=0.004}={}){
+    const c = ensureCtx();
+    const t0 = c.currentTime + start;
+    const osc = c.createOscillator();
+    const gain = c.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, t0);
+    if(glideTo){
+      osc.frequency.exponentialRampToValueAtTime(glideTo, t0 + dur);
+    }
+    gain.gain.setValueAtTime(0, t0);
+    gain.gain.linearRampToValueAtTime(vol, t0 + attack);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    osc.connect(gain).connect(master);
+    osc.start(t0);
+    osc.stop(t0 + dur + 0.02);
+  }
+
+  function click(freq, dur, vol, start=0){
+    // percussive click via short filtered noise burst, good for chips/buttons
+    const c = ensureCtx();
+    const t0 = c.currentTime + start;
+    const src = c.createBufferSource();
+    src.buffer = noiseBuffer(dur, c);
+    const bp = c.createBiquadFilter();
+    bp.type = 'bandpass';
+    bp.frequency.value = freq;
+    bp.Q.value = 6;
+    const gain = c.createGain();
+    gain.gain.setValueAtTime(vol, t0);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    src.connect(bp).connect(gain).connect(master);
+    src.start(t0);
+  }
+
+  const sfx = {
+
+    chip(){
+      if(!enabled) return;
+      // layered chip clack: two quick high clicks, like plastic chips stacking
+      click(1800, 0.06, 0.5, 0);
+      click(2600, 0.045, 0.35, 0.028);
+    },
+
+    buttonClick(){
+      if(!enabled) return;
+      click(1200, 0.05, 0.28, 0);
+      tone(660, {type:'triangle', dur:0.05, vol:0.12, attack:0.001});
+    },
+
+    cardDeal(){
+      if(!enabled) return;
+      // soft whoosh-snap: filtered noise sweep + tiny tick
+      const c = ensureCtx();
+      const t0 = c.currentTime;
+      const src = c.createBufferSource();
+      src.buffer = noiseBuffer(0.14, c);
+      const bp = c.createBiquadFilter();
+      bp.type = 'bandpass';
+      bp.frequency.setValueAtTime(2200, t0);
+      bp.frequency.exponentialRampToValueAtTime(900, t0 + 0.13);
+      bp.Q.value = 1.1;
+      const gain = c.createGain();
+      gain.gain.setValueAtTime(0.32, t0);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.13);
+      src.connect(bp).connect(gain).connect(master);
+      src.start(t0);
+      click(3200, 0.02, 0.25, 0.06);
+    },
+
+    cardFlip(){
+      if(!enabled) return;
+      const c = ensureCtx();
+      const t0 = c.currentTime;
+      const src = c.createBufferSource();
+      src.buffer = noiseBuffer(0.1, c);
+      const bp = c.createBiquadFilter();
+      bp.type = 'bandpass';
+      bp.frequency.setValueAtTime(1500, t0);
+      bp.frequency.exponentialRampToValueAtTime(2600, t0 + 0.08);
+      bp.Q.value = 1.4;
+      const gain = c.createGain();
+      gain.gain.setValueAtTime(0.28, t0);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t0 + 0.09);
+      src.connect(bp).connect(gain).connect(master);
+      src.start(t0);
+    },
+
+    win(){
+      if(!enabled) return;
+      // bright major-key rising arpeggio, a little regal fanfare
+      const notes = [523.25, 659.25, 783.99, 1046.5]; // C5 E5 G5 C6
+      notes.forEach((f,i)=>{
+        tone(f, {type:'triangle', start:i*0.09, dur:0.35, vol:0.28, attack:0.008});
+        tone(f*2, {type:'sine', start:i*0.09, dur:0.28, vol:0.08, attack:0.008});
+      });
+      // shimmering tail
+      tone(1568, {type:'sine', start:0.34, dur:0.6, vol:0.14, attack:0.02});
+    },
+
+    blackjack(){
+      if(!enabled) return;
+      const notes = [523.25, 659.25, 783.99, 1046.5, 1318.5];
+      notes.forEach((f,i)=>{
+        tone(f, {type:'triangle', start:i*0.075, dur:0.4, vol:0.3, attack:0.006});
+      });
+      tone(1975.5, {type:'sine', start:0.35, dur:0.7, vol:0.16, attack:0.02});
+    },
+
+    lose(){
+      if(!enabled) return;
+      // low descending minor thud, weighty but not harsh
+      tone(220, {type:'sawtooth', dur:0.28, vol:0.18, glideTo:110, attack:0.005});
+      tone(146.83, {type:'sine', start:0.03, dur:0.32, vol:0.22, attack:0.01});
+    },
+
+    bust(){
+      if(!enabled) return;
+      tone(180, {type:'sawtooth', dur:0.22, vol:0.22, glideTo:70, attack:0.003});
+      click(500, 0.08, 0.3, 0.02);
+    },
+
+    push(){
+      if(!enabled) return;
+      tone(440, {type:'sine', dur:0.22, vol:0.18, attack:0.008});
+      tone(440, {type:'sine', start:0.16, dur:0.22, vol:0.18, attack:0.008});
+    },
+
+    empty(){
+      if(!enabled) return;
+      const notes = [392, 349.23, 293.66, 220];
+      notes.forEach((f,i)=>{
+        tone(f, {type:'sawtooth', start:i*0.16, dur:0.3, vol:0.16, attack:0.01});
+      });
+    },
+
+    toggleMute(){
+      enabled = !enabled;
+      if(enabled) ensureCtx();
+      return enabled;
+    },
+
+    isEnabled(){ return enabled; },
+
+    primeOnFirstInteraction(){
+      // Browsers require a user gesture before audio can play;
+      // this warms up the context silently on first click anywhere.
+      ensureCtx();
+    }
+  };
+
+  return sfx;
+})();
+
 (function(){
   const SUITS = [
     {sym:'♠', red:false}, {sym:'♣', red:false}, {sym:'♥', red:true}, {sym:'♦', red:true}
@@ -448,6 +669,20 @@
   const doubleBtn = el('doubleBtn');
   const dealBtn = el('dealBtn');
   const clearBetBtn = el('clearBetBtn');
+  const soundToggle = el('soundToggle');
+  const soundIcon = el('soundIcon');
+  const soundLabel = el('soundLabel');
+
+  // Prime audio context on first user interaction anywhere on the page
+  document.addEventListener('pointerdown', CasinoSFX.primeOnFirstInteraction, {once:true});
+
+  soundToggle.addEventListener('click', ()=>{
+    const on = CasinoSFX.toggleMute();
+    soundIcon.textContent = on ? '♪' : '✕';
+    soundLabel.textContent = on ? 'Sound On' : 'Sound Off';
+    soundToggle.style.opacity = on ? '1' : '0.6';
+    if(on) CasinoSFX.buttonClick();
+  });
 
   function freshDeck(){
     const d = [];
@@ -542,6 +777,7 @@
       pendingBet += v;
       dealBtn.disabled = pendingBet <= 0;
       updateLedger();
+      CasinoSFX.chip();
     });
   });
 
@@ -550,10 +786,12 @@
     pendingBet = 0;
     dealBtn.disabled = true;
     updateLedger();
+    CasinoSFX.buttonClick();
   });
 
   dealBtn.addEventListener('click', ()=>{
     if(pendingBet <= 0 || pendingBet > balance) return;
+    CasinoSFX.buttonClick();
     currentBet = pendingBet;
     balance -= currentBet;
     pendingBet = 0;
@@ -571,6 +809,11 @@
     standBtn.disabled = false;
     doubleBtn.disabled = (balance < currentBet);
 
+    // deal four cards with a satisfying staggered snap
+    [0,1,2,3].forEach(i=>{
+      setTimeout(()=>CasinoSFX.cardDeal(), i*140);
+    });
+
     renderHands(false);
 
     if(handValue(playerHand) === 21){
@@ -580,7 +823,9 @@
 
   hitBtn.addEventListener('click', ()=>{
     if(state !== 'playing') return;
+    CasinoSFX.buttonClick();
     playerHand.push(deck.pop());
+    CasinoSFX.cardDeal();
     renderHands(false);
     doubleBtn.disabled = true;
     if(handValue(playerHand) > 21){
@@ -592,10 +837,12 @@
 
   doubleBtn.addEventListener('click', ()=>{
     if(state !== 'playing' || balance < currentBet) return;
+    CasinoSFX.buttonClick();
     balance -= currentBet;
     currentBet *= 2;
     updateLedger();
     playerHand.push(deck.pop());
+    CasinoSFX.cardDeal();
     renderHands(false);
     if(handValue(playerHand) > 21){
       finishRound(false);
@@ -606,6 +853,7 @@
 
   standBtn.addEventListener('click', ()=>{
     if(state !== 'playing') return;
+    CasinoSFX.buttonClick();
     standNow();
   });
 
@@ -618,10 +866,12 @@
   }
 
   function dealerPlay(){
+    CasinoSFX.cardFlip();
     renderHands(true);
     const step = ()=>{
       if(handValue(dealerHand) < 17){
         dealerHand.push(deck.pop());
+        CasinoSFX.cardDeal();
         renderHands(true);
         setTimeout(step, 550);
       } else {
@@ -649,16 +899,22 @@
 
     if(pScore > 21){
       text = 'BUST — The Crown Collects'; cls = 'lose'; payout = 0;
+      CasinoSFX.bust();
     } else if(playerBJ && !dealerBJ){
       text = 'IMPERIAL TWENTY-ONE'; cls = 'win'; payout = Math.floor(currentBet * 2.5);
+      CasinoSFX.blackjack();
     } else if(dScore > 21){
       text = 'CROWN BUSTS — YOU WIN'; cls = 'win'; payout = currentBet * 2;
+      CasinoSFX.win();
     } else if(pScore > dScore){
       text = 'VICTORY'; cls = 'win'; payout = currentBet * 2;
+      CasinoSFX.win();
     } else if(pScore === dScore){
       text = 'STANDOFF — WAGER RETURNED'; cls = 'push'; payout = currentBet;
+      CasinoSFX.push();
     } else {
       text = 'DEFEAT — THE CROWN COLLECTS'; cls = 'lose'; payout = 0;
+      CasinoSFX.lose();
     }
 
     balance += payout;
@@ -673,6 +929,7 @@
       setChipsEnabled(balance > 0);
       if(balance <= 0){
         setSeal('THE TREASURY IS EMPTY', 'lose');
+        CasinoSFX.empty();
       }
     }, 1400);
   }
