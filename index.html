@@ -60,34 +60,54 @@ body {
 .bg-alt { background-color: #0b0e14; }
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes glow-pulse { 0% { box-shadow: 0 8px 25px rgba(255, 200, 55, 0.4); } 50% { box-shadow: 0 12px 40px rgba(255, 200, 55, 0.8); } 100% { box-shadow: 0 8px 25px rgba(255, 200, 55, 0.4); } }
-.navbar { display: flex; justify-content: space-between; align-items: center; padding: 2rem 4rem; position: relative; width: 100%; z-index: 10; }
+
+/* ---------- Navbar ---------- */
+.navbar { display: flex; justify-content: space-between; align-items: center; padding: 2rem 4rem; position: relative; width: 100%; z-index: 150; }
 .navbar.transparent { position: absolute; }
 .nav-brand { display: flex; align-items: center; gap: 1rem; text-decoration: none; }
 .nav-logo-img { height: 34px; width: auto; object-fit: contain; }
 .nav-logo { font-family: 'Cinzel', serif; font-weight: 980; font-size: 1.1rem; letter-spacing: 1.5px; color: #ffc837; }
-.nav-links { display: flex; list-style: none; gap: 1.3rem; }
-.nav-links a { color: #f1f5f9; text-decoration: none; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease; position: relative; }
+.nav-links { display: flex; list-style: none; gap: clamp(0.75rem, 1.6vw, 1.3rem); align-items: center; }
+.nav-links a {
+  color: #f1f5f9; text-decoration: none; font-size: clamp(0.72rem, 0.9vw, 0.85rem);
+  font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s ease;
+  position: relative; white-space: nowrap;
+}
 .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 2px; background: #ffc837; transition: width 0.3s ease; }
 .nav-links a:hover { color: #ffc837; }
 .nav-links a:hover::after { width: 100%; }
-.nav-toggle { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 8px; z-index: 100; }
+.nav-toggle {
+  display: none; flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+  background: none; border: none; cursor: pointer; padding: 10px; z-index: 100;
+  min-width: 44px; min-height: 44px; border-radius: 6px;
+}
 .nav-toggle span { display: block; width: 24px; height: 2px; background: #ffc837; transition: all 0.3s ease; }
 .nav-toggle:hover span { background: #ffd868; }
 .nav-toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .nav-toggle.open span:nth-child(2) { opacity: 0; }
 .nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-@media (max-width: 950px) {
+
+/* Visible keyboard focus states (accessibility) */
+.nav-toggle:focus-visible,
+.nav-links a:focus-visible,
+.btn:focus-visible,
+.home-btn:focus-visible,
+.citizen-card:focus-visible {
+  outline: 2px solid #ffc837; outline-offset: 3px; border-radius: 2px;
+}
+
+@media (max-width: 1200px) {
   .navbar { padding: 1.5rem; }
   .nav-toggle { display: flex; }
   .nav-links {
-    display: flex; flex-direction: column; gap: 0; position: fixed; top: 0; right: 0;
-    width: min(320px, 80vw); height: 100vh; background: #0b0e14; padding: 6rem 2rem 2rem;
+    display: flex; flex-direction: column; align-items: stretch; gap: 0; position: fixed; top: 0; right: 0;
+    width: min(320px, 85vw); height: 100vh; height: 100dvh; background: #0b0e14; padding: 6rem 2rem 2rem;
     box-shadow: -10px 0 40px rgba(0,0,0,0.5); transform: translateX(100%); transition: transform 0.35s ease;
-    z-index: 99; border-left: 1px solid rgba(255,200,55,0.15);
+    z-index: 99; border-left: 1px solid rgba(255,200,55,0.15); overflow-y: auto;
   }
   .nav-links.open { transform: translateX(0); }
   .nav-links li { border-bottom: 1px solid rgba(255,255,255,0.05); }
-  .nav-links a { display: block; padding: 1.1rem 0; }
+  .nav-links a { display: block; padding: 1.1rem 0; font-size: 0.95rem; }
 }
 .btn { display: inline-block; padding: 1.2rem 3rem; font-weight: 700; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px; text-decoration: none; border-radius: 4px; transition: transform 0.25s cubic-bezier(0.23, 1, 0.320, 1), box-shadow 0.3s ease; cursor: pointer; border: none; position: relative; overflow: hidden; will-change: transform; }
 .btn:hover { transform: translateY(-3px); }
@@ -121,14 +141,14 @@ body {
 .footer-nav { display: flex; justify-content: center; gap: 1.75rem; flex-wrap: wrap; margin-bottom: 2rem; }
 .footer-nav a { color: #8898aa; text-decoration: none; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; transition: color 0.2s ease; }
 .footer-nav a:hover { color: #ffc837; }
-.home-btn { position: fixed; bottom: 20px; right: 20px; background-color: #111622; color: #fff; padding: 10px 15px; text-decoration: none; font-size: 14px; font-weight: bold; border: 1px solid rgba(255, 200, 55, 0.3); border-radius: 4px; z-index: 1000; transition: all 0.3s ease; cursor: pointer; opacity: 0; pointer-events: none; transform: translateY(10px); }
+.home-btn { position: fixed; bottom: 20px; right: 20px; background-color: #111622; color: #fff; padding: 10px 15px; text-decoration: none; font-size: 14px; font-weight: bold; border: 1px solid rgba(255, 200, 55, 0.3); border-radius: 4px; z-index: 1000; transition: all 0.3s ease; cursor: pointer; opacity: 0; pointer-events: none; transform: translateY(10px); min-width: 44px; min-height: 44px; }
 .home-btn.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
 .home-btn:hover { border-color: #ffc837; color: #ffc837; box-shadow: 0 4px 12px rgba(255, 200, 55, 0.2); }
 .music-sidebar-left { position: fixed; left: 0; top: 50%; transform: translateY(-50%); z-index: 2000; }
 .music-btn { width: 40px; height: 100px; background: #ffc837; color: #000; border: 2px solid #ffc837; border-left: none; border-radius: 0 8px 8px 0; font-family: 'Cinzel', serif; font-weight: 900; cursor: pointer; writing-mode: vertical-rl; box-shadow: 0 8px 25px rgba(255, 200, 55, 0.4); transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1); font-size: 0.7rem; text-orientation: mixed; }
 .music-btn:hover { animation: glow-pulse 1.5s infinite; background: #fff; box-shadow: 0 12px 35px rgba(255, 200, 55, 0.6); }
 #hidden-audio { display: none; }
-.hero { height: 100vh; display: flex; align-items: center; justify-content: center; position: relative; text-align: center; background: radial-gradient(circle at 50% 40%, #131c30 0%, #060810 55%, #030407 100%); overflow: hidden; }
+.hero { height: 100vh; height: 100dvh; display: flex; align-items: center; justify-content: center; position: relative; text-align: center; background: radial-gradient(circle at 50% 40%, #131c30 0%, #060810 55%, #030407 100%); overflow: hidden; }
 .hero::before { content: ''; position: absolute; inset: 0; background: repeating-conic-gradient(from 0deg, rgba(255,200,55,0.025) 0deg 1deg, transparent 1deg 12deg); animation: rotate-rays 90s linear infinite; opacity: 0.6; }
 @keyframes rotate-rays { to { transform: rotate(360deg); } }
 .hero-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: linear-gradient(to bottom, transparent 45%, #05070a); }
@@ -190,6 +210,7 @@ body {
   .embers, .hero::before, .hero-flag-frame, .hero-flag-frame::before,
   .impact-sparks, .hero::after { animation: none !important; }
   .hero h1, .hero .sub-title, .hero p, .hero-buttons { animation: none !important; opacity: 1 !important; clip-path: none !important; }
+  .nav-links, .nav-scrim { transition: none !important; }
   * { scroll-behavior: auto !important; }
 }
 .pijao-img-box { border-radius: 4px; overflow: hidden; border: 1px solid rgba(255, 200, 55, 0.15); box-shadow: 0 10px 25px rgba(0,0,0,0.4); transition: all 0.4s ease; }
@@ -231,7 +252,7 @@ body {
 .profile-overlay.open { display: flex; }
 .profile-modal { background: linear-gradient(180deg, #111622 0%, #0b0e14 100%); border: 1px solid rgba(255,200,55,0.25); border-radius: 6px; max-width: 520px; width: 100%; max-height: 85vh; overflow-y: auto; box-shadow: 0 30px 80px rgba(0,0,0,0.6); position: relative; }
 .profile-head { padding: 2.5rem 2rem 1.5rem; text-align: center; border-bottom: 1px solid rgba(255,200,55,0.12); position: relative; }
-.profile-close { position: absolute; top: 16px; right: 20px; color: #8898aa; font-family: 'Cinzel', serif; font-size: 0.85rem; letter-spacing: 1.5px; cursor: pointer; transition: color 0.2s ease; }
+.profile-close { position: absolute; top: 16px; right: 20px; color: #8898aa; font-family: 'Cinzel', serif; font-size: 0.85rem; letter-spacing: 1.5px; cursor: pointer; transition: color 0.2s ease; padding: 8px; }
 .profile-close:hover { color: #ffc837; }
 .profile-head img { width: 96px; height: 96px; image-rendering: pixelated; border-radius: 8px; border: 2px solid #ffc837; box-shadow: 0 0 24px rgba(255,200,55,0.25); margin-bottom: 1rem; }
 .profile-head .p-name { font-family: 'Cinzel', serif; font-weight: 900; font-size: 1.6rem; color: #fff; margin-bottom: 0.4rem; }
@@ -258,37 +279,49 @@ body {
 .nav-scrim { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 98; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
 .nav-scrim.open { opacity: 1; pointer-events: auto; }
 
+/* Skip link for keyboard/screen-reader users */
+.skip-link {
+  position: absolute; top: -100px; left: 1rem; background: #ffc837; color: #1a1200;
+  padding: 0.75rem 1.25rem; border-radius: 4px; font-weight: 700; text-decoration: none;
+  z-index: 10000; transition: top 0.2s ease;
+}
+.skip-link:focus { top: 1rem; }
+
 </style>
 </head>
 <body>
+
+<a href="#main-content" class="skip-link">Skip to content</a>
 
 <div class="music-sidebar-left">
   <button class="music-btn" onclick="document.getElementById('hidden-audio').paused ? document.getElementById('hidden-audio').play() : document.getElementById('hidden-audio').pause()">ANTHEM</button>
   <audio id="hidden-audio" src="Colombia National Anthem (Instrumental) - National Anthems Channel (128k) (1).mp3" loop></audio>
 </div>
 
-<nav class="navbar transparent">
+<nav class="navbar transparent" aria-label="Primary">
   <div class="nav-brand">
   </div>
   <ul class="nav-links" id="navLinks">
-    <li><a href="/#domain">Territory</a></li>
-    <li><a href="/#showcase">The Capital</a></li>
-    <li><a href="/#wiki">Wiki</a></li>
-    <li><a href="/#cabinet">The Cabinet</a></li>
+    <li><a href="index.html#domain">Territory</a></li>
+    <li><a href="index.html#showcase">The Capital</a></li>
+    <li><a href="index.html#wiki">Wiki</a></li>
+    <li><a href="index.html#cabinet">The Cabinet</a></li>
     <li><a href="history.html">Chronicles</a></li>
     <li><a href="diplomacy.html">Diplomacy</a></li>
     <li><a href="join.html">Join Us</a></li>
-    <li><a href="/#citizens">Citizens</a></li>
-    <li><a href="/#expansion">Grants &amp; Law</a></li>
+    <li><a href="index.html#citizens">Citizens</a></li>
+    <li><a href="index.html#expansion">Grants &amp; Law</a></li>
     <li><a href="sports.html">Sports Hub</a></li>
     <li><a href="casino.html">Casino</a></li>
-    <li><a href="https://discord.gg/YUyHgnpXwj" target="_blank">Discord</a></li>
+    <li><a href="https://discord.gg/YUyHgnpXwj" target="_blank" rel="noopener">Discord</a></li>
   </ul>
-  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-controls="navLinks" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
-<div class="nav-scrim" id="navScrim"></div>
+<div class="nav-scrim" id="navScrim" aria-hidden="true"></div>
 
-<header class="hero">
+<header class="hero" id="main-content">
   <div class="hero-overlay"></div>
   <div class="embers"><span></span><span></span><span></span><span></span><span></span><span></span></div>
   <div class="hero-content">
@@ -301,8 +334,8 @@ body {
     <h1>THE COLOMBIAN EMPIRE</h1>
     <p>Dominion over the Caribbean, Central America, and Gran Colombia. Protected by an unshakeable alliance network. Built for the active, the loyal, and the elite.</p>
     <div class="hero-buttons">
-      <a href="/#expansion" class="btn btn-primary">Establish a Town</a>
-      <a href="https://discord.gg/YUyHgnpXwj" class="btn btn-secondary" target="_blank">Join Our Discord</a>
+      <a href="index.html#expansion" class="btn btn-primary">Establish a Town</a>
+      <a href="https://discord.gg/YUyHgnpXwj" class="btn btn-secondary" target="_blank" rel="noopener">Join Our Discord</a>
     </div>
   </div>
 </header>
@@ -366,7 +399,7 @@ body {
   <div class="container" style="max-width: 1000px; margin: 0 auto;">
     <h2 class="section-title" style="text-align: center; margin-bottom: 2rem;">Geopolitical Claim Map</h2>
     <div class="map-box">
-      <iframe src="https://map.diplomaticamc.com/?worldname=minecraft_overworld&mapname=surface&zoom=1&x=-17560&z=-2824" width="100%" height="600px" frameborder="0" loading="lazy" allowfullscreen></iframe>
+      <iframe src="https://map.diplomaticamc.com/?worldname=minecraft_overworld&mapname=surface&zoom=1&x=-17560&z=-2824" width="100%" height="600px" frameborder="0" loading="lazy" allowfullscreen title="Interactive claim map"></iframe>
     </div>
   </div>
 </section>
@@ -417,7 +450,7 @@ body {
     <span class="sub-title" style="color: #fff;">The Mayor Funding Directive</span>
     <span class="gold-amount">100 - 200 GOLD</span>
     <p style="color: #8898aa; max-width: 600px; margin: 0 auto 2.5rem;">Approved citizens establishing a colony town receive starting capital from the Crown.</p>
-    <a href="https://discord.gg/YUyHgnpXwj" class="btn btn-primary" target="_blank">Apply For a Grant</a>
+    <a href="https://discord.gg/YUyHgnpXwj" class="btn btn-primary" target="_blank" rel="noopener">Apply For a Grant</a>
   </div>
   <div class="law-banner">
     <h3>⚠️ IMPERIAL EDICT: THE ACTIVITY LAW</h3>
@@ -427,25 +460,25 @@ body {
 
 <footer class="footer">
   <div class="footer-brand">The Colombian Empire</div>
-  <nav class="footer-nav">
-    <a href="/#domain">Territory</a>
+  <nav class="footer-nav" aria-label="Footer">
+    <a href="index.html#domain">Territory</a>
     <a href="history.html">Chronicles</a>
     <a href="diplomacy.html">Diplomacy</a>
     <a href="join.html">Join Us</a>
-    <a href="/#citizens">Citizens</a>
+    <a href="index.html#citizens">Citizens</a>
     <a href="sports.html">Sports Hub</a>
     <a href="casino.html">Casino</a>
-    <a href="https://discord.gg/YUyHgnpXwj" target="_blank">Discord</a>
+    <a href="https://discord.gg/YUyHgnpXwj" target="_blank" rel="noopener">Discord</a>
   </nav>
   <p>&copy; 2026 DiplomaticaMC. All Rights Reserved.</p>
 </footer>
 
-<button class="home-btn" id="backToTop">↑ TOP</button>
+<button class="home-btn" id="backToTop" aria-label="Back to top">↑ TOP</button>
 
-<div class="profile-overlay" id="profileOverlay">
+<div class="profile-overlay" id="profileOverlay" role="dialog" aria-modal="true" aria-labelledby="pName">
   <div class="profile-modal">
     <div class="profile-head">
-      <span class="profile-close" id="profileClose">CLOSE ✕</span>
+      <span class="profile-close" id="profileClose" tabindex="0" role="button" aria-label="Close profile">CLOSE ✕</span>
       <img id="pImg" src="" alt="">
       <div class="p-name" id="pName"></div>
       <div class="p-role" id="pRole"></div>
@@ -476,22 +509,61 @@ document.querySelectorAll('.section, .town-card, .gov-pill').forEach(el => {
   observer.observe(el);
 });
 
-/* ---------- Mobile nav toggle ---------- */
+/* ---------- Mobile nav toggle (accessible) ---------- */
 const navToggle = document.getElementById('navToggle');
 const navLinks = document.getElementById('navLinks');
 const navScrim = document.getElementById('navScrim');
-function closeNav() {
-  navToggle.classList.remove('open');
+const navMQ = window.matchMedia('(max-width: 1200px)');
+
+function syncNavForViewport() {
+  // Below the breakpoint, hide off-screen links from tab order/screen readers
+  // until the menu is actually opened. Above it, the nav is a normal visible
+  // row, so never restrict it.
+  if (navMQ.matches && !navLinks.classList.contains('open')) {
+    navLinks.setAttribute('inert', '');
+    navLinks.setAttribute('aria-hidden', 'true');
+  } else {
+    navLinks.removeAttribute('inert');
+    navLinks.removeAttribute('aria-hidden');
+  }
+}
+syncNavForViewport();
+navMQ.addEventListener('change', syncNavForViewport);
+
+function openNav() {
+  navLinks.classList.add('open');
+  navToggle.classList.add('open');
+  navScrim.classList.add('open');
+  navToggle.setAttribute('aria-expanded', 'true');
+  navLinks.removeAttribute('inert');
+  navLinks.removeAttribute('aria-hidden');
+  document.body.style.overflow = 'hidden';
+  const firstLink = navLinks.querySelector('a');
+  if (firstLink) firstLink.focus();
+}
+function closeNav(returnFocus) {
   navLinks.classList.remove('open');
+  navToggle.classList.remove('open');
   navScrim.classList.remove('open');
+  navToggle.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+  syncNavForViewport();
+  if (returnFocus) navToggle.focus();
 }
 navToggle.addEventListener('click', () => {
-  const isOpen = navLinks.classList.toggle('open');
-  navToggle.classList.toggle('open', isOpen);
-  navScrim.classList.toggle('open', isOpen);
+  if (navLinks.classList.contains('open')) {
+    closeNav(true);
+  } else {
+    openNav();
+  }
 });
-navScrim.addEventListener('click', closeNav);
-navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+navScrim.addEventListener('click', () => closeNav(true));
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => closeNav(false)));
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && navLinks.classList.contains('open')) {
+    closeNav(true);
+  }
+});
 
 /* ---------- Back-to-top button ---------- */
 const backToTop = document.getElementById('backToTop');
@@ -596,11 +668,7 @@ function playChime(rising) {
   } catch (e) { /* fail silently */ }
 }
 
-/* ---------- Magnetic buttons ----------
-   Primary/secondary buttons gently follow the cursor while hovered, and
-   snap back to center on mouse leave. Skipped on touch devices automatically
-   since there's no hover/mousemove there.
-*/
+/* ---------- Magnetic buttons (mouse only — safe on touch since no mousemove fires) ---------- */
 document.querySelectorAll('.btn').forEach(btn => {
   btn.addEventListener('mousemove', (e) => {
     const rect = btn.getBoundingClientRect();
@@ -673,12 +741,18 @@ function renderPlayerCards(list, containerId, isLeader) {
   list.forEach((c, i) => {
     const el = document.createElement('div');
     el.className = 'citizen-card' + (isLeader ? ' leader' : '');
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('role', 'button');
+    el.setAttribute('aria-label', `View profile: ${c.username}, ${c.role}`);
     el.innerHTML = `
-      <img src="https://mc-heads.net/avatar/${encodeURIComponent(c.username)}/64" alt="${c.username}">
+      <img src="https://mc-heads.net/avatar/${encodeURIComponent(c.username)}/64" alt="" role="presentation">
       <div class="name">${c.username}</div>
       <div class="role">${c.role}</div>
     `;
     el.addEventListener('click', () => openProfile(c));
+    el.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openProfile(c); }
+    });
     el.style.opacity = '0';
     el.style.animationDelay = (i % 10) * 0.05 + 's';
     cardObserver.observe(el);
@@ -696,19 +770,33 @@ const cardObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15, rootMargin: '0px 0px -30px 0px' });
 
 const profileOverlay = document.getElementById('profileOverlay');
+let lastProfileTrigger = null;
 function openProfile(c) {
+  lastProfileTrigger = document.activeElement;
   document.getElementById('pImg').src = `https://mc-heads.net/avatar/${encodeURIComponent(c.username)}/128`;
+  document.getElementById('pImg').alt = c.username;
   document.getElementById('pName').textContent = c.username;
   document.getElementById('pRole').textContent = c.role;
   document.getElementById('pBio').textContent = c.bio || "No bio has been added for this citizen yet.";
   document.getElementById('pTown').textContent = c.town || "Unassigned";
   document.getElementById('pJoined').textContent = c.joined || "Unknown";
   profileOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('profileClose').focus();
   playChime(true);
 }
-document.getElementById('profileClose').addEventListener('click', () => { profileOverlay.classList.remove('open'); playChime(false); });
-profileOverlay.addEventListener('click', (e) => { if (e.target === profileOverlay) { profileOverlay.classList.remove('open'); playChime(false); } });
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && profileOverlay.classList.contains('open')) { profileOverlay.classList.remove('open'); playChime(false); } });
+function closeProfile() {
+  profileOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+  playChime(false);
+  if (lastProfileTrigger) lastProfileTrigger.focus();
+}
+document.getElementById('profileClose').addEventListener('click', closeProfile);
+document.getElementById('profileClose').addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); closeProfile(); }
+});
+profileOverlay.addEventListener('click', (e) => { if (e.target === profileOverlay) closeProfile(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && profileOverlay.classList.contains('open')) closeProfile(); });
 
 renderPlayerCards(leaders, 'leaderGrid', true);
 renderPlayerCards(citizens, 'citizenGrid', false);
