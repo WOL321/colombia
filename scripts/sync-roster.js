@@ -66,3 +66,26 @@ main().catch(err => {
   console.error('Roster sync failed:', err.message);
   process.exit(1);
 });
+async function fetchWithRetry(url, options, maxRetries = 3) {
+  for (let i = 0; i < maxRetries; i++) {
+    const res = await fetch(url, options);
+    if (res.ok) return res;
+    if (res.status === 403 && i < maxRetries - 1) {
+      const delay = Math.pow(2, i) * 1000; // Exponential backoff
+      await new Promise(r => setTimeout(r, delay));
+      continue;
+    }
+    throw new Error(`Map feed responded with ${res.status} ${res.statusText}`);
+  }
+}
+
+async function main() {
+  const res = await fetchWithRetry(DYNMAP_MARKERS_URL, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+      'Accept': 'application/json,text/plain,*/*',
+      'Referer': 'https://map.diplomaticamc.com/',
+    },
+  });
+  // ... rest of code
+}
