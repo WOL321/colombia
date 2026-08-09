@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-08-09T04:58:23.730Z",
+  "updatedAt": "2026-08-09T15:25:10.014Z",
   "nation": "Colombia",
   "townCount": 29,
-  "residentCount": 69,
+  "residentCount": 62,
   "towns": [
     {
       "name": "Antillara",
       "residents": [
         {
-          "username": "NovumVetus"
+          "username": "Novum_Vetus"
         }
       ]
     },
@@ -77,6 +77,14 @@
       "residents": [
         {
           "username": "AzureBuster"
+        }
+      ]
+    },
+    {
+      "name": "El Salvador",
+      "residents": [
+        {
+          "username": "ThyCoolio"
         }
       ]
     },
@@ -155,7 +163,7 @@
       "name": "Mexico City",
       "residents": [
         {
-          "username": "Cryoshot"
+          "username": "Cryoshot_"
         }
       ]
     },
@@ -167,6 +175,59 @@
         },
         {
           "username": "magsnake"
+        }
+      ]
+    },
+    {
+      "name": "Paramaribo",
+      "residents": [
+        {
+          "username": "OnlyADonut"
+        },
+        {
+          "username": "Zericef"
+        }
+      ]
+    },
+    {
+      "name": "Port Belize",
+      "residents": [
+        {
+          "username": "4Gal"
+        }
+      ]
+    },
+    {
+      "name": "Puerto Lempira",
+      "residents": [
+        {
+          "username": "pikagamer55"
+        }
+      ]
+    },
+    {
+      "name": "Quito",
+      "residents": [
+        {
+          "username": "PinkF_x"
+        },
+        {
+          "username": "seawave3221"
+        },
+        {
+          "username": "reas240"
+        },
+        {
+          "username": "Syltho865"
+        },
+        {
+          "username": "TheSmartGamer203"
+        },
+        {
+          "username": "Curse345"
+        },
+        {
+          "username": "RocketCraft9000"
         }
       ]
     },
@@ -214,48 +275,12 @@
         },
         {
           "username": "SaturnXP"
-        }
-      ]
-    },
-    {
-      "name": "Port Belize",
-      "residents": [
-        {
-          "username": "4Gal"
-        }
-      ]
-    },
-    {
-      "name": "Puerto Lempira",
-      "residents": [
-        {
-          "username": "pikagamer55"
-        }
-      ]
-    },
-    {
-      "name": "Quito",
-      "residents": [
-        {
-          "username": "PinkF_x"
         },
         {
-          "username": "seawave3221"
+          "username": "sapinzinho"
         },
         {
-          "username": "reas240"
-        },
-        {
-          "username": "Syltho865"
-        },
-        {
-          "username": "TheSmartGamer203"
-        },
-        {
-          "username": "Curse345"
-        },
-        {
-          "username": "RocketCraft9000"
+          "username": "Tim0thyPlayzz"
         }
       ]
     },
@@ -287,44 +312,6 @@
       ]
     },
     {
-      "name": "Tegucigalpa",
-      "residents": [
-        {
-          "username": "Zaity1"
-        },
-        {
-          "username": "Amberology"
-        },
-        {
-          "username": "RealWonOne"
-        },
-        {
-          "username": "PixelMonkey08"
-        },
-        {
-          "username": "Nagitoboy"
-        },
-        {
-          "username": "achenalia"
-        },
-        {
-          "username": "28ms"
-        },
-        {
-          "username": "Stefieprobs"
-        },
-        {
-          "username": "ItsEnes"
-        },
-        {
-          "username": "stonislav"
-        },
-        {
-          "username": "Atrocizzare"
-        }
-      ]
-    },
-    {
       "name": "Tulum",
       "residents": [
         {
@@ -345,14 +332,6 @@
       "residents": [
         {
           "username": "BNAaj"
-        }
-      ]
-    },
-    {
-      "name": "El Salvador",
-      "residents": [
-        {
-          "username": "ThyCoolio"
         }
       ]
     }
