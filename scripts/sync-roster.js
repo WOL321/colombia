@@ -1,30 +1,43 @@
-// Fetches the live Towny/Dynmap marker feed, filters it down to this nation's
+// Fetches the live Towny/Dynmap marker feed using a real headless browser
+// (since a plain HTTP request gets blocked with 403, likely due to the map
+// host blocking known cloud/CI IP ranges), filters it down to this nation's
 // towns and residents, and writes a small same-origin JSON file the website
-// can read without hitting any CORS restrictions (since it's just a static
-// file on colombiadmc.site, fetched by colombiadmc.site).
+// can read without hitting any CORS restrictions.
 //
 // Run manually with: node scripts/sync-roster.js
 // Run automatically by: .github/workflows/sync-roster.yml (every 5 minutes)
 
 const fs = require('fs');
 const path = require('path');
+const { chromium } = require('playwright');
 
 const DYNMAP_MARKERS_URL = 'https://map.diplomaticamc.com/tiles/minecraft_overworld/markers.json';
 const NATION_FILTER = 'Colombia';
 const OUTPUT_PATH = path.join(__dirname, '..', 'roster.json');
 
-async function main() {
- const res = await fetch(DYNMAP_MARKERS_URL, {
-    headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-      'Accept': 'application/json,text/plain,*/*',
-      'Referer': 'https://map.diplomaticamc.com/',
-    },
-  });
-  if (!res.ok) {
-    throw new Error(`Map feed responded with ${res.status} ${res.statusText}`);
+async function fetchMarkersViaBrowser(url) {
+  const browser = await chromium.launch();
+  try {
+    const context = await browser.newContext({
+      userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+    });
+    const page = await context.newPage();
+    const response = await page.goto(url, { waitUntil: 'load', timeout: 30000 });
+    if (!response) {
+      throw new Error('No response from page.goto');
+    }
+    if (!response.ok()) {
+      throw new Error(`Map feed responded with ${response.status()} ${response.statusText()}`);
+    }
+    const text = await response.text();
+    return JSON.parse(text);
+  } finally {
+    await browser.close();
   }
-  const data = await res.json();
+}
+
+async function main() {
+  const data = await fetchMarkersViaBrowser(DYNMAP_MARKERS_URL);
 
   const claimsLayer = (data.layers || []).find(l => l.id === 'towny_claims');
   if (!claimsLayer) {
@@ -66,26 +79,3 @@ main().catch(err => {
   console.error('Roster sync failed:', err.message);
   process.exit(1);
 });
-async function fetchWithRetry(url, options, maxRetries = 3) {
-  for (let i = 0; i < maxRetries; i++) {
-    const res = await fetch(url, options);
-    if (res.ok) return res;
-    if (res.status === 403 && i < maxRetries - 1) {
-      const delay = Math.pow(2, i) * 1000; // Exponential backoff
-      await new Promise(r => setTimeout(r, delay));
-      continue;
-    }
-    throw new Error(`Map feed responded with ${res.status} ${res.statusText}`);
-  }
-}
-
-async function main() {
-  const res = await fetchWithRetry(DYNMAP_MARKERS_URL, {
-    headers: {
-      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
-      'Accept': 'application/json,text/plain,*/*',
-      'Referer': 'https://map.diplomaticamc.com/',
-    },
-  });
-  // ... rest of code
-}
