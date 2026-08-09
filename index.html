@@ -240,7 +240,6 @@ a.status-pill:hover { border-color: rgba(88,101,242,0.6); background: rgba(88,10
 
 /* ---------- Citizen roster search ---------- */
 .roster-search-wrap { max-width: 420px; margin: 0 auto 2.5rem; position: relative; }
-.roster-live-badge { font-size: 0.72rem; color: #8898aa; margin-top: 0.75rem; letter-spacing: 0.3px; }
 .roster-search { display: block; width: 100%; padding: 0.9rem 1.25rem; background: #111622; border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; color: #f1f5f9; font-size: 0.95rem; font-family: inherit; transition: border-color 0.25s ease; }
 .roster-search::placeholder { color: #8898aa; }
 .roster-search:focus { outline: none; border-color: #ffc837; box-shadow: 0 0 0 3px rgba(255,200,55,0.12); }
@@ -587,7 +586,6 @@ a.status-pill:hover { border-color: rgba(88,101,242,0.6); background: rgba(88,10
     <span class="sub-title">The Populace</span>
     <h2 class="section-title">Citizen Roster</h2>
     <p class="section-desc">The leadership and towns that make up the Empire — <span id="rosterTownCount">29</span> towns, <span id="rosterCitizenCount">69</span> citizens.</p>
-    <p class="roster-live-badge" id="rosterLiveBadge">🟡 Syncing…</p>
   </div>
   <div class="roster-search-wrap">
     <label for="citizenSearch" class="sr-only">Search citizens or towns by name or role</label>
@@ -857,19 +855,13 @@ document.querySelectorAll('.btn').forEach(btn => {
 });
 
 const leaders = [
-  { username: "ueq_",       role: "Emperor of Colombia", town: "Pijao", joined: "Est. 2026", bio: "Founder and Emperor of the Colombian Empire." },
+  { username: "ueq_",       role: "Emperor of Colombia", town: "Riohacha", joined: "Est. 2026", bio: "Founder and Emperor of the Colombian Empire." },
   { username: "OliveTree315", role: "Prime Minister of Colombia", town: "Medellin Antioquia", joined: "2026", bio: "" },
   { username: "pikagamer55", role: "President of Central America", town: "Puerto Lempira", joined: "2025", bio: "" },
   { username: "zaity1",     role: "Prime Minister of Central America", town: "Tegucigalpa", joined: "2025", bio: "" },
 ];
 
-// DOM refs needed early — applyRosterData() below calls filterRoster() immediately on load.
-const citizenSearch = document.getElementById('citizenSearch');
-const rosterEmpty = document.getElementById('rosterEmpty');
-const rosterEmptyQuery = document.getElementById('rosterEmptyQuery');
-
-// Fallback snapshot — used only if the live map data can't be reached (offline, CORS, etc).
-const FALLBACK_TOWNS = [
+const towns = [
   { name: "Antillara", residents: [ { username: "NovumVetus" } ] },
   { name: "Barbados", residents: [ { username: "Crowlia" }, { username: "Executor71" } ] },
   { name: "Baytown", residents: [ { username: "chezburgercool" } ] },
@@ -887,7 +879,7 @@ const FALLBACK_TOWNS = [
   { name: "Medellin Antioquia", residents: [ { username: "birdyboa" }, { username: "EpicPandaz8" }, { username: "Sasadii" }, { username: "OliveTree316" }, { username: "VickyVenus9416" } ] },
   { name: "Mexico City", residents: [ { username: "Cryoshot" } ] },
   { name: "New Bahamas", residents: [ { username: "AnythingIsFinee" }, { username: "magsnake" } ] },
-  { name: "Pijao", residents: [ { username: "ueq_" }, { username: "Amismash82" }, { username: "blucknock_" }, { username: "K_NightFall" }, { username: "nadea1" }, { username: "jakke_mugen" }, { username: "sarcasticbox" }, { username: "alexiszadas34" }, { username: "Scientist" }, { username: "iBandidoxlz" }, { username: "rukanda" }, { username: "BluepopOSC" }, { username: "AionScriptor" }, { username: "SaturnXP" } ] },
+  { name: "Riohacha", residents: [ { username: "ueq_" }, { username: "Amismash82" }, { username: "blucknock_" }, { username: "K_NightFall" }, { username: "nadea1" }, { username: "jakke_mugen" }, { username: "sarcasticbox" }, { username: "alexiszadas34" }, { username: "Scientist" }, { username: "iBandidoxlz" }, { username: "rukanda" }, { username: "BluepopOSC" }, { username: "AionScriptor" }, { username: "SaturnXP" } ] },
   { name: "Port Belize", residents: [ { username: "4Gal" } ] },
   { name: "Puerto Lempira", residents: [ { username: "pikagamer55" } ] },
   { name: "Quito", residents: [ { username: "PinkF_x" }, { username: "seawave3221" }, { username: "reas240" }, { username: "Syltho865" }, { username: "TheSmartGamer203" }, { username: "Curse345" }, { username: "RocketCraft9000" } ] },
@@ -900,92 +892,14 @@ const FALLBACK_TOWNS = [
   { name: "Zirconia", residents: [ { username: "BNAaj" } ] },
   { name: "El Salvador", residents: [ { username: "ThyCoolio" } ] },
 ];
-
-/* ---------- Live roster state (populated from the Towny map feed, falls back to the snapshot above) ---------- */
-let towns = [];
-let totalResidents = 0;
-let allResidents = [];
-
-function assignRolesAndTown(townsArr) {
-  townsArr.forEach(t => {
-    t.residents.forEach((r, i) => {
-      r.role = i === 0 ? `Mayor of ${t.name}` : `Citizen of ${t.name}`;
-      r.town = t.name;
-    });
+// First resident listed per town is the mayor.
+towns.forEach(t => {
+  t.residents.forEach((r, i) => {
+    r.role = i === 0 ? `Mayor of ${t.name}` : `Citizen of ${t.name}`;
+    r.town = t.name;
   });
-  return townsArr;
-}
-
-function applyRosterData(townsArr) {
-  towns = assignRolesAndTown(townsArr);
-  totalResidents = towns.reduce((sum, t) => sum + t.residents.length, 0);
-  allResidents = towns.flatMap(t => t.residents);
-  const grid = document.getElementById('townsGrid');
-  if (grid) grid.innerHTML = '';
-  renderTownsRoster(towns, 'townsGrid');
-  const townCountEl = document.getElementById('rosterTownCount');
-  const citizenCountEl = document.getElementById('rosterCitizenCount');
-  if (townCountEl) townCountEl.textContent = towns.length;
-  if (citizenCountEl) citizenCountEl.textContent = totalResidents;
-  const statTowns = document.getElementById('statTowns');
-  const statCitizens = document.getElementById('statCitizens');
-  if (statTowns && statTowns.dataset.animated) statTowns.textContent = towns.length;
-  if (statCitizens && statCitizens.dataset.animated) statCitizens.textContent = totalResidents;
-  filterRoster();
-}
-
-/* ---------- Live Towny roster sync ----------
-   Pulls real town/resident data from the server's Dynmap+Towny feed and filters
-   to this nation. Re-checks silently every 60s while the page is open, so new
-   residents/towns appear without anyone editing this file. Falls back to
-   FALLBACK_TOWNS above if the feed is unreachable (offline, moved, CORS-blocked). */
-const DYNMAP_MARKERS_URL = "https://map.diplomaticamc.com/tiles/minecraft_overworld/markers.json";
-const NATION_FILTER = "Colombia";
-const rosterLiveBadge = document.getElementById('rosterLiveBadge');
-function setRosterLiveBadge(state) {
-  if (!rosterLiveBadge) return;
-  if (state === 'live') {
-    rosterLiveBadge.textContent = '🟢 Live from server map';
-    rosterLiveBadge.title = 'Synced from the Towny map feed — updates automatically.';
-  } else if (state === 'checking') {
-    rosterLiveBadge.textContent = '🟡 Syncing…';
-  } else {
-    rosterLiveBadge.textContent = '⚪ Using saved list (live sync unavailable)';
-    rosterLiveBadge.title = 'Could not reach the map data feed — showing the last known roster.';
-  }
-}
-async function loadLiveTownyRoster(isBackgroundRefresh) {
-  if (!isBackgroundRefresh) setRosterLiveBadge('checking');
-  try {
-    const res = await fetch(DYNMAP_MARKERS_URL, { cache: 'no-store' });
-    if (!res.ok) throw new Error('bad response');
-    const data = await res.json();
-    const claimsLayer = (data.layers || []).find(l => l.id === 'towny_claims');
-    if (!claimsLayer) throw new Error('no towny_claims layer');
-    const liveTowns = claimsLayer.markers
-      .filter(m => m.meta && m.meta['%nation%'] === NATION_FILTER && m.meta['%town%'])
-      .map(m => {
-        const rawResidents = (m.meta['%residents%'] || m.meta['%mayor%'] || '').split(',').map(s => s.trim()).filter(Boolean);
-        return {
-          name: (m.meta['%town%'] || '').replace(/_/g, ' '),
-          residents: rawResidents.map(username => ({ username })),
-        };
-      })
-      .filter(t => t.name && t.residents.length)
-      .sort((a, b) => a.name.localeCompare(b.name));
-    if (!liveTowns.length) throw new Error('no towns matched nation filter');
-    applyRosterData(liveTowns);
-    setRosterLiveBadge('live');
-  } catch (err) {
-    if (!isBackgroundRefresh) {
-      applyRosterData(JSON.parse(JSON.stringify(FALLBACK_TOWNS)));
-      setRosterLiveBadge('offline');
-    }
-    console.warn('Live Towny roster sync failed, using fallback list:', err.message);
-  }
-}
-// (Live roster loading is kicked off further down, after renderTownsRoster and
-// cardObserver are defined — see near renderPlayerCards(leaders, ...) below.)
+});
+const totalResidents = towns.reduce((sum, t) => sum + t.residents.length, 0);
 
 function renderPlayerCards(list, containerId, isLeader) {
   const grid = document.getElementById(containerId);
@@ -1131,13 +1045,11 @@ document.getElementById('profileClose').addEventListener('keydown', (e) => {
 profileOverlay.addEventListener('click', (e) => { if (e.target === profileOverlay) closeProfile(); });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && profileOverlay.classList.contains('open')) closeProfile(); });
 
-renderPlayerCards(leaders, 'leaderGrid', true);
+document.getElementById('rosterTownCount') && (document.getElementById('rosterTownCount').textContent = towns.length);
+document.getElementById('rosterCitizenCount') && (document.getElementById('rosterCitizenCount').textContent = totalResidents);
 
-// Show the fallback snapshot immediately so the page isn't empty, then sync live
-// from the server's Towny map feed. Re-checks silently every 60s while open.
-applyRosterData(JSON.parse(JSON.stringify(FALLBACK_TOWNS)));
-loadLiveTownyRoster(false);
-setInterval(() => loadLiveTownyRoster(true), 60000);
+renderPlayerCards(leaders, 'leaderGrid', true);
+renderTownsRoster(towns, 'townsGrid');
 
 /* ---------- Animated stat counters ---------- */
 function animateCount(el, target, duration = 1200) {
@@ -1147,7 +1059,6 @@ function animateCount(el, target, duration = 1200) {
     const eased = 1 - Math.pow(1 - progress, 3);
     el.textContent = Math.round(eased * target);
     if (progress < 1) requestAnimationFrame(tick);
-    else el.dataset.animated = 'true';
   }
   requestAnimationFrame(tick);
 }
@@ -1313,6 +1224,9 @@ async function loadDiscordStatus() {
 loadDiscordStatus();
 
 /* ---------- Citizen roster search/filter (leadership + town-grouped residents) ---------- */
+const citizenSearch = document.getElementById('citizenSearch');
+const rosterEmpty = document.getElementById('rosterEmpty');
+const rosterEmptyQuery = document.getElementById('rosterEmptyQuery');
 function filterRoster() {
   if (!citizenSearch) return;
   const q = citizenSearch.value.trim().toLowerCase();
@@ -1415,15 +1329,14 @@ function cmdkCitizenItem(c) {
     action: () => openProfile(c),
   };
 }
-function buildCmdkAllItems() {
-  return [
-    ...cmdkSections.map(i => ({ ...i, tag: 'Section' })),
-    ...cmdkPages.map(i => ({ ...i, tag: 'Page' })),
-    ...cmdkActions.map(i => ({ ...i, tag: 'Action' })),
-    ...leaders.map(c => ({ ...cmdkCitizenItem(c), tag: 'Leader' })),
-    ...allResidents.map(c => ({ ...cmdkCitizenItem(c), tag: c.role.startsWith('Mayor') ? 'Mayor' : 'Citizen' })),
-  ];
-}
+const allResidents = towns.flatMap(t => t.residents);
+const cmdkAllItems = [
+  ...cmdkSections.map(i => ({ ...i, tag: 'Section' })),
+  ...cmdkPages.map(i => ({ ...i, tag: 'Page' })),
+  ...cmdkActions.map(i => ({ ...i, tag: 'Action' })),
+  ...leaders.map(c => ({ ...cmdkCitizenItem(c), tag: 'Leader' })),
+  ...allResidents.map(c => ({ ...cmdkCitizenItem(c), tag: c.role.startsWith('Mayor') ? 'Mayor' : 'Citizen' })),
+];
 
 function cmdkActivate(item) {
   closeCmdk();
@@ -1434,7 +1347,6 @@ function cmdkActivate(item) {
 
 function renderCmdkList(query) {
   const q = query.trim().toLowerCase();
-  const cmdkAllItems = buildCmdkAllItems();
   cmdkVisibleItems = !q ? cmdkAllItems.slice(0, 40) : cmdkAllItems.filter(i =>
     i.title.toLowerCase().includes(q) || (i.sub || '').toLowerCase().includes(q) || (i.tag || '').toLowerCase().includes(q)
   ).slice(0, 40);
