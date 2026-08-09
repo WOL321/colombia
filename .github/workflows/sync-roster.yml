@@ -1,9 +1,9 @@
 name: Sync Colombia roster from map
 
 on:
-schedule:
-  - cron: "*/15 * * * *"  # Every 15 minutes instead of 5
-workflow_dispatch: {} # lets you trigger it manually from the Actions tab
+  schedule:
+    - cron: "*/5 * * * *"
+  workflow_dispatch: {}
 
 permissions:
   contents: write
@@ -19,6 +19,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Install Playwright browser
+        run: npx playwright install --with-deps chromium
 
       - name: Run roster sync
         run: node scripts/sync-roster.js
