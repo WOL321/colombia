@@ -14,7 +14,13 @@ const NATION_FILTER = 'Colombia';
 const OUTPUT_PATH = path.join(__dirname, '..', 'roster.json');
 
 async function main() {
-  const res = await fetch(DYNMAP_MARKERS_URL);
+ const res = await fetch(DYNMAP_MARKERS_URL, {
+    headers: {
+      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36',
+      'Accept': 'application/json,text/plain,*/*',
+      'Referer': 'https://map.diplomaticamc.com/',
+    },
+  });
   if (!res.ok) {
     throw new Error(`Map feed responded with ${res.status} ${res.statusText}`);
   }
