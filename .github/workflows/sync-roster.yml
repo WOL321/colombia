@@ -1,0 +1,39 @@
+name: Sync Colombia roster from map
+
+on:
+  schedule:
+    # Runs roughly every 5 minutes. GitHub does not guarantee exact timing —
+    # under load it can be delayed by a few minutes. This is the practical
+    # limit for free scheduled workflows, not a bug in this setup.
+    - cron: "*/5 * * * *"
+  workflow_dispatch: {} # lets you trigger it manually from the Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Run roster sync
+        run: node scripts/sync-roster.js
+
+      - name: Commit roster.json if it changed
+        run: |
+          if git diff --quiet -- roster.json; then
+            echo "No changes to roster.json — skipping commit."
+            exit 0
+          fi
+          git config user.name "roster-sync-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add roster.json
+          git commit -m "chore: sync roster.json [skip ci]"
+          git push
