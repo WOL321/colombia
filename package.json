@@ -1,0 +1,7 @@
+{
+  "name": "colombia-roster-sync",
+  "private": true,
+  "dependencies": {
+    "playwright": "^1.47.0"
+  }
+}
