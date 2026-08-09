@@ -1,12 +1,9 @@
 name: Sync Colombia roster from map
 
 on:
-  schedule:
-    # Runs roughly every 5 minutes. GitHub does not guarantee exact timing —
-    # under load it can be delayed by a few minutes. This is the practical
-    # limit for free scheduled workflows, not a bug in this setup.
-    - cron: "*/5 * * * *"
-  workflow_dispatch: {} # lets you trigger it manually from the Actions tab
+schedule:
+  - cron: "*/15 * * * *"  # Every 15 minutes instead of 5
+workflow_dispatch: {} # lets you trigger it manually from the Actions tab
 
 permissions:
   contents: write
