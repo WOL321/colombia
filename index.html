@@ -906,6 +906,7 @@ const FALLBACK_TOWNS = [
 let towns = [];
 let totalResidents = 0;
 let allResidents = [];
+let lastRosterSignature = null;
 
 function assignRolesAndTown(townsArr) {
   townsArr.forEach(t => {
@@ -921,9 +922,19 @@ function applyRosterData(townsArr) {
   towns = assignRolesAndTown(townsArr);
   totalResidents = towns.reduce((sum, t) => sum + t.residents.length, 0);
   allResidents = towns.flatMap(t => t.residents);
-  const grid = document.getElementById('townsGrid');
-  if (grid) grid.innerHTML = '';
-  renderTownsRoster(towns, 'townsGrid');
+
+  // Only rebuild the DOM if the actual town/resident data changed — this runs
+  // every 60s via the background sync, and re-rendering identical data would
+  // replay every card's animation and force every avatar image to reload for
+  // no reason. Counts, badges, and search filtering still refresh either way.
+  const signature = JSON.stringify(towns.map(t => [t.name, t.residents.map(r => r.username)]));
+  if (signature !== lastRosterSignature) {
+    lastRosterSignature = signature;
+    const grid = document.getElementById('townsGrid');
+    if (grid) grid.innerHTML = '';
+    renderTownsRoster(towns, 'townsGrid');
+  }
+
   const townCountEl = document.getElementById('rosterTownCount');
   const citizenCountEl = document.getElementById('rosterCitizenCount');
   if (townCountEl) townCountEl.textContent = towns.length;
@@ -1012,16 +1023,16 @@ async function tryRosterJson() {
 async function loadLiveTownyRoster(isBackgroundRefresh) {
   if (!isBackgroundRefresh) setRosterLiveBadge('checking');
   try {
-    const towns = await tryDirectMapFetch();
-    applyRosterData(towns);
+    const fetchedTowns = await tryDirectMapFetch();
+    applyRosterData(fetchedTowns);
     setRosterLiveBadge('live-direct');
     return;
   } catch (err) {
     console.warn('Direct map fetch failed (likely needs a CORS header from the map host):', err.message);
   }
   try {
-    const { towns, updatedAt } = await tryRosterJson();
-    applyRosterData(towns);
+    const { towns: fetchedTowns, updatedAt } = await tryRosterJson();
+    applyRosterData(fetchedTowns);
     setRosterLiveBadge('live-snapshot', updatedAt);
     return;
   } catch (err) {
@@ -1283,7 +1294,7 @@ function showToast(message) {
 /* ---------- Live Minecraft server status + Copy IP ----------
    Update SERVER_IP to your real Java Edition address (host or host:port).
    Status is fetched from the free, CORS-enabled api.mcsrvstat.us service. */
-const SERVER_IP = "diplomaticamc.com";
+const SERVER_IP = "play.colombiadmc.site";
 const serverStatusDot = document.getElementById('serverStatusDot');
 const serverStatusText = document.getElementById('serverStatusText');
 const copyIpBtn = document.getElementById('copyIpBtn');
