@@ -887,6 +887,7 @@ const FALLBACK_TOWNS = [
   { name: "Medellin Antioquia", residents: [ { username: "birdyboa" }, { username: "EpicPandaz8" }, { username: "Sasadii" }, { username: "OliveTree316" }, { username: "VickyVenus9416" } ] },
   { name: "Mexico City", residents: [ { username: "Cryoshot" } ] },
   { name: "New Bahamas", residents: [ { username: "AnythingIsFinee" }, { username: "magsnake" } ] },
+  { name: "Paramaribo", residents: [ { username: "OnlyADonut" }, { username: "Zericef" } ] },
   { name: "Pijao", residents: [ { username: "ueq_" }, { username: "Amismash82" }, { username: "blucknock_" }, { username: "K_NightFall" }, { username: "nadea1" }, { username: "jakke_mugen" }, { username: "sarcasticbox" }, { username: "alexiszadas34" }, { username: "Scientist" }, { username: "iBandidoxlz" }, { username: "rukanda" }, { username: "BluepopOSC" }, { username: "AionScriptor" }, { username: "SaturnXP" } ] },
   { name: "Port Belize", residents: [ { username: "4Gal" } ] },
   { name: "Puerto Lempira", residents: [ { username: "pikagamer55" } ] },
@@ -935,12 +936,22 @@ function applyRosterData(townsArr) {
 }
 
 /* ---------- Live roster sync ----------
-   Reads roster.json — a same-origin file kept fresh by a GitHub Actions
-   workflow (.github/workflows/sync-roster.yml) that fetches the server's
-   Dynmap+Towny feed every ~5 minutes and commits the filtered result here.
-   Same-origin means no CORS issues, ever. Re-checks in-tab every 60s too,
-   in case the file changed since the page loaded. Falls back to
-   FALLBACK_TOWNS above if roster.json is missing or malformed. */
+   Tries three sources, in order, and uses whichever works:
+   1. Direct fetch from the map's live feed — real-time, but needs the map
+      server to send an Access-Control-Allow-Origin header (see note below).
+   2. roster.json — a same-origin snapshot a GitHub Actions workflow tries to
+      keep updated (currently blocked server-side by the map host — see
+      .github/workflows/sync-roster.yml for details/history).
+   3. FALLBACK_TOWNS above — the last known-good snapshot baked into the page.
+
+   TO GET LIVE SYNC WORKING: whoever manages map.diplomaticamc.com needs to
+   add this single response header to /tiles/minecraft_overworld/markers.json:
+     Access-Control-Allow-Origin: https://colombiadmc.site
+   (or "*" to allow any site to read it). That's it — no other config needed.
+   Once that's added, option 1 below will start working immediately, live,
+   with zero further changes here. */
+const DYNMAP_MARKERS_URL = "https://map.diplomaticamc.com/tiles/minecraft_overworld/markers.json";
+const NATION_FILTER = "Colombia";
 const ROSTER_JSON_URL = "roster.json";
 const rosterLiveBadge = document.getElementById('rosterLiveBadge');
 function timeAgo(iso) {
@@ -952,34 +963,73 @@ function timeAgo(iso) {
   const hours = Math.round(mins / 60);
   return hours === 1 ? '1 hour ago' : `${hours} hours ago`;
 }
-function setRosterLiveBadge(state, updatedAt) {
+function setRosterLiveBadge(state, detail) {
   if (!rosterLiveBadge) return;
-  if (state === 'live') {
-    rosterLiveBadge.textContent = `🟢 Synced ${updatedAt ? timeAgo(updatedAt) : 'recently'}`;
-    rosterLiveBadge.title = 'Kept in sync automatically from the server map, roughly every 5 minutes.';
+  if (state === 'live-direct') {
+    rosterLiveBadge.textContent = '🟢 Live from server map (real-time)';
+    rosterLiveBadge.title = 'Fetched directly from the map, live, on every page load.';
+  } else if (state === 'live-snapshot') {
+    rosterLiveBadge.textContent = `🟡 Synced ${detail ? timeAgo(detail) : 'recently'} (via backup sync)`;
+    rosterLiveBadge.title = 'Direct live sync is unavailable — showing the GitHub Actions snapshot instead.';
   } else if (state === 'checking') {
     rosterLiveBadge.textContent = '🟡 Checking for updates…';
   } else {
-    rosterLiveBadge.textContent = '⚪ Using saved list (roster.json unavailable)';
-    rosterLiveBadge.title = 'Could not load roster.json — showing the last known roster baked into the page.';
+    rosterLiveBadge.textContent = '⚪ Using saved list (live sync unavailable)';
+    rosterLiveBadge.title = 'Could not reach the map directly or roster.json — showing the last known roster baked into the page.';
   }
+}
+function parseMarkersToTowns(data) {
+  const claimsLayer = (data.layers || []).find(l => l.id === 'towny_claims');
+  if (!claimsLayer) throw new Error('no towny_claims layer');
+  const liveTowns = claimsLayer.markers
+    .filter(m => m.meta && m.meta['%nation%'] === NATION_FILTER && m.meta['%town%'])
+    .map(m => {
+      const rawResidents = (m.meta['%residents%'] || m.meta['%mayor%'] || '').split(',').map(s => s.trim()).filter(Boolean);
+      return {
+        name: (m.meta['%town%'] || '').replace(/_/g, ' '),
+        residents: rawResidents.map(username => ({ username })),
+      };
+    })
+    .filter(t => t.name && t.residents.length)
+    .sort((a, b) => a.name.localeCompare(b.name));
+  if (!liveTowns.length) throw new Error('no towns matched nation filter');
+  return liveTowns;
+}
+async function tryDirectMapFetch() {
+  const res = await fetch(DYNMAP_MARKERS_URL, { cache: 'no-store' });
+  if (!res.ok) throw new Error('bad response from map');
+  const data = await res.json();
+  return parseMarkersToTowns(data);
+}
+async function tryRosterJson() {
+  const res = await fetch(ROSTER_JSON_URL, { cache: 'no-store' });
+  if (!res.ok) throw new Error('bad response from roster.json');
+  const data = await res.json();
+  const liveTowns = Array.isArray(data.towns) ? data.towns : [];
+  if (!liveTowns.length) throw new Error('roster.json has no towns');
+  return { towns: liveTowns, updatedAt: data.updatedAt };
 }
 async function loadLiveTownyRoster(isBackgroundRefresh) {
   if (!isBackgroundRefresh) setRosterLiveBadge('checking');
   try {
-    const res = await fetch(ROSTER_JSON_URL, { cache: 'no-store' });
-    if (!res.ok) throw new Error('bad response');
-    const data = await res.json();
-    const liveTowns = Array.isArray(data.towns) ? data.towns : [];
-    if (!liveTowns.length) throw new Error('roster.json has no towns');
-    applyRosterData(liveTowns);
-    setRosterLiveBadge('live', data.updatedAt);
+    const towns = await tryDirectMapFetch();
+    applyRosterData(towns);
+    setRosterLiveBadge('live-direct');
+    return;
   } catch (err) {
-    if (!isBackgroundRefresh) {
-      applyRosterData(JSON.parse(JSON.stringify(FALLBACK_TOWNS)));
-      setRosterLiveBadge('offline');
-    }
-    console.warn('Live Towny roster sync failed, using fallback list:', err.message);
+    console.warn('Direct map fetch failed (likely needs a CORS header from the map host):', err.message);
+  }
+  try {
+    const { towns, updatedAt } = await tryRosterJson();
+    applyRosterData(towns);
+    setRosterLiveBadge('live-snapshot', updatedAt);
+    return;
+  } catch (err) {
+    console.warn('roster.json fallback also failed:', err.message);
+  }
+  if (!isBackgroundRefresh) {
+    applyRosterData(JSON.parse(JSON.stringify(FALLBACK_TOWNS)));
+    setRosterLiveBadge('offline');
   }
 }
 // (Live roster loading is kicked off further down, after renderTownsRoster and
@@ -1233,7 +1283,7 @@ function showToast(message) {
 /* ---------- Live Minecraft server status + Copy IP ----------
    Update SERVER_IP to your real Java Edition address (host or host:port).
    Status is fetched from the free, CORS-enabled api.mcsrvstat.us service. */
-const SERVER_IP = "play.colombiadmc.site";
+const SERVER_IP = "diplomaticamc.com";
 const serverStatusDot = document.getElementById('serverStatusDot');
 const serverStatusText = document.getElementById('serverStatusText');
 const copyIpBtn = document.getElementById('copyIpBtn');
