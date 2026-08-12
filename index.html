@@ -319,6 +319,42 @@ a.status-pill:hover { border-color: rgba(88,101,242,0.6); background: rgba(88,10
 @media (max-width: 950px) { .hero h1 { font-size: 3.2rem; } }
 @media (max-width: 480px) { .hero h1 { font-size: 2.4rem; letter-spacing: 2px; } .hero p { font-size: 1.1rem; } }
 
+.map-box iframe { width: 100%; height: 600px; border: 0; display: block; }
+
+/* ---------- Small/narrow-screen refinements ----------
+   Fixes: leader-grid and towns-roster-grid staying multi-column too long on
+   small phones (cramped or, for towns-roster-grid's 260px minimum, at real
+   risk of horizontal overflow under ~360px); desktop-sized padding on cards/
+   sections eating most of the usable width on a phone; a 600px-tall map that
+   dominates the screen on mobile. */
+@media (max-width: 700px) {
+  .leader-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .container { padding: 0 1.25rem; }
+  .section { padding: 4rem 0; }
+  .center-header { margin-bottom: 2.5rem; }
+  .pijao-card { padding: 1.75rem; }
+  .grant-section { padding: 2.5rem 1.5rem; }
+  .law-banner { padding: 2.25rem 1.5rem; }
+  .law-banner h3 { font-size: 1.5rem; }
+  .gov-pill { padding: 1.75rem 1.25rem; }
+  .town-info { padding: 1.5rem; }
+  .towns-roster-grid { grid-template-columns: 1fr; }
+  .roster-live-badge { font-size: 0.68rem; }
+  .live-bar { padding: 1.25rem 1rem; gap: 0.65rem; }
+  .status-pill, .copy-ip-btn { font-size: 0.78rem; padding: 0.6rem 0.9rem; }
+  .map-box iframe { height: 380px; }
+  .cmdk-overlay { padding: 6vh 1rem 1.5rem; }
+  .profile-body { padding: 1.5rem 1.5rem 2rem; }
+  .profile-facts { grid-template-columns: 1fr; }
+}
+@media (max-width: 360px) {
+  .hero h1 { font-size: 2rem; letter-spacing: 1px; }
+  .section-title { font-size: 1.8rem; }
+  .gold-amount { font-size: 2.75rem; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .embers, .hero::before, .hero-flag-frame, .hero-flag-frame::before,
   .impact-sparks, .hero::after { animation: none !important; }
