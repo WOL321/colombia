@@ -1,14 +1,14 @@
 {
-  "updatedAt": "2026-08-11T23:55:35.769Z",
+  "updatedAt": "2026-08-12T00:31:09.879Z",
   "nation": "Colombia",
-  "townCount": 28,
-  "residentCount": 61,
+  "townCount": 30,
+  "residentCount": 71,
   "towns": [
     {
       "name": "Antillara",
       "residents": [
         {
-          "username": "Novum_Vetus"
+          "username": "NovumVetus"
         }
       ]
     },
@@ -73,10 +73,10 @@
       ]
     },
     {
-      "name": "El Salvador",
+      "name": "Cartagena",
       "residents": [
         {
-          "username": "ThyCoolio"
+          "username": "AzureBuster"
         }
       ]
     },
@@ -155,7 +155,7 @@
       "name": "Mexico City",
       "residents": [
         {
-          "username": "Cryoshot_"
+          "username": "Cryoshot"
         }
       ]
     },
@@ -178,6 +178,53 @@
         },
         {
           "username": "Zericef"
+        }
+      ]
+    },
+    {
+      "name": "Pijao",
+      "residents": [
+        {
+          "username": "ueq_"
+        },
+        {
+          "username": "Amismash82"
+        },
+        {
+          "username": "blucknock_"
+        },
+        {
+          "username": "K_NightFall"
+        },
+        {
+          "username": "nadea1"
+        },
+        {
+          "username": "jakke_mugen"
+        },
+        {
+          "username": "sarcasticbox"
+        },
+        {
+          "username": "alexiszadas34"
+        },
+        {
+          "username": "Scientist"
+        },
+        {
+          "username": "iBandidoxlz"
+        },
+        {
+          "username": "rukanda"
+        },
+        {
+          "username": "BluepopOSC"
+        },
+        {
+          "username": "AionScriptor"
+        },
+        {
+          "username": "SaturnXP"
         }
       ]
     },
@@ -224,59 +271,6 @@
       ]
     },
     {
-      "name": "Riohacha",
-      "residents": [
-        {
-          "username": "ueq_"
-        },
-        {
-          "username": "Amismash82"
-        },
-        {
-          "username": "blucknock_"
-        },
-        {
-          "username": "K_NightFall"
-        },
-        {
-          "username": "nadea1"
-        },
-        {
-          "username": "jakke_mugen"
-        },
-        {
-          "username": "sarcasticbox"
-        },
-        {
-          "username": "alexiszadas34"
-        },
-        {
-          "username": "Scientist"
-        },
-        {
-          "username": "iBandidoxlz"
-        },
-        {
-          "username": "rukanda"
-        },
-        {
-          "username": "BluepopOSC"
-        },
-        {
-          "username": "AionScriptor"
-        },
-        {
-          "username": "SaturnXP"
-        },
-        {
-          "username": "sapinzinho"
-        },
-        {
-          "username": "Tim0thyPlayzz"
-        }
-      ]
-    },
-    {
       "name": "Salento",
       "residents": [
         {
@@ -304,6 +298,44 @@
       ]
     },
     {
+      "name": "Tegucigalpa",
+      "residents": [
+        {
+          "username": "Zaity1"
+        },
+        {
+          "username": "Amberology"
+        },
+        {
+          "username": "RealWonOne"
+        },
+        {
+          "username": "PixelMonkey08"
+        },
+        {
+          "username": "Nagitoboy"
+        },
+        {
+          "username": "achenalia"
+        },
+        {
+          "username": "28ms"
+        },
+        {
+          "username": "Stefieprobs"
+        },
+        {
+          "username": "ItsEnes"
+        },
+        {
+          "username": "stonislav"
+        },
+        {
+          "username": "Atrocizzare"
+        }
+      ]
+    },
+    {
       "name": "Tulum",
       "residents": [
         {
@@ -324,6 +356,14 @@
       "residents": [
         {
           "username": "BNAaj"
+        }
+      ]
+    },
+    {
+      "name": "El Salvador",
+      "residents": [
+        {
+          "username": "ThyCoolio"
         }
       ]
     }
