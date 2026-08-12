@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-08-12T11:31:10.685Z",
+  "updatedAt": "2026-08-12T12:11:37.353Z",
   "nation": "Colombia",
-  "townCount": 28,
-  "residentCount": 61,
+  "townCount": 27,
+  "residentCount": 60,
   "towns": [
     {
       "name": "Antillara",
@@ -316,14 +316,6 @@
       "residents": [
         {
           "username": "wewakm2"
-        }
-      ]
-    },
-    {
-      "name": "Zirconia",
-      "residents": [
-        {
-          "username": "BNAaj"
         }
       ]
     }
