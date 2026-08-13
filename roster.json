@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-08-13T22:09:56.140Z",
+  "updatedAt": "2026-08-13T22:58:36.176Z",
   "nation": "Colombia",
   "townCount": 27,
-  "residentCount": 60,
+  "residentCount": 61,
   "towns": [
     {
       "name": "Antillara",
@@ -273,6 +273,9 @@
         },
         {
           "username": "Tim0thyPlayzz"
+        },
+        {
+          "username": "TerrificAxolotl3"
         }
       ]
     },
