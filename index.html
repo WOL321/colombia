@@ -705,6 +705,7 @@ a.status-pill:hover { border-color: rgba(88,101,242,0.6); background: rgba(88,10
   <img id="lightboxImg" src="" alt="">
 </div>
 
+<script src="roster-core.js"></script>
 <script>
 const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
 const observer = new IntersectionObserver((entries) => {
@@ -984,20 +985,21 @@ function applyRosterData(townsArr) {
 
 /* ---------- Live roster sync ----------
    Tries three sources, in order, and uses whichever works:
-   1. Direct fetch from the map's live feed — real-time, but needs the map
-      server to send an Access-Control-Allow-Origin header (see note below).
-   2. roster.json — a same-origin snapshot a GitHub Actions workflow tries to
-      keep updated (currently blocked server-side by the map host — see
-      .github/workflows/sync-roster.yml for details/history).
+   1. Direct fetch of the map's own markers.json via roster-core.js —
+      real-time, but only works if the map host sends an
+      Access-Control-Allow-Origin header for this site (see note below).
+   2. roster.json — a same-origin snapshot the GitHub Actions workflow keeps
+      updated (see .github/workflows/sync-roster.yml).
    3. FALLBACK_TOWNS above — the last known-good snapshot baked into the page.
 
-   TO GET LIVE SYNC WORKING: whoever manages map.diplomaticamc.com needs to
-   add this single response header to /tiles/minecraft_overworld/markers.json:
-     Access-Control-Allow-Origin: https://colombiadmc.site
-   (or "*" to allow any site to read it). That's it — no other config needed.
-   Once that's added, option 1 below will start working immediately, live,
-   with zero further changes here. */
-const DYNMAP_MARKERS_URL = "https://map.diplomaticamc.com/tiles/minecraft_overworld/markers.json";
+   Parsing lives in roster-core.js (shared with scripts/sync-roster.js) —
+   see that file for the confirmed markers.json schema.
+
+   TO GET OPTION 1 WORKING LIVE: whoever manages map.diplomaticamc.com would
+   need to add an Access-Control-Allow-Origin header (for this site, or "*")
+   to the /tiles/.../markers.json response. Not required — option 2 covers it. */
+const MAP_BASE = "https://map.diplomaticamc.com";
+const MAP_WORLD = "minecraft_overworld";
 const NATION_FILTER = "Colombia";
 const ROSTER_JSON_URL = "roster.json";
 const rosterLiveBadge = document.getElementById('rosterLiveBadge');
@@ -1025,28 +1027,13 @@ function setRosterLiveBadge(state, detail) {
     rosterLiveBadge.title = 'Could not reach the map directly or roster.json — showing the last known roster baked into the page.';
   }
 }
-function parseMarkersToTowns(data) {
-  const claimsLayer = (data.layers || []).find(l => l.id === 'towny_claims');
-  if (!claimsLayer) throw new Error('no towny_claims layer');
-  const liveTowns = claimsLayer.markers
-    .filter(m => m.meta && m.meta['%nation%'] === NATION_FILTER && m.meta['%town%'])
-    .map(m => {
-      const rawResidents = (m.meta['%residents%'] || m.meta['%mayor%'] || '').split(',').map(s => s.trim()).filter(Boolean);
-      return {
-        name: (m.meta['%town%'] || '').replace(/_/g, ' '),
-        residents: rawResidents.map(username => ({ username })),
-      };
-    })
-    .filter(t => t.name && t.residents.length)
-    .sort((a, b) => a.name.localeCompare(b.name));
-  if (!liveTowns.length) throw new Error('no towns matched nation filter');
-  return liveTowns;
-}
 async function tryDirectMapFetch() {
-  const res = await fetch(DYNMAP_MARKERS_URL, { cache: 'no-store' });
-  if (!res.ok) throw new Error('bad response from map');
-  const data = await res.json();
-  return parseMarkersToTowns(data);
+  const fetchNoStore = (url) => fetch(url, { cache: 'no-store' });
+  return RosterCore.fetchNationTowns(fetchNoStore, {
+    mapBase: MAP_BASE,
+    world: MAP_WORLD,
+    nation: NATION_FILTER,
+  });
 }
 async function tryRosterJson() {
   const res = await fetch(ROSTER_JSON_URL, { cache: 'no-store' });
