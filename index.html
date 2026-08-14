@@ -210,6 +210,7 @@ body {
 .gov-pill .medallion { width: 56px; height: 56px; margin: 0 auto 1rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; background: radial-gradient(circle at 35% 30%, #1c2130, #0b0e14); border: 1px solid rgba(255,200,55,0.35); box-shadow: inset 0 0 12px rgba(255,200,55,0.08), 0 4px 12px rgba(0,0,0,0.3); }
 .gov-pill h4 { font-family: 'Cinzel', serif; font-size: 1.05rem; margin-bottom: 0.5rem; color: #fff; letter-spacing: 1px; text-transform: uppercase; }
 .gov-pill p { color: #8898aa; font-size: 0.88rem; }
+.gov-pill p.minister-name { font-family: 'Cinzel', serif; color: #ffc837; font-size: 0.85rem; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 0.4rem; }
 .footer { text-align: center; padding: 4rem 2rem 3rem; background-color: #05070a; position: relative; color: #8898aa; font-size: 0.9rem; }
 .footer::before { content: ''; display: block; width: 60px; height: 1px; background: linear-gradient(90deg, transparent, rgba(255,200,55,0.5), transparent); margin: 0 auto 2rem; }
 .footer .footer-brand { font-family: 'Cinzel', serif; color: #ffc837; letter-spacing: 2px; font-size: 0.95rem; margin-bottom: 0.75rem; text-transform: uppercase; }
@@ -390,6 +391,11 @@ a.status-pill:hover { border-color: rgba(88,101,242,0.6); background: rgba(88,10
 .citizen-card:hover { border-color: rgba(255,200,55,0.3); box-shadow: 0 10px 25px rgba(0,0,0,0.35), 0 0 20px rgba(255,200,55,0.08); transform: translateY(-4px); }
 .citizen-card img { width: 64px; height: 64px; image-rendering: pixelated; border-radius: 6px; border: 1px solid rgba(255,200,55,0.3); margin-bottom: 0.85rem; background: #0b0e14; }
 .citizen-card.leader img { width: 76px; height: 76px; border-color: #ffc837; box-shadow: 0 0 16px rgba(255,200,55,0.25); }
+.citizen-card.leader.minister { padding: 1.15rem 1rem; }
+.citizen-card.leader.minister img { width: 58px; height: 58px; border-color: #b9c2d0; box-shadow: 0 0 10px rgba(185,194,208,0.18); }
+.citizen-card.leader.minister .role { color: #b9c2d0; }
+.leader-grid-cabinet { grid-template-columns: repeat(5, 1fr); }
+@media (max-width: 950px) { .leader-grid-cabinet { grid-template-columns: repeat(2, 1fr); } }
 .citizen-card .name { font-family: 'Cinzel', serif; font-weight: 700; font-size: 1rem; color: #fff; margin-bottom: 0.25rem; }
 .citizen-card .role { font-size: 0.75rem; color: #ffc837; text-transform: uppercase; letter-spacing: 1px; }
 .citizen-card.leader .role { font-size: 0.7rem; letter-spacing: 0.5px; line-height: 1.3; }
@@ -608,12 +614,11 @@ a.status-pill:hover { border-color: rgba(88,101,242,0.6); background: rgba(88,10
       <h2 class="section-title">The Crown Administration</h2>
     </div>
     <div class="grid grid-3">
-      <div class="gov-pill"><div class="medallion">🏛️</div><h4>Min. of Interior</h4><p>Coordinates town placements and regional borders.</p></div>
-      <div class="gov-pill"><div class="medallion">💰</div><h4>Min. of Finance</h4><p>Manages treasury, shop taxes, and gold reserves.</p></div>
-      <div class="gov-pill"><div class="medallion">⚖️</div><h4>Min. of Justice and Law</h4><p>Enforces imperial code and settles legal matters.</p></div>
-      <div class="gov-pill"><div class="medallion">🌾</div><h4>Min. of Agriculture</h4><p>Manages resource farming for the populace.</p></div>
-      <div class="gov-pill"><div class="medallion">🎨</div><h4>Min. of Culture</h4><p>Preserves history and server relations.</p></div>
-      <div class="gov-pill"><div class="medallion">💻</div><h4>Min. of Technology</h4><p>Oversees automation, redstone systems, and server infrastructure.</p></div>
+      <div class="gov-pill"><div class="medallion">🏛️</div><h4>Min. of Interior</h4><p class="minister-name">Novum_Vetus</p><p>Coordinates town placements and regional borders.</p></div>
+      <div class="gov-pill"><div class="medallion">⚖️</div><h4>Min. of Justice and Law</h4><p class="minister-name">K_NightFall</p><p>Enforces imperial code and settles legal matters.</p></div>
+      <div class="gov-pill"><div class="medallion">🌾</div><h4>Min. of Agriculture</h4><p class="minister-name">Respawn34</p><p>Manages resource farming for the populace.</p></div>
+      <div class="gov-pill"><div class="medallion">🎨</div><h4>Min. of Culture</h4><p class="minister-name">ThyCoolio</p><p>Preserves history and server relations.</p></div>
+      <div class="gov-pill"><div class="medallion">💻</div><h4>Min. of Technology</h4><p class="minister-name">Moumen11</p><p>Oversees automation, redstone systems, and server infrastructure.</p></div>
     </div>
   </div>
 </section>
@@ -629,8 +634,10 @@ a.status-pill:hover { border-color: rgba(88,101,242,0.6); background: rgba(88,10
     <label for="citizenSearch" class="sr-only">Search citizens or towns by name or role</label>
     <input type="text" id="citizenSearch" class="roster-search" placeholder="Search by citizen name, town, or role…" autocomplete="off">
   </div>
-  <div class="roster-subhead">Imperial Leadership</div>
-  <div class="leader-grid" id="leaderGrid"></div>
+  <div class="roster-subhead">The Crown</div>
+  <div class="leader-grid leader-grid-crown" id="leaderGridCrown"></div>
+  <div class="roster-subhead">The Cabinet</div>
+  <div class="leader-grid leader-grid-cabinet" id="leaderGridCabinet"></div>
   <div class="roster-subhead">Towns &amp; Residents</div>
   <div class="towns-roster-grid" id="townsGrid"></div>
   <p class="roster-empty" id="rosterEmpty">No citizens or towns match "<span id="rosterEmptyQuery"></span>".</p>
@@ -893,61 +900,23 @@ document.querySelectorAll('.btn').forEach(btn => {
   });
 });
 
-const leaders = [
+const crownLeaders = [
   { username: "ueq_",       role: "King of Colombia", town: "Pijao", joined: "Est. 2026", bio: "Founder and Emperor of the Colombian Empire." },
   { username: "OliveTree315", role: "Prime Minister of Colombia", town: "Medellin Antioquia", joined: "2026", bio: "" },
   { username: "pikagamer55", role: "King of Central America", town: "Puerto Lempira", joined: "2025", bio: "" },
   { username: "zaity1",     role: "Prime Minister of Central America", town: "Tegucigalpa", joined: "2025", bio: "" },
 ];
-  const cabinetLeaders = [
+
+const cabinetLeaders = [
   { username: "Novum_Vetus", role: "Min. of Interior", town: "Antillara", joined: "2026", bio: "Elected Minister of Interior. Holds down the home front, keeps order, and makes sure daily operations don't fall apart." },
   { username: "ThyCoolio", role: "Min. of Culture", town: "El Salvador", joined: "2026", bio: "Elected Minister of Culture with 7 votes. Keeps the community vibe alive, runs events, and preserves the Empire's cultural identity." },
   { username: "Respawn34", role: "Min. of Agriculture", town: "Canollia", joined: "2026", bio: "Elected Minister of Agriculture with 4 votes. Takes charge of resources and internal growth as the backbone of the economy." },
   { username: "Moumen11", role: "Min. of Technology", town: "Haiti", joined: "2026", bio: "Elected Minister of Technology. Manages infrastructure and automation, keeping the Empire's tech systems a step ahead." },
   { username: "K_NightFall", role: "Min. of Justice and Law", town: "Maicao", joined: "2026", bio: "Elected Minister of Justice and Law. Upholds the rules, keeps legal proceedings fair, and ensures justice is distributed properly." },
 ];
- 
+
 // Kept for any code below that still refers to the combined leadership list.
 const leaders = [...crownLeaders, ...cabinetLeaders];
- 
-// DOM refs needed early — applyRosterData() below calls filterRoster() immediately on load.
-const citizenSearch = document.getElementById('citizenSearch');
-const rosterEmpty = document.getElementById('rosterEmpty');
-const rosterEmptyQuery = document.getElementById('rosterEmptyQuery');
- 
-// Fallback snapshot — used only if the live map data can't be reached (offline, CORS, etc).
-const FALLBACK_TOWNS = [
-  { name: "Antillara", residents: [ { username: "NovumVetus" } ] },
-  { name: "Barbados", residents: [ { username: "Crowlia" }, { username: "Executor71" } ] },
-  { name: "Baytown", residents: [ { username: "chezburgercool" } ] },
-  { name: "Bismuna Tara", residents: [ { username: "Bosi45" } ] },
-  { name: "Cali", residents: [ { username: "LukasKung" } ] },
-  { name: "Canollia", residents: [ { username: "Respawn34" }, { username: "Xmantatwin" }, { username: "AlexDahMan" }, { username: "ExpertDay613" } ] },
-  { name: "Caracas", residents: [ { username: "INeedBagels" } ] },
-  { name: "Cartagena", residents: [ { username: "AzureBuster" } ] },
-  { name: "Esteli", residents: [ { username: "IcyStraw9509602" } ] },
-  { name: "Golopigi", residents: [ { username: "ProdigyMster100" } ] },
-  { name: "Guatape", residents: [ { username: "Pokeframe" } ] },
-  { name: "Guatemala", residents: [ { username: "StormChaser234" }, { username: "JustinReality" } ] },
-  { name: "Haiti", residents: [ { username: "moumen11" } ] },
-  { name: "Managua", residents: [ { username: "BoscGIaa" } ] },
-  { name: "Medellin Antioquia", residents: [ { username: "birdyboa" }, { username: "EpicPandaz8" }, { username: "Sasadii" }, { username: "OliveTree316" }, { username: "VickyVenus9416" } ] },
-  { name: "Mexico City", residents: [ { username: "Cryoshot" } ] },
-  { name: "New Bahamas", residents: [ { username: "AnythingIsFinee" }, { username: "magsnake" } ] },
-  { name: "Paramaribo", residents: [ { username: "OnlyADonut" }, { username: "Zericef" } ] },
-  { name: "Pijao", residents: [ { username: "ueq_" }, { username: "Amismash82" }, { username: "blucknock_" }, { username: "K_NightFall" }, { username: "nadea1" }, { username: "jakke_mugen" }, { username: "sarcasticbox" }, { username: "alexiszadas34" }, { username: "Scientist" }, { username: "iBandidoxlz" }, { username: "rukanda" }, { username: "BluepopOSC" }, { username: "AionScriptor" }, { username: "SaturnXP" } ] },
-  { name: "Port Belize", residents: [ { username: "4Gal" } ] },
-  { name: "Puerto Lempira", residents: [ { username: "pikagamer55" } ] },
-  { name: "Quito", residents: [ { username: "PinkF_x" }, { username: "seawave3221" }, { username: "reas240" }, { username: "Syltho865" }, { username: "TheSmartGamer203" }, { username: "Curse345" }, { username: "RocketCraft9000" } ] },
-  { name: "Salento", residents: [ { username: "zattercal" } ] },
-  { name: "Santa Marta", residents: [ { username: "tigerm354" } ] },
-  { name: "Solva", residents: [ { username: "MoGalPro" }, { username: "HASSANBLUE15" } ] },
-  { name: "Tegucigalpa", residents: [ { username: "Zaity1" }, { username: "Amberology" }, { username: "RealWonOne" }, { username: "PixelMonkey08" }, { username: "Nagitoboy" }, { username: "achenalia" }, { username: "28ms" }, { username: "Stefieprobs" }, { username: "ItsEnes" }, { username: "stonislav" }, { username: "Atrocizzare" } ] },
-  { name: "Tulum", residents: [ { username: "SimuWeltSA" } ] },
-  { name: "Zircon", residents: [ { username: "wewakm2" } ] },
-  { name: "Zirconia", residents: [ { username: "BNAaj" } ] },
-  { name: "El Salvador", residents: [ { username: "ThyCoolio" } ] },
-];
 
 // DOM refs needed early — applyRosterData() below calls filterRoster() immediately on load.
 const citizenSearch = document.getElementById('citizenSearch');
@@ -1118,12 +1087,12 @@ async function loadLiveTownyRoster(isBackgroundRefresh) {
 // (Live roster loading is kicked off further down, after renderTownsRoster and
 // cardObserver are defined — see near renderPlayerCards(leaders, ...) below.)
 
-function renderPlayerCards(list, containerId, isLeader) {
+function renderPlayerCards(list, containerId, isLeader, tierClass) {
   const grid = document.getElementById(containerId);
   if (!grid) return;
   list.forEach((c, i) => {
     const el = document.createElement('div');
-    el.className = 'citizen-card spotlight' + (isLeader ? ' leader' : '');
+    el.className = 'citizen-card spotlight' + (isLeader ? ' leader' : '') + (tierClass ? ' ' + tierClass : '');
     el.setAttribute('tabindex', '0');
     el.setAttribute('role', 'button');
     el.setAttribute('aria-label', `View profile: ${c.username}, ${c.role}`);
@@ -1262,7 +1231,8 @@ document.getElementById('profileClose').addEventListener('keydown', (e) => {
 profileOverlay.addEventListener('click', (e) => { if (e.target === profileOverlay) closeProfile(); });
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && profileOverlay.classList.contains('open')) closeProfile(); });
 
-renderPlayerCards(leaders, 'leaderGrid', true);
+renderPlayerCards(crownLeaders, 'leaderGridCrown', true, 'crown');
+renderPlayerCards(cabinetLeaders, 'leaderGridCabinet', true, 'minister');
 
 // Show the fallback snapshot immediately so the page isn't empty, then sync live
 // from the server's Towny map feed. Re-checks silently every 60s while open.
@@ -1291,7 +1261,7 @@ if (statsBar) {
         statsAnimated = true;
         animateCount(document.getElementById('statTowns'), towns.length);
         animateCount(document.getElementById('statCitizens'), totalResidents);
-        animateCount(document.getElementById('statLeaders'), 6);
+        animateCount(document.getElementById('statLeaders'), 5);
         statsObserver.disconnect();
       }
     });
@@ -1450,7 +1420,7 @@ function filterRoster() {
   let anyVisible = false;
 
   // Leadership cards: match on name or role text
-  document.querySelectorAll('#leaderGrid .citizen-card').forEach(card => {
+  document.querySelectorAll('#leaderGridCrown .citizen-card, #leaderGridCabinet .citizen-card').forEach(card => {
     const name = card.querySelector('.name').textContent.toLowerCase();
     const role = card.querySelector('.role').textContent.toLowerCase();
     const match = !q || name.includes(q) || role.includes(q);
