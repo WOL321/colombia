@@ -985,20 +985,19 @@ function applyRosterData(townsArr) {
 
 /* ---------- Live roster sync ----------
    Tries three sources, in order, and uses whichever works:
-   1. Direct fetch from the map's live squaremap feed via roster-core.js —
+   1. Direct fetch of the map's own markers.json via roster-core.js —
       real-time, but only works if the map host sends an
       Access-Control-Allow-Origin header for this site (see note below).
    2. roster.json — a same-origin snapshot the GitHub Actions workflow keeps
       updated (see .github/workflows/sync-roster.yml).
    3. FALLBACK_TOWNS above — the last known-good snapshot baked into the page.
 
-   Parsing lives in roster-core.js (shared with scripts/sync-roster.js) — see
-   that file for why this has to parse HTML popups instead of reading a
-   metadata object.
+   Parsing lives in roster-core.js (shared with scripts/sync-roster.js) —
+   see that file for the confirmed markers.json schema.
 
    TO GET OPTION 1 WORKING LIVE: whoever manages map.diplomaticamc.com would
    need to add an Access-Control-Allow-Origin header (for this site, or "*")
-   to the /tiles/... JSON responses. Not required — option 2 covers it. */
+   to the /tiles/.../markers.json response. Not required — option 2 covers it. */
 const MAP_BASE = "https://map.diplomaticamc.com";
 const MAP_WORLD = "minecraft_overworld";
 const NATION_FILTER = "Colombia";
