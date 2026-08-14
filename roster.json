@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-13T23:35:55.905Z",
+  "updatedAt": "2026-08-14T00:11:12.345Z",
   "nation": "Colombia",
   "townCount": 27,
   "residentCount": 60,
@@ -124,6 +124,59 @@
       ]
     },
     {
+      "name": "Maicao",
+      "residents": [
+        {
+          "username": "ueq_"
+        },
+        {
+          "username": "Amismash82"
+        },
+        {
+          "username": "blucknock_"
+        },
+        {
+          "username": "K_NightFall"
+        },
+        {
+          "username": "nadea1"
+        },
+        {
+          "username": "jakke_mugen"
+        },
+        {
+          "username": "sarcasticbox"
+        },
+        {
+          "username": "alexiszadas34"
+        },
+        {
+          "username": "Scientist"
+        },
+        {
+          "username": "iBandidoxlz"
+        },
+        {
+          "username": "rukanda"
+        },
+        {
+          "username": "BluepopOSC"
+        },
+        {
+          "username": "AionScriptor"
+        },
+        {
+          "username": "SaturnXP"
+        },
+        {
+          "username": "sapinzinho"
+        },
+        {
+          "username": "Tim0thyPlayzz"
+        }
+      ]
+    },
+    {
       "name": "Managua",
       "residents": [
         {
@@ -220,59 +273,6 @@
         },
         {
           "username": "RocketCraft9000"
-        }
-      ]
-    },
-    {
-      "name": "Riohacha",
-      "residents": [
-        {
-          "username": "ueq_"
-        },
-        {
-          "username": "Amismash82"
-        },
-        {
-          "username": "blucknock_"
-        },
-        {
-          "username": "K_NightFall"
-        },
-        {
-          "username": "nadea1"
-        },
-        {
-          "username": "jakke_mugen"
-        },
-        {
-          "username": "sarcasticbox"
-        },
-        {
-          "username": "alexiszadas34"
-        },
-        {
-          "username": "Scientist"
-        },
-        {
-          "username": "iBandidoxlz"
-        },
-        {
-          "username": "rukanda"
-        },
-        {
-          "username": "BluepopOSC"
-        },
-        {
-          "username": "AionScriptor"
-        },
-        {
-          "username": "SaturnXP"
-        },
-        {
-          "username": "sapinzinho"
-        },
-        {
-          "username": "Tim0thyPlayzz"
         }
       ]
     },
