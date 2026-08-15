@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-08-15T19:02:58.811Z",
+  "updatedAt": "2026-08-15T19:26:55.781Z",
   "nation": "Colombia",
-  "townCount": 29,
-  "residentCount": 62,
+  "townCount": 30,
+  "residentCount": 64,
   "towns": [
     {
       "name": "Antillara",
@@ -85,6 +85,17 @@
       "residents": [
         {
           "username": "IcyStraw9509602"
+        }
+      ]
+    },
+    {
+      "name": "Goiania",
+      "residents": [
+        {
+          "username": "NewSweetTea"
+        },
+        {
+          "username": "GiorgioJGZ"
         }
       ]
     },
