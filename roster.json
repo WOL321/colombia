@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-08-16T06:30:11.237Z",
+  "updatedAt": "2026-08-16T07:09:19.693Z",
   "nation": "Colombia",
   "townCount": 30,
-  "residentCount": 64,
+  "residentCount": 65,
   "towns": [
     {
       "name": "Antillara",
@@ -195,6 +195,9 @@
         },
         {
           "username": "Bishop_coquitlam"
+        },
+        {
+          "username": "Addychi01"
         }
       ]
     },
