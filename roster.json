@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-08-16T13:40:32.969Z",
+  "updatedAt": "2026-08-16T13:57:06.628Z",
   "nation": "Colombia",
-  "townCount": 30,
+  "townCount": 31,
   "residentCount": 69,
   "towns": [
     {
@@ -131,6 +131,14 @@
       "residents": [
         {
           "username": "moumen11"
+        }
+      ]
+    },
+    {
+      "name": "Intuto",
+      "residents": [
+        {
+          "username": "catboyHoratio"
         }
       ]
     },
@@ -270,9 +278,6 @@
         },
         {
           "username": "Zericef"
-        },
-        {
-          "username": "catboyHoratio"
         }
       ]
     },
