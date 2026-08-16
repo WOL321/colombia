@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-08-16T09:39:17.549Z",
+  "updatedAt": "2026-08-16T09:55:31.021Z",
   "nation": "Colombia",
   "townCount": 30,
-  "residentCount": 66,
+  "residentCount": 67,
   "towns": [
     {
       "name": "Antillara",
@@ -201,6 +201,9 @@
         },
         {
           "username": "thebestLung"
+        },
+        {
+          "username": "XLHeart"
         }
       ]
     },
