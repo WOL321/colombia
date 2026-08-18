@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-08-18T11:52:19.581Z",
+  "updatedAt": "2026-08-18T12:15:52.588Z",
   "nation": "Colombia",
-  "townCount": 30,
-  "residentCount": 68,
+  "townCount": 31,
+  "residentCount": 69,
   "towns": [
     {
       "name": "Antillara",
@@ -120,6 +120,14 @@
       "residents": [
         {
           "username": "moumen11"
+        }
+      ]
+    },
+    {
+      "name": "Huari",
+      "residents": [
+        {
+          "username": "Crowlia"
         }
       ]
     },
