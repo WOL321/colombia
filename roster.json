@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-08-18T21:48:40.278Z",
+  "updatedAt": "2026-08-18T22:00:39.379Z",
   "nation": "Colombia",
   "townCount": 31,
   "residentCount": 70,
@@ -128,6 +128,9 @@
       "residents": [
         {
           "username": "Crowlia"
+        },
+        {
+          "username": "bigboykasra"
         }
       ]
     },
@@ -221,9 +224,6 @@
         },
         {
           "username": "hecolator27"
-        },
-        {
-          "username": "bigboykasra"
         }
       ]
     },
