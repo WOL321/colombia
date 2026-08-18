@@ -1,25 +1,14 @@
 {
-  "updatedAt": "2026-08-18T11:30:49.608Z",
+  "updatedAt": "2026-08-18T11:52:19.581Z",
   "nation": "Colombia",
-  "townCount": 31,
-  "residentCount": 70,
+  "townCount": 30,
+  "residentCount": 68,
   "towns": [
     {
       "name": "Antillara",
       "residents": [
         {
           "username": "Novum_Vetus"
-        }
-      ]
-    },
-    {
-      "name": "Barbados",
-      "residents": [
-        {
-          "username": "Crowlia"
-        },
-        {
-          "username": "Executor71"
         }
       ]
     },
