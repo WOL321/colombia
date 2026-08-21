@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-08-21T15:32:54.356Z",
+  "updatedAt": "2026-08-21T16:00:25.601Z",
   "nation": "Colombia",
-  "townCount": 31,
-  "residentCount": 68,
+  "townCount": 32,
+  "residentCount": 79,
   "towns": [
     {
       "name": "Antillara",
@@ -344,6 +344,44 @@
         },
         {
           "username": "HASSANBLUE15"
+        }
+      ]
+    },
+    {
+      "name": "Tegucigalpa",
+      "residents": [
+        {
+          "username": "Zaity1"
+        },
+        {
+          "username": "PixelMonkey08"
+        },
+        {
+          "username": "Nagitoboy"
+        },
+        {
+          "username": "achenalia"
+        },
+        {
+          "username": "_28ms"
+        },
+        {
+          "username": "Stefieprobs"
+        },
+        {
+          "username": "ItsEnes"
+        },
+        {
+          "username": "stonislav"
+        },
+        {
+          "username": "Atrocizzare_"
+        },
+        {
+          "username": "FabioVortex"
+        },
+        {
+          "username": "Lunes2015"
         }
       ]
     },
