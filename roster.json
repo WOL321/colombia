@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-08-22T11:59:02.009Z",
+  "updatedAt": "2026-08-22T12:33:06.528Z",
   "nation": "Colombia",
-  "townCount": 32,
-  "residentCount": 79,
+  "townCount": 31,
+  "residentCount": 78,
   "towns": [
     {
       "name": "Antillara",
@@ -281,14 +281,6 @@
         },
         {
           "username": "Zericef"
-        }
-      ]
-    },
-    {
-      "name": "Port Belize",
-      "residents": [
-        {
-          "username": "4Gal"
         }
       ]
     },
