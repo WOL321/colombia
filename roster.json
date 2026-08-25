@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-08-25T09:07:12.491Z",
+  "updatedAt": "2026-08-25T09:47:07.802Z",
   "nation": "Colombia",
   "townCount": 31,
-  "residentCount": 79,
+  "residentCount": 80,
   "towns": [
     {
       "name": "Antillara",
@@ -309,6 +309,9 @@
         },
         {
           "username": "RocketCraft9000"
+        },
+        {
+          "username": "itssadlybat"
         }
       ]
     },
