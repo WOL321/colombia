@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-08-26T16:41:32.406Z",
+  "updatedAt": "2026-08-26T18:23:00.673Z",
   "nation": "Colombia",
-  "townCount": 32,
-  "residentCount": 80,
+  "townCount": 33,
+  "residentCount": 81,
   "towns": [
     {
       "name": "Antillara",
@@ -128,6 +128,14 @@
       "residents": [
         {
           "username": "Crowlia"
+        }
+      ]
+    },
+    {
+      "name": "Iglesia",
+      "residents": [
+        {
+          "username": "Maximilian_____I"
         }
       ]
     },
