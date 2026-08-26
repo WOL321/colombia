@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-08-26T04:02:54.519Z",
+  "updatedAt": "2026-08-26T04:48:46.648Z",
   "nation": "Colombia",
   "townCount": 32,
-  "residentCount": 81,
+  "residentCount": 80,
   "towns": [
     {
       "name": "Antillara",
@@ -151,7 +151,7 @@
       "name": "Kingston",
       "residents": [
         {
-          "username": "SennieZalm"
+          "username": "itssadlybat"
         }
       ]
     },
@@ -317,9 +317,6 @@
         },
         {
           "username": "RocketCraft9000"
-        },
-        {
-          "username": "itssadlybat"
         }
       ]
     },
