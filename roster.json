@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-08-29T18:11:24.776Z",
+  "updatedAt": "2026-08-29T20:52:51.009Z",
   "nation": "Colombia",
-  "townCount": 33,
-  "residentCount": 78,
+  "townCount": 34,
+  "residentCount": 81,
   "towns": [
     {
       "name": "Antillara",
@@ -74,6 +74,20 @@
       "residents": [
         {
           "username": "IcyStraw9509602"
+        }
+      ]
+    },
+    {
+      "name": "George Town",
+      "residents": [
+        {
+          "username": "Carstendb"
+        },
+        {
+          "username": "Gregordb"
+        },
+        {
+          "username": "OFVDEB"
         }
       ]
     },
