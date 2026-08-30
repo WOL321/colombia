@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-08-30T10:43:39.952Z",
+  "updatedAt": "2026-08-30T15:00:16.057Z",
   "nation": "Colombia",
-  "townCount": 34,
-  "residentCount": 81,
+  "townCount": 33,
+  "residentCount": 78,
   "towns": [
     {
       "name": "Antillara",
@@ -185,9 +185,6 @@
         },
         {
           "username": "Amismash82"
-        },
-        {
-          "username": "blucknock_"
         },
         {
           "username": "K_NightFall"
@@ -373,9 +370,6 @@
           "username": "Nagitoboy"
         },
         {
-          "username": "achenalia"
-        },
-        {
           "username": "_28ms"
         },
         {
@@ -398,14 +392,6 @@
         },
         {
           "username": "talety"
-        }
-      ]
-    },
-    {
-      "name": "Tulum",
-      "residents": [
-        {
-          "username": "SimuWeltSA"
         }
       ]
     },
