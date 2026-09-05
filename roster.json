@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-09-05T09:03:53.053Z",
+  "updatedAt": "2026-09-05T12:35:23.713Z",
   "nation": "Colombia",
-  "townCount": 34,
-  "residentCount": 75,
+  "townCount": 35,
+  "residentCount": 76,
   "towns": [
     {
       "name": "Aldama",
@@ -174,6 +174,14 @@
       "residents": [
         {
           "username": "itssadlybat"
+        }
+      ]
+    },
+    {
+      "name": "La Peace",
+      "residents": [
+        {
+          "username": "_hpll_"
         }
       ]
     },
