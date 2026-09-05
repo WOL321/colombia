@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-09-05T15:29:11.585Z",
+  "updatedAt": "2026-09-05T17:27:10.559Z",
   "nation": "Colombia",
   "townCount": 35,
-  "residentCount": 76,
+  "residentCount": 77,
   "towns": [
     {
       "name": "Aldama",
@@ -182,6 +182,9 @@
       "residents": [
         {
           "username": "_hpll_"
+        },
+        {
+          "username": "scuderi"
         }
       ]
     },
