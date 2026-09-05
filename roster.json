@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-05T12:35:23.713Z",
+  "updatedAt": "2026-09-05T15:29:11.585Z",
   "nation": "Colombia",
   "townCount": 35,
   "residentCount": 76,
@@ -178,7 +178,7 @@
       ]
     },
     {
-      "name": "La Peace",
+      "name": "La Paz",
       "residents": [
         {
           "username": "_hpll_"
