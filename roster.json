@@ -1,9 +1,17 @@
 {
-  "updatedAt": "2026-09-04T23:16:48.765Z",
+  "updatedAt": "2026-09-05T00:58:48.761Z",
   "nation": "Colombia",
   "townCount": 33,
   "residentCount": 74,
   "towns": [
+    {
+      "name": "Aldama",
+      "residents": [
+        {
+          "username": "Crowlia"
+        }
+      ]
+    },
     {
       "name": "Antillara",
       "residents": [
@@ -134,14 +142,6 @@
       "residents": [
         {
           "username": "moumen11"
-        }
-      ]
-    },
-    {
-      "name": "Huari",
-      "residents": [
-        {
-          "username": "Crowlia"
         }
       ]
     },
