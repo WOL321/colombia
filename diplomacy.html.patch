@@ -1,0 +1,108 @@
+diff --git a/diplomacy.html b/diplomacy.html
+index 9aa5eb8..ec1a358 100644
+--- a/diplomacy.html
++++ b/diplomacy.html
+@@ -427,6 +427,53 @@ a.status-pill:hover { border-color: rgba(88,101,242,0.6); background: rgba(88,10
+ .treaty-card h3 { font-family: 'Cinzel', serif; font-size: 1.4rem; color: #fff; margin-bottom: 1rem; }
+ .treaty-card p { color: #8898aa; font-size: 0.95rem; }
+ 
++/* ---------- Treaty Archive (scanned documents, chronological) ---------- */
++.treaty-archive-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.75rem; }
++@media (max-width: 900px) { .treaty-archive-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; } }
++.treaty-doc {
++  background: #111622;
++  border: 1px solid rgba(255,200,55,0.15);
++  border-radius: 6px;
++  overflow: hidden;
++  position: relative;
++  transform: translateZ(0);
++  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.35s ease;
++}
++.treaty-doc:hover, .treaty-doc:focus-within {
++  transform: translateY(-6px) translateZ(0);
++  border-color: rgba(255,200,55,0.4);
++  box-shadow: 0 20px 40px rgba(0,0,0,0.45);
++}
++.treaty-doc-thumb { position: relative; overflow: hidden; aspect-ratio: 4 / 5; background: #0b0e14; cursor: zoom-in; }
++.treaty-doc-thumb img {
++  width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block;
++  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), filter 0.6s ease;
++  will-change: transform;
++}
++.treaty-doc:hover .treaty-doc-thumb img, .treaty-doc:focus-within .treaty-doc-thumb img { transform: scale(1.06); }
++.treaty-doc-thumb::after {
++  content: ''; position: absolute; inset: 0;
++  background: linear-gradient(180deg, rgba(5,7,10,0) 55%, rgba(5,7,10,0.85) 100%);
++  pointer-events: none;
++}
++.treaty-doc-zoom {
++  position: absolute; top: 12px; right: 12px; width: 34px; height: 34px; border-radius: 50%;
++  background: rgba(5,7,10,0.55); border: 1px solid rgba(255,200,55,0.3); color: #ffc837;
++  display: flex; align-items: center; justify-content: center; font-size: 0.9rem;
++  opacity: 0; transform: scale(0.85); transition: opacity 0.3s ease, transform 0.3s ease;
++  pointer-events: none;
++}
++.treaty-doc:hover .treaty-doc-zoom, .treaty-doc:focus-within .treaty-doc-zoom { opacity: 1; transform: scale(1); }
++.treaty-doc-body { padding: 1.5rem 1.5rem 1.75rem; }
++.treaty-doc-date { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #ffc837; margin-bottom: 0.6rem; }
++.treaty-doc-body h3 { font-family: 'Cinzel', serif; font-size: 1.15rem; color: #fff; margin-bottom: 0.4rem; line-height: 1.3; }
++.treaty-doc-body p { color: #8898aa; font-size: 0.88rem; }
++@media (prefers-reduced-motion: reduce) {
++  .treaty-doc, .treaty-doc-thumb img, .treaty-doc-zoom { transition: none !important; }
++  .treaty-doc:hover { transform: none; }
++  .treaty-doc:hover .treaty-doc-thumb img { transform: none; }
++}
++
+ /* ---------- Join Us: perk cards + numbered steps ---------- */
+ .perk-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+ @media (max-width: 700px) { .perk-grid { grid-template-columns: 1fr; } }
+@@ -549,6 +596,49 @@ a.status-pill:hover { border-color: rgba(88,101,242,0.6); background: rgba(88,10
+   </div>
+ </section>
+ 
++<section class="section container">
++  <div class="center-header">
++    <span class="sub-title">Ratified Documents</span>
++    <h2 class="section-title">Treaty Archive</h2>
++    <p class="section-desc">The Crown's diplomatic record isn't a claim — it's paper. Every accord below was signed, sealed, and ratified. Click a document to read it in full.</p>
++  </div>
++  <div class="treaty-archive-grid">
++    <article class="treaty-doc reveal">
++      <div class="treaty-doc-thumb lightbox-trigger">
++        <img src="treaty-colombia-iceland-2026-08-15.webp" alt="Alliance Treaty between Colombia and Iceland, signed August 15, 2026" loading="lazy" decoding="async" width="1400" height="1965">
++        <span class="treaty-doc-zoom" aria-hidden="true">🔍</span>
++      </div>
++      <div class="treaty-doc-body">
++        <span class="treaty-doc-date">August 15, 2026</span>
++        <h3>Alliance Treaty</h3>
++        <p>Colombia &amp; Iceland — mutual recognition, non-aggression, and mutual support.</p>
++      </div>
++    </article>
++    <article class="treaty-doc reveal">
++      <div class="treaty-doc-thumb lightbox-trigger">
++        <img src="treaty-colombia-brazil-2026-08-31.webp" alt="Alliance Treaty between Colombia and Brazil, signed August 31, 2026" loading="lazy" decoding="async" width="1400" height="1456">
++        <span class="treaty-doc-zoom" aria-hidden="true">🔍</span>
++      </div>
++      <div class="treaty-doc-body">
++        <span class="treaty-doc-date">August 31, 2026</span>
++        <h3>Alliance Treaty</h3>
++        <p>Colombia &amp; Brazil — mutual recognition, non-aggression, and mutual support.</p>
++      </div>
++    </article>
++    <article class="treaty-doc reveal">
++      <div class="treaty-doc-thumb lightbox-trigger">
++        <img src="treaty-colombia-chile-2026-09-03.webp" alt="Treaty of Non-Aggression and Cooperation between Colombia and Chile, ratified September 3, 2026" loading="lazy" decoding="async" width="1400" height="2036">
++        <span class="treaty-doc-zoom" aria-hidden="true">🔍</span>
++      </div>
++      <div class="treaty-doc-body">
++        <span class="treaty-doc-date">September 3, 2026</span>
++        <h3>Non-Aggression &amp; Cooperation</h3>
++        <p>Colombia &amp; Chile — sovereignty, cooperation, and a good-faith path through disputes.</p>
++      </div>
++    </article>
++  </div>
++</section>
++
+ <section class="section container">
+   <div class="center-header">
+     <h2 class="section-title" style="font-size: 2rem;">The Crown's Foreign Policy</h2>
