@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-09-07T05:14:21.673Z",
+  "updatedAt": "2026-09-07T10:18:07.629Z",
   "nation": "Colombia",
-  "townCount": 35,
+  "townCount": 36,
   "residentCount": 78,
   "towns": [
     {
@@ -16,7 +16,7 @@
       "name": "Antillara",
       "residents": [
         {
-          "username": "Novum_Vetus"
+          "username": "Amismash82"
         }
       ]
     },
@@ -195,9 +195,6 @@
           "username": "ueq_"
         },
         {
-          "username": "Amismash82"
-        },
-        {
           "username": "K_NightFall"
         },
         {
@@ -346,6 +343,14 @@
       "residents": [
         {
           "username": "zattercal"
+        }
+      ]
+    },
+    {
+      "name": "Santa Maria",
+      "residents": [
+        {
+          "username": "Novum_Vetus"
         }
       ]
     },
