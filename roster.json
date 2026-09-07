@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-09-07T15:53:20.130Z",
+  "updatedAt": "2026-09-07T19:25:47.527Z",
   "nation": "Colombia",
-  "townCount": 35,
-  "residentCount": 76,
+  "townCount": 36,
+  "residentCount": 79,
   "towns": [
     {
       "name": "Aldama",
@@ -178,6 +178,20 @@
       ]
     },
     {
+      "name": "La Paz",
+      "residents": [
+        {
+          "username": "_hpll_"
+        },
+        {
+          "username": "scuderi"
+        },
+        {
+          "username": "BBMilkshake"
+        }
+      ]
+    },
+    {
       "name": "Maicao",
       "residents": [
         {
@@ -188,9 +202,6 @@
         },
         {
           "username": "nadea1"
-        },
-        {
-          "username": "jakke_mugen"
         },
         {
           "username": "sarcasticbox"
@@ -245,6 +256,9 @@
         },
         {
           "username": "xnd"
+        },
+        {
+          "username": "GrovKurt"
         }
       ]
     },
