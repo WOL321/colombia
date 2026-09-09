@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-09-09T04:33:14.329Z",
+  "updatedAt": "2026-09-09T09:07:12.751Z",
   "nation": "Colombia",
-  "townCount": 37,
-  "residentCount": 79,
+  "townCount": 36,
+  "residentCount": 75,
   "towns": [
     {
       "name": "Aldama",
@@ -185,23 +185,6 @@
       "residents": [
         {
           "username": "itssadlybat"
-        }
-      ]
-    },
-    {
-      "name": "La Paz",
-      "residents": [
-        {
-          "username": "_hpll_"
-        },
-        {
-          "username": "scuderi"
-        },
-        {
-          "username": "BBMilkshake"
-        },
-        {
-          "username": "_Melix_"
         }
       ]
     },
