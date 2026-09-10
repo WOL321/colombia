@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-09-10T11:22:01.177Z",
+  "updatedAt": "2026-09-10T15:02:19.093Z",
   "nation": "Colombia",
-  "townCount": 36,
-  "residentCount": 75,
+  "townCount": 37,
+  "residentCount": 76,
   "towns": [
     {
       "name": "Aldama",
@@ -390,6 +390,14 @@
         },
         {
           "username": "talety"
+        }
+      ]
+    },
+    {
+      "name": "Tenochtitlan",
+      "residents": [
+        {
+          "username": "Mertian"
         }
       ]
     },
