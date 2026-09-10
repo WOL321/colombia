@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-09T23:44:06.606Z",
+  "updatedAt": "2026-09-10T01:28:00.102Z",
   "nation": "Colombia",
   "townCount": 36,
   "residentCount": 75,
@@ -9,14 +9,6 @@
       "residents": [
         {
           "username": "Crowlia"
-        }
-      ]
-    },
-    {
-      "name": "Antillara",
-      "residents": [
-        {
-          "username": "Amismash82"
         }
       ]
     },
@@ -66,6 +58,14 @@
       "residents": [
         {
           "username": "INeedBagels"
+        }
+      ]
+    },
+    {
+      "name": "Dominican Republic",
+      "residents": [
+        {
+          "username": "Amismash82"
         }
       ]
     },
