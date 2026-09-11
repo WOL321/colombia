@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-09-11T00:35:39.946Z",
+  "updatedAt": "2026-09-11T05:08:01.276Z",
   "nation": "Colombia",
   "townCount": 37,
-  "residentCount": 76,
+  "residentCount": 77,
   "towns": [
     {
       "name": "Aldama",
@@ -58,6 +58,14 @@
       "residents": [
         {
           "username": "INeedBagels"
+        }
+      ]
+    },
+    {
+      "name": "Cordoba",
+      "residents": [
+        {
+          "username": "zattercal"
         }
       ]
     },
@@ -145,6 +153,9 @@
         },
         {
           "username": "JustinReality"
+        },
+        {
+          "username": "LDude2345"
         }
       ]
     },
@@ -329,14 +340,6 @@
       "residents": [
         {
           "username": "PinkF_x"
-        }
-      ]
-    },
-    {
-      "name": "Salento",
-      "residents": [
-        {
-          "username": "zattercal"
         }
       ]
     },
