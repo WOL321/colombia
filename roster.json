@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-09-13T04:49:43.017Z",
+  "updatedAt": "2026-09-13T09:46:42.195Z",
   "nation": "Colombia",
-  "townCount": 37,
-  "residentCount": 78,
+  "townCount": 36,
+  "residentCount": 71,
   "towns": [
     {
       "name": "Aldama",
@@ -370,32 +370,6 @@
         },
         {
           "username": "HASSANBLUE15"
-        }
-      ]
-    },
-    {
-      "name": "Tegucigalpa",
-      "residents": [
-        {
-          "username": "Zaity1"
-        },
-        {
-          "username": "ItsEnes"
-        },
-        {
-          "username": "stonislav"
-        },
-        {
-          "username": "Atrocizzare_"
-        },
-        {
-          "username": "FabioVortex"
-        },
-        {
-          "username": "Lunes2015"
-        },
-        {
-          "username": "talety"
         }
       ]
     },
