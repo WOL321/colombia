@@ -1,14 +1,22 @@
 {
-  "updatedAt": "2026-09-14T06:10:38.654Z",
+  "updatedAt": "2026-09-14T12:38:04.057Z",
   "nation": "Colombia",
-  "townCount": 37,
-  "residentCount": 78,
+  "townCount": 38,
+  "residentCount": 77,
   "towns": [
     {
       "name": "Aldama",
       "residents": [
         {
           "username": "Crowlia"
+        }
+      ]
+    },
+    {
+      "name": "Anori",
+      "residents": [
+        {
+          "username": "OliveTree316"
         }
       ]
     },
@@ -282,9 +290,6 @@
           "username": "birdyboa"
         },
         {
-          "username": "OliveTree316"
-        },
-        {
           "username": "c0rrupt_Jelly"
         }
       ]
@@ -381,9 +386,6 @@
         },
         {
           "username": "ItsEnes"
-        },
-        {
-          "username": "stonislav"
         },
         {
           "username": "Atrocizzare_"
