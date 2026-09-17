@@ -1,7 +1,7 @@
 {
-  "updatedAt": "2026-09-17T01:47:51.744Z",
+  "updatedAt": "2026-09-17T06:42:12.047Z",
   "nation": "Colombia",
-  "townCount": 38,
+  "townCount": 37,
   "residentCount": 75,
   "towns": [
     {
@@ -200,14 +200,6 @@
       ]
     },
     {
-      "name": "Kingston",
-      "residents": [
-        {
-          "username": "itssadlybat"
-        }
-      ]
-    },
-    {
       "name": "Maicao",
       "residents": [
         {
@@ -350,6 +342,9 @@
         },
         {
           "username": "Qulipzz"
+        },
+        {
+          "username": "stonebigman"
         }
       ]
     },
