@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-09-19T01:31:40.323Z",
+  "updatedAt": "2026-09-19T06:24:55.641Z",
   "nation": "Colombia",
-  "townCount": 36,
-  "residentCount": 75,
+  "townCount": 37,
+  "residentCount": 76,
   "towns": [
     {
       "name": "Aldama",
@@ -326,6 +326,14 @@
       "residents": [
         {
           "username": "pikagamer55"
+        }
+      ]
+    },
+    {
+      "name": "Quito",
+      "residents": [
+        {
+          "username": "PinkF_x"
         }
       ]
     },
