@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-09-19T14:24:06.413Z",
+  "updatedAt": "2026-09-19T17:19:56.730Z",
   "nation": "Colombia",
-  "townCount": 37,
-  "residentCount": 76,
+  "townCount": 35,
+  "residentCount": 74,
   "towns": [
     {
       "name": "Aldama",
@@ -164,14 +164,6 @@
       "residents": [
         {
           "username": "moumen11"
-        }
-      ]
-    },
-    {
-      "name": "Iglesia",
-      "residents": [
-        {
-          "username": "ArchB_Francois"
         }
       ]
     },
@@ -390,14 +382,6 @@
         },
         {
           "username": "talety"
-        }
-      ]
-    },
-    {
-      "name": "Tenochtitlan",
-      "residents": [
-        {
-          "username": "Mertian"
         }
       ]
     },
