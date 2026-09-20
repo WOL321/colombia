@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-09-19T23:20:42.634Z",
+  "updatedAt": "2026-09-20T01:17:08.014Z",
   "nation": "Colombia",
   "townCount": 35,
-  "residentCount": 75,
+  "residentCount": 74,
   "towns": [
     {
       "name": "Aldama",
@@ -250,9 +250,6 @@
         },
         {
           "username": "pato541"
-        },
-        {
-          "username": "Soemtheguywhoask"
         }
       ]
     },
