@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-22T18:20:49.379Z",
+  "updatedAt": "2026-09-22T21:26:41.949Z",
   "nation": "Colombia",
   "townCount": 35,
   "residentCount": 75,
@@ -330,29 +330,6 @@
       ]
     },
     {
-      "name": "San Miguel",
-      "residents": [
-        {
-          "username": "Zaity1"
-        },
-        {
-          "username": "ItsEnes"
-        },
-        {
-          "username": "Atrocizzare_"
-        },
-        {
-          "username": "FabioVortex"
-        },
-        {
-          "username": "Lunes2015"
-        },
-        {
-          "username": "talety"
-        }
-      ]
-    },
-    {
       "name": "Santa Maria",
       "residents": [
         {
@@ -385,6 +362,29 @@
         },
         {
           "username": "HASSANBLUE15"
+        }
+      ]
+    },
+    {
+      "name": "Tegucigalpa",
+      "residents": [
+        {
+          "username": "Zaity1"
+        },
+        {
+          "username": "ItsEnes"
+        },
+        {
+          "username": "Atrocizzare_"
+        },
+        {
+          "username": "FabioVortex"
+        },
+        {
+          "username": "Lunes2015"
+        },
+        {
+          "username": "talety"
         }
       ]
     },
