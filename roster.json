@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-09-25T18:54:31.666Z",
+  "updatedAt": "2026-09-25T21:52:24.009Z",
   "nation": "Colombia",
   "townCount": 35,
-  "residentCount": 73,
+  "residentCount": 74,
   "towns": [
     {
       "name": "Aldama",
@@ -12,6 +12,15 @@
         },
         {
           "username": "ThaRiseOfKiller"
+        },
+        {
+          "username": "Cryoshot_"
+        },
+        {
+          "username": "moumen11"
+        },
+        {
+          "username": "Novum_Vetus"
         }
       ]
     },
@@ -166,7 +175,7 @@
       "name": "Haiti",
       "residents": [
         {
-          "username": "moumen11"
+          "username": "Phoenix7742"
         }
       ]
     },
@@ -270,7 +279,7 @@
       "name": "Mexico City",
       "residents": [
         {
-          "username": "Cryoshot_"
+          "username": "TheEmptyBar"
         }
       ]
     },
@@ -317,18 +326,12 @@
       "residents": [
         {
           "username": "PinkF_x"
-        },
-        {
-          "username": "TheEmptyBar"
         }
       ]
     },
     {
       "name": "Santa Maria",
       "residents": [
-        {
-          "username": "Novum_Vetus"
-        },
         {
           "username": "Qulipzz"
         },
