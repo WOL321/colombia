@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-26T17:24:24.764Z",
+  "updatedAt": "2026-09-26T19:58:17.444Z",
   "nation": "Colombia",
   "townCount": 35,
   "residentCount": 75,
@@ -12,9 +12,6 @@
         },
         {
           "username": "ThaRiseOfKiller"
-        },
-        {
-          "username": "Cryoshot_"
         },
         {
           "username": "moumen11"
@@ -278,6 +275,9 @@
     {
       "name": "Mexico City",
       "residents": [
+        {
+          "username": "Cryoshot_"
+        },
         {
           "username": "TheEmptyBar"
         }
