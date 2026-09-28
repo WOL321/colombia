@@ -1,20 +1,14 @@
 {
-  "updatedAt": "2026-09-28T11:00:12.845Z",
+  "updatedAt": "2026-09-28T18:30:35.046Z",
   "nation": "Colombia",
   "townCount": 35,
-  "residentCount": 76,
+  "residentCount": 74,
   "towns": [
     {
       "name": "Aldama",
       "residents": [
         {
           "username": "Crowlia"
-        },
-        {
-          "username": "ThaRiseOfKiller"
-        },
-        {
-          "username": "moumen11"
         },
         {
           "username": "Novum_Vetus"
@@ -173,6 +167,9 @@
       "residents": [
         {
           "username": "Phoenix7742"
+        },
+        {
+          "username": "moumen11"
         }
       ]
     },
@@ -253,9 +250,6 @@
         },
         {
           "username": "Aquilla_AQ"
-        },
-        {
-          "username": "Sahxr"
         }
       ]
     },
