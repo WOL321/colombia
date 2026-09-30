@@ -1,22 +1,14 @@
 {
-  "updatedAt": "2026-09-30T08:39:31.205Z",
+  "updatedAt": "2026-09-30T15:15:29.777Z",
   "nation": "Colombia",
-  "townCount": 35,
-  "residentCount": 72,
+  "townCount": 34,
+  "residentCount": 71,
   "towns": [
     {
       "name": "Aldama",
       "residents": [
         {
           "username": "Crowlia"
-        }
-      ]
-    },
-    {
-      "name": "Baytown",
-      "residents": [
-        {
-          "username": "chezburgercool"
         }
       ]
     },
