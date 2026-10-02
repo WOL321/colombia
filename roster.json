@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-02T00:38:49.880Z",
+  "updatedAt": "2026-10-02T06:08:17.226Z",
   "nation": "Colombia",
   "townCount": 33,
-  "residentCount": 69,
+  "residentCount": 70,
   "towns": [
     {
       "name": "Aldama",
@@ -178,6 +178,9 @@
     {
       "name": "Maicao",
       "residents": [
+        {
+          "username": "9_88"
+        },
         {
           "username": "ueq_"
         },
