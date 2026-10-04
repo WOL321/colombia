@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-04T14:26:07.050Z",
+  "updatedAt": "2026-10-04T18:13:54.237Z",
   "nation": "Colombia",
-  "townCount": 33,
-  "residentCount": 69,
+  "townCount": 34,
+  "residentCount": 70,
   "towns": [
     {
       "name": "Aldama",
@@ -298,6 +298,14 @@
       "residents": [
         {
           "username": "foxphor"
+        }
+      ]
+    },
+    {
+      "name": "Santa Ana",
+      "residents": [
+        {
+          "username": "Menacingsquid"
         }
       ]
     },
