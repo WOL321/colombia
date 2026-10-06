@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-06T00:57:54.270Z",
+  "updatedAt": "2026-10-06T07:03:31.947Z",
   "nation": "Colombia",
   "townCount": 34,
   "residentCount": 64,
@@ -306,6 +306,9 @@
       "name": "Santa Maria",
       "residents": [
         {
+          "username": "Novum_Vetus"
+        },
+        {
           "username": "Qulipzz"
         },
         {
@@ -313,9 +316,6 @@
         },
         {
           "username": "Tim0thyPlayzz"
-        },
-        {
-          "username": "Novum_Vetus"
         }
       ]
     },
