@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-05T11:39:41.453Z",
+  "updatedAt": "2026-10-06T00:57:54.270Z",
   "nation": "Colombia",
   "townCount": 34,
-  "residentCount": 69,
+  "residentCount": 64,
   "towns": [
     {
       "name": "Aldama",
@@ -17,6 +17,14 @@
       "residents": [
         {
           "username": "Bosi45"
+        }
+      ]
+    },
+    {
+      "name": "Cabada Vera",
+      "residents": [
+        {
+          "username": "Fishy_Fosh43"
         }
       ]
     },
@@ -36,9 +44,6 @@
         },
         {
           "username": "Xmantatwin"
-        },
-        {
-          "username": "AlexDahMan"
         }
       ]
     },
@@ -188,16 +193,7 @@
           "username": "_PinkLuna_"
         },
         {
-          "username": "nadea1"
-        },
-        {
           "username": "sarcasticbox"
-        },
-        {
-          "username": "rukanda"
-        },
-        {
-          "username": "SaturnXP"
         },
         {
           "username": "sapinzinho"
@@ -251,7 +247,7 @@
       "name": "Mexico City",
       "residents": [
         {
-          "username": "Cryoshot_"
+          "username": "Cryolyte"
         }
       ]
     },
@@ -328,17 +324,6 @@
       "residents": [
         {
           "username": "tigerm354"
-        }
-      ]
-    },
-    {
-      "name": "Solva",
-      "residents": [
-        {
-          "username": "MoGalPro"
-        },
-        {
-          "username": "HASSANBLUE15"
         }
       ]
     },
