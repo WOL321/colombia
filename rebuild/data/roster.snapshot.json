@@ -1,0 +1,370 @@
+{
+  "updatedAt": "2026-10-07T02:19:22.967Z",
+  "nation": "Colombia",
+  "townCount": 34,
+  "residentCount": 64,
+  "towns": [
+    {
+      "name": "Aldama",
+      "residents": [
+        {
+          "username": "Crowlia"
+        }
+      ]
+    },
+    {
+      "name": "Bismuna Tara",
+      "residents": [
+        {
+          "username": "Bosi45"
+        }
+      ]
+    },
+    {
+      "name": "Cabada Vera",
+      "residents": [
+        {
+          "username": "Fishy_Fosh43"
+        }
+      ]
+    },
+    {
+      "name": "Cali",
+      "residents": [
+        {
+          "username": "LukasKung"
+        }
+      ]
+    },
+    {
+      "name": "Canollia",
+      "residents": [
+        {
+          "username": "Respawn34"
+        },
+        {
+          "username": "Xmantatwin"
+        }
+      ]
+    },
+    {
+      "name": "Caracas",
+      "residents": [
+        {
+          "username": "INeedBagels"
+        }
+      ]
+    },
+    {
+      "name": "Cordoba",
+      "residents": [
+        {
+          "username": "zattercal"
+        }
+      ]
+    },
+    {
+      "name": "Dominican Republic",
+      "residents": [
+        {
+          "username": "Amismash82"
+        }
+      ]
+    },
+    {
+      "name": "El Estrella",
+      "residents": [
+        {
+          "username": "jakke_mugen"
+        },
+        {
+          "username": "xnd"
+        }
+      ]
+    },
+    {
+      "name": "El Salvador",
+      "residents": [
+        {
+          "username": "ThyCoolio"
+        }
+      ]
+    },
+    {
+      "name": "Esteli",
+      "residents": [
+        {
+          "username": "IcyStraw9509602"
+        }
+      ]
+    },
+    {
+      "name": "George Town",
+      "residents": [
+        {
+          "username": "Carstendb"
+        },
+        {
+          "username": "Gregordb"
+        },
+        {
+          "username": "OFVDEB"
+        }
+      ]
+    },
+    {
+      "name": "Goiania",
+      "residents": [
+        {
+          "username": "NewSweetTea"
+        },
+        {
+          "username": "GiorgioJGZ"
+        }
+      ]
+    },
+    {
+      "name": "Golopigi",
+      "residents": [
+        {
+          "username": "ProdigyMster100"
+        }
+      ]
+    },
+    {
+      "name": "Guatape",
+      "residents": [
+        {
+          "username": "Pokeframe"
+        }
+      ]
+    },
+    {
+      "name": "Guatemala",
+      "residents": [
+        {
+          "username": "StormChaser234"
+        },
+        {
+          "username": "JustinReality"
+        },
+        {
+          "username": "LDude2345"
+        }
+      ]
+    },
+    {
+      "name": "Intuto",
+      "residents": [
+        {
+          "username": "catboyHoratio"
+        }
+      ]
+    },
+    {
+      "name": "Iza",
+      "residents": [
+        {
+          "username": "OliveTree316"
+        },
+        {
+          "username": "VickyVenus9416"
+        }
+      ]
+    },
+    {
+      "name": "Jardin",
+      "residents": [
+        {
+          "username": "Mrspancake4343"
+        }
+      ]
+    },
+    {
+      "name": "Maicao",
+      "residents": [
+        {
+          "username": "9_88"
+        },
+        {
+          "username": "ueq_"
+        },
+        {
+          "username": "_PinkLuna_"
+        },
+        {
+          "username": "sarcasticbox"
+        },
+        {
+          "username": "sapinzinho"
+        },
+        {
+          "username": "Addychi01"
+        },
+        {
+          "username": "Scarioh"
+        },
+        {
+          "username": "FutureLemon"
+        },
+        {
+          "username": "TheKrieger6774"
+        },
+        {
+          "username": "hecolator27"
+        },
+        {
+          "username": "AudioCrescent83"
+        },
+        {
+          "username": "pato541"
+        },
+        {
+          "username": "Aquilla_AQ"
+        }
+      ]
+    },
+    {
+      "name": "Managua",
+      "residents": [
+        {
+          "username": "BoscGIaa"
+        }
+      ]
+    },
+    {
+      "name": "Medellin Antioquia",
+      "residents": [
+        {
+          "username": "birdyboa"
+        },
+        {
+          "username": "c0rrupt_Jelly"
+        }
+      ]
+    },
+    {
+      "name": "Mexico City",
+      "residents": [
+        {
+          "username": "Cryolyte"
+        }
+      ]
+    },
+    {
+      "name": "New Bahamas",
+      "residents": [
+        {
+          "username": "AnythingIsFinee"
+        }
+      ]
+    },
+    {
+      "name": "Panama",
+      "residents": [
+        {
+          "username": "__Jyro__"
+        }
+      ]
+    },
+    {
+      "name": "Paramaribo",
+      "residents": [
+        {
+          "username": "OnlyADonut"
+        },
+        {
+          "username": "Zericef"
+        }
+      ]
+    },
+    {
+      "name": "Puerto Lempira",
+      "residents": [
+        {
+          "username": "pikagamer55"
+        }
+      ]
+    },
+    {
+      "name": "Quito",
+      "residents": [
+        {
+          "username": "foxphor"
+        }
+      ]
+    },
+    {
+      "name": "Santa Ana",
+      "residents": [
+        {
+          "username": "Menacingsquid"
+        }
+      ]
+    },
+    {
+      "name": "Santa Maria",
+      "residents": [
+        {
+          "username": "Novum_Vetus"
+        },
+        {
+          "username": "Qulipzz"
+        },
+        {
+          "username": "stonebigman"
+        },
+        {
+          "username": "Tim0thyPlayzz"
+        }
+      ]
+    },
+    {
+      "name": "Santa Marta",
+      "residents": [
+        {
+          "username": "tigerm354"
+        }
+      ]
+    },
+    {
+      "name": "Tegucigalpa",
+      "residents": [
+        {
+          "username": "Zaity1"
+        },
+        {
+          "username": "ItsEnes"
+        },
+        {
+          "username": "Atrocizzare_"
+        },
+        {
+          "username": "FabioVortex"
+        },
+        {
+          "username": "Lunes2015"
+        },
+        {
+          "username": "talety"
+        }
+      ]
+    },
+    {
+      "name": "Trinidad",
+      "residents": [
+        {
+          "username": "DianJ"
+        }
+      ]
+    },
+    {
+      "name": "Zircon",
+      "residents": [
+        {
+          "username": "wewakm2"
+        }
+      ]
+    }
+  ]
+}
