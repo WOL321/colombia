@@ -1,0 +1,435 @@
+/* ==========================================================================
+   Reino de Colombia — DiplomaticaMC rebuild
+   Design tokens + shared components + Hero
+   Order: tokens → reset/base → layout helpers → buttons → header → hero
+   Later sections append below in the same order as the markup.
+   ========================================================================== */
+
+/* ---------- 1. Tokens ---------------------------------------------------- */
+:root {
+  /* Surfaces */
+  --bg: #07080b;
+  --surface: #0e1015;
+  --surface-raised: #14161d;
+
+  /* Gold */
+  --gold: #d4a017;
+  --gold-bright: #f0c14b;
+  --gold-line: rgba(212, 160, 23, 0.22);
+  --gold-line-strong: rgba(212, 160, 23, 0.45);
+  --gold-glow: rgba(212, 160, 23, 0.14);
+
+  /* Text */
+  --text: #ece5d8;
+  --text-muted: #9d968a;
+
+  /* Type */
+  --font-serif: "Cormorant Garamond", Georgia, "Times New Roman", serif;
+  --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Shape + shadow */
+  --radius: 14px;
+  --shadow-card: 0 18px 40px -22px rgba(0, 0, 0, 0.8);
+
+  /* Motion */
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* ---------- 2. Reset / base ---------------------------------------------- */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  line-height: 1.08;
+  margin: 0;
+}
+
+p { margin: 0; }
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; }
+
+::selection {
+  background: rgba(212, 160, 23, 0.35);
+  color: #fff;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  padding: 0.75rem 1.25rem;
+  background: var(--gold);
+  color: #14100a;
+  border-radius: 0 0 var(--radius) 0;
+  z-index: 100;
+}
+.skip-link:focus { left: 0; }
+
+/* ---------- 3. Layout helpers -------------------------------------------- */
+.container {
+  width: min(1160px, calc(100% - 2.5rem));
+  margin-inline: auto;
+}
+
+.kicker {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+}
+
+/* Entrance animation helper (JS adds .is-in when element enters view) */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after { animation-duration: 0.001s !important; }
+}
+
+/* ---------- 4. Buttons ---------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.7rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  font: 600 0.95rem/1 var(--font-sans);
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    transform 0.25s var(--ease-out),
+    box-shadow 0.25s var(--ease-out),
+    border-color 0.25s var(--ease-out),
+    background-color 0.25s var(--ease-out);
+}
+.btn:active { transform: translateY(1px) scale(0.99); }
+
+.btn-gold {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%);
+  color: #17120a;
+  box-shadow: 0 10px 26px -12px rgba(212, 160, 23, 0.55);
+}
+.btn-gold:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 34px -12px rgba(240, 193, 75, 0.6);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--gold-line-strong);
+}
+.btn-ghost:hover {
+  transform: translateY(-2px);
+  border-color: var(--gold-bright);
+  background: rgba(212, 160, 23, 0.08);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--gold-bright);
+  outline-offset: 3px;
+}
+
+/* ---------- 5. Header ------------------------------------------------------*/
+.site-header {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  border-bottom: 1px solid transparent;
+  transition: background-color 0.35s var(--ease-out),
+              border-color 0.35s var(--ease-out);
+}
+.site-header.is-scrolled {
+  background: rgba(7, 8, 11, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom-color: var(--gold-line);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: 1.1rem;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  text-decoration: none;
+}
+.brand-crest {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid var(--gold-line-strong);
+  /* tricolor dot so the brand still reads Colombian without an image */
+  background: linear-gradient(180deg,
+    var(--gold-bright) 0 50%,
+    #2d5da8 50% 75%,
+    #c23b33 75% 100%);
+  box-shadow: 0 0 12px var(--gold-glow);
+}
+.brand-name {
+  font-family: var(--font-serif);
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* ---------- 6. Hero --------------------------------------------------------*/
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(7.5rem, 14vh, 10rem) 0 clamp(4rem, 6vh, 5rem);
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: clamp(2.5rem, 5vh, 4rem);
+}
+
+/* Atmosphere: two soft gold lights + engraved contour lines */
+.hero-atmos { position: absolute; inset: 0; pointer-events: none; }
+
+.glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+}
+.glow-a {
+  width: 55vw; height: 55vw;
+  right: -12vw; top: -18vw;
+  background: radial-gradient(circle, rgba(212, 160, 23, 0.16), transparent 65%);
+}
+.glow-b {
+  width: 44vw; height: 44vw;
+  left: -14vw; bottom: -10vw;
+  background: radial-gradient(circle, rgba(240, 193, 75, 0.09), transparent 65%);
+}
+
+.contours {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  stroke: rgba(212, 160, 23, 0.10);
+  stroke-width: 1.2;
+}
+
+/* Grid: copy left, crest right */
+.hero-grid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.85fr);
+  align-items: center;
+  gap: clamp(2rem, 6vw, 5rem);
+}
+
+.hero-title {
+  font-size: clamp(3.1rem, 8.5vw, 6.2rem);
+  font-weight: 700;
+  letter-spacing: 0.005em;
+  margin: 1.1rem 0 1.25rem;
+  background: linear-gradient(105deg, #fdf6e3 20%, var(--gold-bright) 55%, #b9870f 85%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-tagline {
+  max-width: 46ch;
+  color: var(--text-muted);
+  font-size: clamp(1.02rem, 1.4vw, 1.15rem);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-top: 2.1rem;
+}
+
+/* Crest panel: dark card, gold hairline, flag band across the top */
+.crest-panel {
+  position: relative;
+  justify-self: center;
+  width: min(340px, 82vw);
+  padding: 3.2rem 2rem 1.9rem;
+  background: linear-gradient(180deg, var(--surface-raised), var(--surface));
+  border: 1px solid var(--gold-line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card), 0 0 60px -18px var(--gold-glow);
+  text-align: center;
+  transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
+}
+.crest-panel:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card), 0 0 80px -14px rgba(212, 160, 23, 0.28);
+}
+
+.flag-band {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 6px;
+  display: flex;
+  border-radius: calc(var(--radius) - 1px) calc(var(--radius) - 1px) 0 0;
+  overflow: hidden;
+}
+.flag-yellow { flex: 2; background: #fcd116; }
+.flag-blue   { flex: 1; background: #003893; }
+.flag-red    { flex: 1; background: #ce1126; }
+
+.crest-frame {
+  width: 210px;
+  height: 210px;
+  margin: 0 auto 1.2rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--gold-line-strong);
+  background: radial-gradient(circle at 50% 42%, rgba(212, 160, 23, 0.12), transparent 70%);
+}
+.crest-img {
+  width: 78%;
+  height: 78%;
+  object-fit: contain;
+  filter: drop-shadow(0 6px 18px rgba(0, 0, 0, 0.55));
+}
+
+.crest-caption {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.02rem;
+  color: var(--text-muted);
+}
+.crest-caption::before,
+.crest-caption::after {
+  content: "";
+  display: inline-block;
+  width: 34px;
+  height: 1px;
+  background: var(--gold-line-strong);
+  vertical-align: middle;
+  margin: 0 0.8rem;
+}
+
+/* Stat strip: one bordered card, three numbers */
+.stat-strip {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.5rem, 5vw, 4rem);
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  padding: 1.3rem 2.2rem 1.15rem;
+  background: rgba(14, 16, 21, 0.72);
+  border: 1px solid var(--gold-line);
+  border-radius: var(--radius);
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  min-width: 84px;
+}
+.stat-value {
+  font-family: var(--font-serif);
+  font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+  font-weight: 700;
+  line-height: 1;
+  color: var(--gold-bright);
+  font-variant-numeric: tabular-nums;
+}
+.stat-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.stat-divider {
+  width: 1px;
+  height: 44px;
+  background: var(--gold-line);
+}
+
+.stat-updated {
+  position: absolute;
+  bottom: -1.7rem;
+  left: 0;
+  right: 0;
+  text-align: center;
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+.stat-updated:not(:empty)::before {
+  content: "● ";
+  color: var(--gold);
+  font-size: 0.55rem;
+  vertical-align: 2px;
+}
+
+/* ---------- 6b. Hero responsive -------------------------------------------*/
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .hero-tagline { margin-inline: auto; }
+  .hero-actions { justify-content: center; }
+  .crest-panel { order: -1; width: min(300px, 78vw); }
+}
+
+@media (max-width: 560px) {
+  .stat-strip {
+    gap: 1rem;
+    padding: 1.1rem 1.1rem 1rem;
+    width: 100%;
+    justify-content: space-between;
+  }
+  .stat { min-width: 0; }
+  .stat-divider { height: 36px; }
+}
