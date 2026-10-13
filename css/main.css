@@ -1438,3 +1438,168 @@ a { color: inherit; }
 .treaty-doc-featured .treaty-doc-body { padding: 2.2rem; }
 .treaty-doc-featured h3 { font-size: 1.7rem; color: #f3e9d7; }
 .btn-sm { padding: 0.55rem 1.1rem; font-size: 0.9rem; margin-top: 1.1rem; display: inline-block; }
+
+/* ==========================================================================
+   Sub-page shared chrome — Chronicles + Sports Federation
+   Mirrors the main page hero/section styling exactly: same tokens, same
+   eyebrow caps, same serif display sizes, same card surfaces.
+   ========================================================================== */
+.chronicles-hero,
+.sports-hero {
+  position: relative;
+  padding: clamp(7rem, 14vh, 9rem) 0 clamp(3.5rem, 7vh, 4.5rem);
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 0%, var(--gold-glow), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 85% 20%, rgba(29, 78, 138, 0.10), transparent 70%),
+    linear-gradient(180deg, var(--bg) 0%, var(--surface) 100%);
+}
+.chronicles-hero::before,
+.sports-hero::before {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 30%, black, transparent 75%);
+}
+.chronicles-hero-inner,
+.sports-hero-inner { position: relative; text-align: center; }
+
+.hero-eyebrow {
+  display: inline-block;
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-bright);
+  margin-bottom: 1.1rem;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: '\2014'; color: var(--gold-line-strong); margin: 0 0.75em;
+}
+
+.chronicles-title,
+.sports-title {
+  font-family: var(--font-serif);
+  font-size: clamp(2.6rem, 6vw, 4.2rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: 0.005em;
+  color: var(--text);
+  margin: 0 auto 1.2rem;
+  max-width: 18ch;
+  background: linear-gradient(105deg, #fdf6e3 20%, var(--gold-bright) 55%, #b9870f 85%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.chronicles-lede,
+.sports-lede {
+  color: var(--text-muted);
+  font-size: 1.08rem;
+  max-width: 62ch;
+  margin: 0 auto;
+}
+
+.sub-strip { height: 12px; width: 100%; opacity: 0.85;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='12' viewBox='0 0 48 12'%3E%3Cpath fill='%23d4a017' d='M0 6 L8 0 L16 6 L8 12 Z'/%3E%3Cpath fill='%232a6b6b' d='M16 6 L24 0 L32 6 L24 12 Z'/%3E%3Cpath fill='%23b85c38' d='M32 6 L40 0 L48 6 L40 12 Z'/%3E%3C/svg%3E");
+  background-repeat: repeat-x; background-size: 48px 12px; }
+
+/* Premium sub-page section header (same rhythm as .section-head on index) */
+.sub-section { padding: clamp(4.5rem, 9vh, 7rem) 0; }
+.sub-section.alt { background: var(--surface); }
+.sub-head { margin-bottom: clamp(2.5rem, 5vh, 3.5rem); text-align: center; }
+.sub-head .section-title { font-family: var(--font-serif); font-size: clamp(2.1rem, 4.5vw, 3.2rem); margin: 0.4rem 0 0.9rem; color: var(--text); }
+.sub-head .section-desc { color: var(--text-muted); font-size: 1.02rem; max-width: 62ch; margin-inline: auto; }
+
+/* Chronicle ledger cards — main-page surface + hairline + shadow language */
+.chronicle-list { max-width: 780px; margin: 0 auto; display: grid; gap: 1.4rem; }
+.chronicle-card {
+  background: linear-gradient(160deg, var(--surface-raised), var(--surface));
+  border: 1px solid var(--gold-line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 1.9rem 2rem;
+  transition: border-color 0.3s var(--ease-out), transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+}
+.chronicle-card:hover {
+  border-color: var(--gold-line-strong);
+  transform: translateY(-3px);
+  box-shadow: 0 22px 48px -20px rgba(0,0,0,0.85), 0 0 24px var(--gold-glow);
+}
+.chronicle-era {
+  display: inline-flex; align-items: center; gap: 0.55rem;
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--gold-bright); margin-bottom: 0.5rem;
+}
+.chronicle-era::before { content: ''; width: 22px; height: 1px; background: var(--gold-line-strong); }
+.chronicle-date { font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.6rem; }
+.chronicle-card h3 { font-family: var(--font-serif); font-size: 1.45rem; color: var(--text); margin-bottom: 0.55rem; }
+.chronicle-card p { color: var(--text-muted); font-size: 0.97rem; line-height: 1.7; }
+
+.chronicle-quote {
+  text-align: center; max-width: 640px; margin: 3.5rem auto 0; padding: 2.2rem 1.5rem;
+  border-top: 1px solid var(--gold-line); border-bottom: 1px solid var(--gold-line);
+}
+.chronicle-quote p { font-family: var(--font-serif); font-style: italic; font-size: 1.35rem; color: var(--gold-bright); margin-bottom: 0.7rem; }
+.chronicle-quote span { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); }
+
+/* Sports team cards — same premium card language */
+.team-grid-premium { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.6rem; }
+.team-premium {
+  background: linear-gradient(160deg, var(--surface-raised), var(--surface));
+  border: 1px solid var(--gold-line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card);
+  padding: 2.6rem 2rem 2.2rem;
+  text-align: center;
+  position: relative; overflow: hidden;
+  transition: border-color 0.3s var(--ease-out), transform 0.3s var(--ease-out), box-shadow 0.3s var(--ease-out);
+}
+.team-premium::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold) 30%, var(--gold-bright) 50%, var(--gold) 70%, transparent);
+  opacity: 0.7;
+}
+.team-premium:hover {
+  border-color: var(--gold-line-strong);
+  transform: translateY(-4px);
+  box-shadow: 0 24px 52px -20px rgba(0,0,0,0.85), 0 0 28px var(--gold-glow);
+}
+.team-crest-ring {
+  width: 118px; height: 118px; margin: 0 auto 1.5rem; border-radius: 50%; overflow: hidden;
+  border: 2px solid var(--gold-line-strong);
+  background: radial-gradient(circle at 35% 30%, var(--surface-raised), var(--bg));
+  box-shadow: 0 0 0 6px rgba(212,160,23,0.06), 0 10px 26px -12px rgba(0,0,0,0.8);
+  display: flex; align-items: center; justify-content: center;
+}
+.team-crest-ring img { width: 100%; height: 100%; object-fit: cover; }
+.team-premium h3 { font-family: var(--font-serif); font-size: 1.5rem; color: var(--text); margin-bottom: 0.35rem; }
+.team-league { display: block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-bright); margin-bottom: 1rem; }
+.team-blurb { color: var(--text-muted); font-size: 0.95rem; line-height: 1.7; margin-bottom: 1.2rem; }
+.team-tag {
+  display: inline-block; padding: 0.35rem 0.9rem; border-radius: 999px;
+  border: 1px solid var(--gold-line-strong); background: rgba(212,160,23,0.08);
+  color: var(--gold-bright); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+}
+
+/* Tryouts CTA panel — mirrors the grants/terms card treatment */
+.tryouts-panel {
+  background: linear-gradient(160deg, var(--surface-raised), var(--surface));
+  border: 1px solid var(--gold-line-strong);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-card), 0 0 32px var(--gold-glow);
+  padding: clamp(2.5rem, 6vw, 4rem);
+  text-align: center;
+  max-width: 760px; margin: 0 auto;
+}
+.tryouts-panel h2 { font-family: var(--font-serif); font-size: clamp(1.8rem, 4vw, 2.4rem); color: var(--text); margin: 0.4rem 0 1rem; }
+.tryouts-panel p { color: var(--text-muted); font-size: 1.02rem; max-width: 56ch; margin: 0 auto 1.8rem; }
+
+@media (prefers-reduced-motion: reduce) {
+  .chronicle-card, .team-premium { transition: none; }
+  .chronicle-card:hover, .team-premium:hover { transform: none; }
+}
