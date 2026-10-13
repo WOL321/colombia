@@ -311,7 +311,7 @@
 
   /* ---------- Leadership lists (static roles, avatars from mc-heads) ---------*/
   const crownLeaders = [
-    { username: 'ueq_',         role: 'King of Colombia',             town: 'Maicao',            joined: 'Est. 2026', bio: 'Founder and King of the Colombian Empire.' },
+    { username: '9_88',         role: 'King of Colombia',             town: 'Maicao',            joined: 'Est. 2026', bio: 'Founder and King of the Colombian Empire.' },
     { username: 'OliveTree315', role: 'Prime Minister of Colombia',   town: 'Medellin Antioquia', joined: '2026', bio: '' },
   ];
   // Kept in sync with the Cabinet section on index.html — tier order matters:
@@ -357,12 +357,7 @@
       role.className = 'role';
       role.textContent = c.role;
       el.appendChild(role);
-      if (c.tier) {
-        const tierTag = document.createElement('div');
-        tierTag.className = 'citizen-tier citizen-tier-' + c.tier;
-        tierTag.textContent = c.tier === 'senior' ? 'Senior Cabinet' : 'Cabinet';
-        el.appendChild(tierTag);
-      }
+      // No tier tags ("Senior Cabinet" / "Cabinet") on the cards anymore.
       el.addEventListener('click', () => openProfile(c));
       el.addEventListener('mousemove', spotlightMove);
       el.addEventListener('keydown', (e) => {

@@ -17,7 +17,7 @@ window.SITE_CONFIG = {
 
   // Nation identity constants used across sections.
   CAPITAL: 'Maicao',
-  KING: 'ueq_',
+  KING: '9_88',
 
   DISCORD_INVITE: 'https://discord.gg/YUyHgnpXwj',
   SERVER_IP: 'play.diplomaticamc.com',

@@ -78,7 +78,7 @@
     if (!stats) return;
     setStat(statEls.towns, stats.towns);
     setStat(statEls.citizens, stats.citizens);
-    // "Leader" and "Council of Ministers" are fixed numbers (1 / 5) — see above.
+    // "Leaders" and "Council of Ministers" are fixed numbers (2 / 5) — see above.
 
     const stamp = state.data.updatedAt
       ? new Date(state.data.updatedAt)
