@@ -321,11 +321,8 @@
   const cabinetLeaders = [
     { username: 'Novum_Vetus', role: 'Min. of Foreign & Internal Affairs', tier: 'senior', town: 'Antillara', joined: '2026', bio: 'Represents the Empire abroad and coordinates town placements and internal borders at home.' },
     { username: 'Crowlia',     role: 'Min. of Defense',        tier: 'senior', town: 'Barbados',    joined: '2026', bio: 'Commands the imperial army, guards the claims, and keeps the peace with foreign powers.' },
-    { username: 'Maximilian_____I', role: 'Min. of Finance',   tier: 'senior', town: 'Maicao',      joined: '2026', bio: 'Manages the national treasury, taxation, trade, and the gold behind every town grant.' },
-    { username: 'qulipzz',     role: 'Min. of Justice and Law', tier: 'ministry', town: 'Maicao',   joined: '2026', bio: 'Enforces imperial code and settles legal matters across the realm.' },
-    { username: 'pato541',     role: 'Min. of Culture',        tier: 'ministry', town: 'El Salvador', joined: '2026', bio: "Preserves the Empire's history, runs events, and keeps its identity alive." },
-    { username: 'Respawn34',   role: 'Min. of Agriculture',    tier: 'ministry', town: 'Canollia',  joined: '2026', bio: 'Elected Minister of Agriculture. Takes charge of resources and internal growth as the backbone of the economy.' },
-    { username: 'Moumen11',    role: 'Min. of Technology',     tier: 'ministry', town: 'Haiti',     joined: '2026', bio: "Elected Minister of Technology. Manages infrastructure and automation, keeping the Empire's tech systems a step ahead." },
+    { username: 'qulipzz',     role: 'Min. of Justice and Law', tier: 'ministry', town: 'Maicao',   joined: '2026', bio: 'Enforces imperial code and settles disputes across the realm.' },
+    { username: 'pato541',     role: 'Min. of Culture',        tier: 'ministry', town: 'El Salvador', joined: '2026', bio: "Keeps the Empire's story loud: festivals, builds, events, and identity." },
   ];
 
   function makeAvatarImg(username, size) {
@@ -352,9 +349,7 @@
       el.setAttribute('tabindex', '0');
       el.setAttribute('role', 'button');
       el.setAttribute('aria-label', 'View profile: ' + c.username + ', ' + c.role);
-      // Region data so the roster region filters work on leaders too.
       el.dataset.town = (c.town || '').toLowerCase();
-      el.dataset.region = townRegion(c.town || '');
       el.appendChild(makeAvatarImg(c.username, 64));
       const name = document.createElement('div');
       name.className = 'name';
@@ -367,7 +362,7 @@
       if (c.tier) {
         const tierTag = document.createElement('div');
         tierTag.className = 'citizen-tier citizen-tier-' + c.tier;
-        tierTag.textContent = c.tier === 'senior' ? 'Senior Ministry' : 'Ministry';
+        tierTag.textContent = c.tier === 'senior' ? 'Senior Cabinet' : 'Cabinet';
         el.appendChild(tierTag);
       }
       el.addEventListener('click', () => openProfile(c));
@@ -382,30 +377,6 @@
   /* ---------- Towns & residents roster --------------------------------------*/
   let allResidents = [];
 
-  // Region mapping for the 34 in-game towns — one place to edit when the
-  // Empire claims new ground. Anything unmapped falls into "Other claims".
-  const TOWN_REGIONS = {
-    caribbean:      ['Maicao', 'New Bahamas', 'Trinidad', 'Golopigi', 'George Town',
-                     'Dominican Republic', 'Paramaribo', 'Bismuna Tara'],
-    colombia:       ['Aldama', 'Cabada Vera', 'Cali', 'Canollia', 'Cordoba', 'Guatape',
-                     'Iza', 'Jardin', 'Medellin Antioquia', 'Santa Ana', 'Santa Maria',
-                     'Santa Marta', 'Zircon', 'El Estrella', 'Intuto', 'Salento'],
-    'central-america': ['Tegucigalpa', 'Puerto Lempira', 'Managua', 'Esteli', 'Panama',
-                        'Guatemala', 'El Salvador', 'Mexico City'],
-    'south-america':   ['Quito', 'Caracas', 'Goiania'],
-  };
-  const REGION_LABELS = {
-    caribbean: 'Caribbean', colombia: 'Colombia',
-    'central-america': 'Central America', 'south-america': 'South America',
-    other: 'Other claims',
-  };
-  function townRegion(name) {
-    for (const key of Object.keys(TOWN_REGIONS)) {
-      if (TOWN_REGIONS[key].includes(name)) return key;
-    }
-    return 'other';
-  }
-
   function renderTownsRoster(list) {
     const grid = document.getElementById('townsGrid');
     if (!grid) return;
@@ -415,12 +386,10 @@
       if (!residents.length) return;
       const mayor = Object.assign({}, residents[0], { role: 'Mayor of ' + t.name, town: t.name });
       const others = residents.slice(1);
-      const region = townRegion(t.name);
 
       const card = document.createElement('div');
       card.className = 'town-roster-card';
       card.dataset.town = t.name.toLowerCase();
-      card.dataset.region = region;
 
       const head = document.createElement('div');
       head.className = 'town-roster-head';
@@ -433,13 +402,6 @@
       head.appendChild(count);
       card.appendChild(head);
 
-      const pill = document.createElement('span');
-      pill.className = 'region-pill tag-' + (region === 'central-america' ? 'central'
-        : region === 'colombia' ? 'colombia'
-        : region === 'caribbean' ? 'caribbean' : 'central');
-      pill.style.opacity = region === 'other' ? '0.55' : '1';
-      pill.textContent = REGION_LABELS[region];
-      head.appendChild(pill);
 
       const mayorRow = document.createElement('div');
       mayorRow.className = 'town-mayor-row';
@@ -485,37 +447,29 @@
     });
   }
 
-  /* ---------- Roster search / region filters --------------------------------*/
+  /* ---------- Roster search ---------------------------------------------------*/
   const citizenSearch = document.getElementById('citizenSearch');
   const rosterEmpty = document.getElementById('rosterEmpty');
   const rosterEmptyQuery = document.getElementById('rosterEmptyQuery');
   const rosterClearBtn = document.getElementById('rosterClear');
-  const regionFilterBtns = $$('#regionFilters .region-chip');
-  let activeRegion = 'all';
 
   function filterRoster() {
     if (!citizenSearch) return;
     const q = citizenSearch.value.trim().toLowerCase();
     let anyVisible = false;
 
-    // Leaders: match by name/role, and honour the region filter via their town.
+    // Leaders: match by name/role/town.
     $$('#leaderGridCrown .citizen-card, #leaderGridCabinet .citizen-card').forEach(card => {
       const name = card.querySelector('.name').textContent.toLowerCase();
       const role = card.querySelector('.role').textContent.toLowerCase();
       const town = (card.dataset.town || '').toLowerCase();
-      const regionOk = activeRegion === 'all' || card.dataset.region === activeRegion;
-      const match = (!q || name.includes(q) || role.includes(q) || town.includes(q)) && regionOk;
+      const match = !q || name.includes(q) || role.includes(q) || town.includes(q);
       card.classList.toggle('hidden', !match);
       if (match) anyVisible = true;
     });
 
     $$('#townsGrid .town-roster-card').forEach(card => {
       const townName = card.dataset.town || '';
-      const regionOk = activeRegion === 'all' || card.dataset.region === activeRegion;
-      if (!regionOk) {
-        card.classList.add('roster-hidden');
-        return;
-      }
       const mayorRow = card.querySelector('.town-mayor-row');
       const mayorName = mayorRow ? mayorRow.dataset.name || '' : '';
       const townOrMayorMatch = !q || townName.includes(q) || mayorName.includes(q);
@@ -548,15 +502,6 @@
       citizenSearch.focus();
     });
   }
-
-  regionFilterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-      regionFilterBtns.forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-      activeRegion = btn.dataset.region;
-      filterRoster();
-    });
-  });
 
   /* ---------- Deep links: #citizens / town?person=X / town=X ---------------*/
   // Applies a search term from the URL (?person= or ?town=) or from an
