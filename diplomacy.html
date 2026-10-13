@@ -568,6 +568,41 @@ a.status-pill:hover { border-color: rgba(88,101,242,0.6); background: rgba(88,10
 .wayuu-strip { height: 12px; width: 100%; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='12' viewBox='0 0 48 12'%3E%3Cpath fill='%23c9a227' d='M0 6 L8 0 L16 6 L8 12 Z'/%3E%3Cpath fill='%232a6b6b' d='M16 6 L24 0 L32 6 L24 12 Z'/%3E%3Cpath fill='%23b85c38' d='M32 6 L40 0 L48 6 L40 12 Z'/%3E%3C/svg%3E"); background-repeat: repeat-x; background-size: 48px 12px; }
 
 body{background-color:#1a1410!important;}
+
+/* ---------- Premium relations (China-only) ---------- */
+.relations-grid-solo { max-width: 860px; margin-inline: auto; display: grid; gap: 1.5rem; }
+.relation-card-hero {
+  position: relative; overflow: hidden; text-align: left; padding: 2.4rem 2.2rem;
+  border-radius: 16px;
+  background: linear-gradient(150deg, rgba(201,162,39,0.10), #241d16 55%);
+  border: 1px solid rgba(201,162,39,0.45);
+  box-shadow: 0 22px 46px -24px rgba(0,0,0,0.75), 0 0 26px rgba(201,162,39,0.08);
+}
+.relation-card-hero::after {
+  content: '\2605'; position: absolute; right: 1.2rem; bottom: -1.6rem; font-size: 7.5rem;
+  color: rgba(201,162,39,0.09); pointer-events: none; line-height: 1;
+}
+.relation-card-hero h3 { font-size: 2.1rem !important; margin: 0.4rem 0 0.8rem !important; }
+.relation-card-hero p { font-size: 1rem !important; line-height: 1.75; color: #cbbfa6 !important; max-width: 62ch; }
+.relation-card-wide {
+  text-align: left; padding: 1.9rem 2rem; border-radius: 16px;
+  background: linear-gradient(180deg, #2e261f, #241d16);
+  border: 1px solid rgba(201,162,39,0.22);
+  box-shadow: 0 18px 40px -22px rgba(0,0,0,0.7);
+}
+.relation-card-wide h3 { font-size: 1.45rem !important; margin: 0.3rem 0 0.5rem !important; }
+.relation-card-wide p { line-height: 1.7; }
+.treaty-doc-featured {
+  max-width: 780px; margin-inline: auto;
+  border: 1px solid rgba(201,162,39,0.45) !important;
+  background: linear-gradient(150deg, rgba(201,162,39,0.08), #2e261f 55%) !important;
+  box-shadow: 0 24px 52px -26px rgba(0,0,0,0.8), 0 0 28px rgba(201,162,39,0.08);
+  text-align: center;
+}
+.treaty-doc-featured .treaty-doc-body { padding: 2.4rem 2.2rem; }
+.treaty-doc-featured h3 { font-size: 1.8rem; margin: 0.4rem 0 0.9rem; }
+.treaty-doc-featured p { color: #cbbfa6; line-height: 1.75; max-width: 62ch; margin: 0 auto; }
+.btn-sm { padding: 0.8rem 1.6rem !important; font-size: 0.78rem !important; margin-top: 1.3rem; }
 </style>
 </head>
 <body>
@@ -644,7 +679,7 @@ body{background-color:#1a1410!important;}
     <li><a href="diplomacy.html" class="active">Diplomacy</a></li>
     <li><a href="join.html" >Join Us</a></li>
     <li><a href="index.html#citizens">Citizens</a></li>
-    <li><a href="index.html#expansion">Grants &amp; Law</a></li>
+    <li><a href="index.html#grants">Grants &amp; Law</a></li>
     <li><a href="sports.html" >Sports Hub</a></li>
     <li><a href="casino.html" >Casino</a></li>
     <li><a href="https://discord.gg/YUyHgnpXwj" target="_blank" rel="noopener">Discord</a></li>
@@ -670,36 +705,16 @@ body{background-color:#1a1410!important;}
     <h2 class="section-title">Political Relations</h2>
     <p class="section-desc">Current standing with other nations on DiplomaticaMC.</p>
   </div>
-  <div class="relations-grid">
-    <div class="relation-card reveal">
+  <div class="relations-grid relations-grid-solo">
+    <div class="relation-card relation-card-hero reveal">
       <span class="relation-status ally">Ally</span>
       <h3>China</h3>
-      <p>A true ally of the Crown — bound by the Peace Accord and standing together ever since.</p>
+      <p>The one name on the alliance roll &mdash; and the one that matters. Bound by the Peace Accord since the Empire&rsquo;s early days, tested by a common rival that no longer exists, and still standing. Whatever happens on this server, Beijing is where Colombia calls first.</p>
     </div>
-    <div class="relation-card reveal">
-      <span class="relation-status ally">Ally</span>
-      <h3>Iceland</h3>
-      <p>Alliance treaty signed August 15, 2026 — mutual recognition, non-aggression, and mutual support.</p>
-    </div>
-    <div class="relation-card reveal">
-      <span class="relation-status ally">Ally</span>
-      <h3>Brazil</h3>
-      <p>Alliance treaty signed August 31, 2026 — mutual recognition, non-aggression, and mutual support.</p>
-    </div>
-    <div class="relation-card reveal">
-      <span class="relation-status neutral">Neutral</span>
-      <h3>Chile</h3>
-      <p>Treaty of Non-Aggression &amp; Cooperation ratified September 3, 2026 — a good-faith path through disputes.</p>
-    </div>
-    <div class="relation-card reveal">
-      <span class="relation-status neutral">Neutral</span>
-      <h3>The Amazons</h3>
-      <p>Treaty of Non-Aggression &amp; Cooperation ratified September 10, 2026 — friendship and diplomatic cooperation.</p>
-    </div>
-    <div class="relation-card reveal">
+    <div class="relation-card relation-card-wide reveal">
       <span class="relation-status neutral">Neutral</span>
       <h3>Everyone Else</h3>
-      <p>Any nation outside our formal alliances — no conflict, no treaty, just neutral standing until proven otherwise.</p>
+      <p>No feuds, no backroom deals. Every other nation starts on neutral ground &mdash; and stays there until a treaty says otherwise. If you want your name here as an ally, the Crown is listening.</p>
     </div>
   </div>
 </section>
@@ -722,61 +737,23 @@ body{background-color:#1a1410!important;}
 <section class="section container">
   <div class="center-header">
     <span class="sub-title">Ratified Documents</span>
-    <h2 class="section-title">Treaties</h2>
-    <p class="section-desc">The Crown's diplomatic record isn't a claim — it's paper. Every accord below was signed, sealed, and ratified. Click a document to read it in full.</p>
+    <h2 class="section-title">The Paper Trail</h2>
+    <p class="section-desc">Diplomacy you can hold. The alliance with China isn&rsquo;t a vibe &mdash; it&rsquo;s a signed, sealed accord, and it still hangs in the archives.</p>
   </div>
-  <div class="treaty-archive-grid">
-    <article class="treaty-doc reveal">
-      <div class="treaty-doc-thumb lightbox-trigger">
-        <img src="treaty-colombia-iceland-2026-08-15.webp" alt="Alliance Treaty between Colombia and Iceland, signed August 15, 2026" loading="lazy" decoding="async" width="1400" height="1965">
-        <span class="treaty-doc-zoom" aria-hidden="true">🔍</span>
-      </div>
-      <div class="treaty-doc-body">
-        <span class="treaty-doc-date">August 15, 2026</span>
-        <h3>Alliance Treaty</h3>
-        <p>Colombia &amp; Iceland — mutual recognition, non-aggression, and mutual support.</p>
-      </div>
-    </article>
-    <article class="treaty-doc reveal">
-      <div class="treaty-doc-thumb lightbox-trigger">
-        <img src="treaty-colombia-brazil-2026-08-31.webp" alt="Alliance Treaty between Colombia and Brazil, signed August 31, 2026" loading="lazy" decoding="async" width="1400" height="1456">
-        <span class="treaty-doc-zoom" aria-hidden="true">🔍</span>
-      </div>
-      <div class="treaty-doc-body">
-        <span class="treaty-doc-date">August 31, 2026</span>
-        <h3>Alliance Treaty</h3>
-        <p>Colombia &amp; Brazil — mutual recognition, non-aggression, and mutual support.</p>
-      </div>
-    </article>
-    <article class="treaty-doc reveal">
-      <div class="treaty-doc-thumb lightbox-trigger">
-        <img src="treaty-colombia-chile-2026-09-03.webp" alt="Treaty of Non-Aggression and Cooperation between Colombia and Chile, ratified September 3, 2026" loading="lazy" decoding="async" width="1400" height="2036">
-        <span class="treaty-doc-zoom" aria-hidden="true">🔍</span>
-      </div>
-      <div class="treaty-doc-body">
-        <span class="treaty-doc-date">September 3, 2026</span>
-        <h3>Non-Aggression &amp; Cooperation</h3>
-        <p>Colombia &amp; Chile — ourty, cooperation, and a good-faith path through disputes.</p>
-      </div>
-    </article>
-    <article class="treaty-doc reveal">
-      <div class="treaty-doc-thumb lightbox-trigger">
-        <img src="treaty-colombia-amazons-2026-09-10.webp" alt="Treaty of Non-Aggression and Cooperation between the High Kingdom of Nueva Granada and the Great Country of the Amazons, ratified September 10, 2026" loading="lazy" decoding="async" width="1503" height="2048">
-        <span class="treaty-doc-zoom" aria-hidden="true">🔍</span>
-      </div>
-      <div class="treaty-doc-body">
-        <span class="treaty-doc-date">September 10, 2026</span>
-        <h3>Non-Aggression &amp; Cooperation</h3>
-        <p>Colombia &amp; The Amazons — non-aggression, mutual ourty, and diplomatic cooperation.</p>
-      </div>
-    </article>
+  <div class="treaty-doc treaty-doc-featured reveal">
+    <div class="treaty-doc-body">
+      <span class="treaty-doc-date">Peace Accord</span>
+      <h3>Colombia &amp; China</h3>
+      <p>Signed when the Empire split off to pursue its own path in South America. Not a textbook defense pact &mdash; a pact between two nations who decided to hold the line together against a common rival. That rival has since fallen; the accord hasn&rsquo;t.</p>
+      <a class="btn btn-primary btn-sm" href="https://discord.gg/YUyHgnpXwj" target="_blank" rel="noopener">Request the full document in Discord</a>
+    </div>
   </div>
 </section>
 
 <section class="section container">
   <div class="center-header">
     <h2 class="section-title" style="font-size: 2rem;">The Crown's Foreign Policy</h2>
-    <p class="section-desc">Colombia stands firmly behind China — a nation we consider a true ally. Beyond that circle, we hold neutral ground with the rest of the server by default. The Empire's former rival, the Far Eastern Federation, is no more — the Crown holds no active standing rivalries.</p>
+    <p class="section-desc">Colombia stands firmly behind China &mdash; not out of convenience, but history. Beyond that circle, the Empire keeps neutral ground with everyone else by default. The old rivalry with the Far Eastern Federation died with the Federation itself; the Crown carries no grudges into a new era. One ally, zero enemies &mdash; that&rsquo;s the policy.</p>
   </div>
 </section>
 
@@ -999,7 +976,7 @@ const cmdkSections = [
   { icon: '📍', title: 'Wiki', sub: 'Official DMC wiki entry', href: 'index.html#wiki', tag: 'Section' },
   { icon: '📍', title: 'The Cabinet', sub: 'Sovereign council & departments', href: 'index.html#cabinet', tag: 'Section' },
   { icon: '📍', title: 'Citizen Roster', sub: 'Leadership and citizens', href: 'index.html#citizens', tag: 'Section' },
-  { icon: '📍', title: 'Grants & Law', sub: 'Funding and the Activity Law', href: 'index.html#expansion', tag: 'Section' },
+  { icon: '📍', title: 'Grants & Law', sub: 'Funding and the Activity Law', href: 'index.html#grants', tag: 'Section' },
 ];
 const cmdkPages = [
   { icon: '📄', title: 'Home', sub: 'The Colombian Empire', href: 'index.html', tag: 'Page' },

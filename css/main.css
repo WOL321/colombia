@@ -1004,37 +1004,6 @@ a { color: inherit; }
   box-shadow: 0 0 0 3px rgba(212, 160, 23, 0.15);
 }
 
-.region-filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.55rem; }
-.region-chip {
-  padding: 0.45rem 1.05rem;
-  border-radius: 999px;
-  border: 1px solid var(--gold-line);
-  background: transparent;
-  color: var(--text-muted);
-  font: 600 0.78rem/1 var(--font-sans);
-  letter-spacing: 0.04em;
-  cursor: pointer;
-  transition: all 0.25s var(--ease-out);
-}
-.region-chip:hover { border-color: var(--gold-line-strong); color: var(--text); }
-.region-chip.active {
-  background: linear-gradient(135deg, var(--gold), var(--gold-bright));
-  color: #17120a;
-  border-color: transparent;
-}
-/* Region tag colours used on roster town cards */
-.region-pill {
-  display: inline-block;
-  margin-top: 0.5rem;
-  padding: 0.22rem 0.7rem;
-  border-radius: 999px;
-  font-size: 0.66rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #fff;
-}
-
 .roster-subhead {
   font-family: var(--font-serif);
   font-size: 1.5rem;
@@ -1428,3 +1397,44 @@ a { color: inherit; }
 .fk { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.25rem; }
 .fv { font-weight: 600; font-size: 0.92rem; }
 .profile-unverified { font-size: 0.72rem; color: var(--text-muted); font-style: italic; }
+
+/* ============================================================
+   V. CABINET TIERS (final pass) — Crown / Cabinet, clean hierarchy
+   ============================================================ */
+.cabinet-grid-ministers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 760px) { .cabinet-grid-ministers { grid-template-columns: 1fr; } }
+
+/* ============================================================
+   VI. DIPLOMACY SUBPAGE — China-only relations, premium cards
+   ============================================================ */
+.relations-grid-solo { max-width: 860px; margin-inline: auto; display: grid; gap: 1.5rem; }
+.relation-card-hero {
+  position: relative; overflow: hidden; text-align: left; padding: 2.4rem 2.2rem;
+  border-radius: 16px;
+  background: linear-gradient(150deg, rgba(212,160,23,0.10), rgba(20,22,29,0.9) 45%), #0e1015;
+  border: 1px solid rgba(212,160,23,0.45);
+  box-shadow: 0 18px 44px -22px rgba(0,0,0,0.8), 0 0 24px rgba(212,160,23,0.08);
+}
+.relation-card-hero::after {
+  content: '\2605'; position: absolute; right: 1.2rem; bottom: -1.4rem; font-size: 7rem;
+  color: rgba(212,160,23,0.08); pointer-events: none; line-height: 1;
+}
+.relation-card-hero h3 { font-size: 2rem; margin: 0.6rem 0 0.7rem; color: #f3e9d7; }
+.relation-card-hero p { color: #b7ac97; line-height: 1.7; max-width: 60ch; }
+.relation-card-wide {
+  text-align: left; padding: 1.8rem 2rem; border-radius: 16px;
+  background: linear-gradient(180deg, #14161d, #0e1015);
+  border: 1px solid rgba(212,160,23,0.22);
+  box-shadow: 0 18px 40px -22px rgba(0,0,0,0.8);
+}
+.relation-card-wide h3 { font-size: 1.4rem; margin: 0.5rem 0 0.5rem; color: #f3e9d7; }
+.relation-card-wide p { color: #9a8f7c; line-height: 1.7; }
+.treaty-doc-featured {
+  max-width: 760px; margin-inline: auto;
+  border: 1px solid rgba(212,160,23,0.45) !important;
+  background: linear-gradient(150deg, rgba(212,160,23,0.08), rgba(20,22,29,0.9) 50%), #0e1015 !important;
+  box-shadow: 0 22px 50px -24px rgba(0,0,0,0.85), 0 0 26px rgba(212,160,23,0.08);
+}
+.treaty-doc-featured .treaty-doc-body { padding: 2.2rem; }
+.treaty-doc-featured h3 { font-size: 1.7rem; color: #f3e9d7; }
+.btn-sm { padding: 0.55rem 1.1rem; font-size: 0.9rem; margin-top: 1.1rem; display: inline-block; }

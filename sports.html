@@ -515,6 +515,16 @@ a.status-pill:hover { border-color: rgba(88,101,242,0.6); background: rgba(88,10
 .page-hero .sub-title { color: #3d8a8a !important; }
 .wayuu-strip { height: 12px; width: 100%; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='12' viewBox='0 0 48 12'%3E%3Cpath fill='%23c9a227' d='M0 6 L8 0 L16 6 L8 12 Z'/%3E%3Cpath fill='%232a6b6b' d='M16 6 L24 0 L32 6 L24 12 Z'/%3E%3Cpath fill='%23b85c38' d='M32 6 L40 0 L48 6 L40 12 Z'/%3E%3C/svg%3E"); background-repeat: repeat-x; background-size: 48px 12px; }
 
+
+/* ---------- Premium team cards ---------- */
+.team-card-premium { position: relative; overflow: hidden; padding-bottom: 2.2rem; }
+.team-crest-strip { position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, #8a7018, #e0b83a 50%, #8a7018); opacity: 0.8; }
+.team-blurb { color: #9a8f7c; font-size: 0.95rem; line-height: 1.65; max-width: 42ch; margin: 1rem auto 1.2rem; }
+.team-tag { display: inline-block; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.8px;
+  color: #c9a227; border: 1px solid rgba(201,162,39,0.35); border-radius: 999px; padding: 0.35rem 0.9rem; }
+.sports-cta { text-align: center; max-width: 640px; margin: 0 auto; }
+.sports-cta p { color: #9a8f7c; font-size: 1.05rem; line-height: 1.7; margin: 0 auto 2rem; max-width: 56ch; }
 </style>
 </head>
 <body>
@@ -591,7 +601,7 @@ a.status-pill:hover { border-color: rgba(88,101,242,0.6); background: rgba(88,10
     <li><a href="diplomacy.html" >Diplomacy</a></li>
     <li><a href="join.html" >Join Us</a></li>
     <li><a href="index.html#citizens">Citizens</a></li>
-    <li><a href="index.html#expansion">Grants &amp; Law</a></li>
+    <li><a href="index.html#grants">Grants &amp; Law</a></li>
     <li><a href="sports.html" class="active">Sports</a></li>
     <li><a href="casino.html" >Casino</a></li>
     <li><a href="https://discord.gg/YUyHgnpXwj" target="_blank" rel="noopener">Discord</a></li>
@@ -606,7 +616,7 @@ a.status-pill:hover { border-color: rgba(88,101,242,0.6); background: rgba(88,10
   <div class="page-hero-content">
     <span class="sub-title">Colombian Empire</span>
     <h1>Sports Federation</h1>
-    <p>The clubs and national teams that carry the Crown's colors onto the ice and the pitch.</p>
+    <p>Two rosters, one crest. The Jaguares carry the Empire&rsquo;s colors onto the ice and the pitch &mdash; in DHL leagues, under the gold-and-black of Maicao.</p>
   </div>
 </header>
 <div class="wayuu-strip" aria-hidden="true"></div>
@@ -617,15 +627,32 @@ a.status-pill:hover { border-color: rgba(88,101,242,0.6); background: rgba(88,10
     <h2 class="section-title">Representing the Empire</h2>
   </div>
   <div class="team-grid">
-    <div class="team-card reveal lightbox-trigger">
+    <div class="team-card team-card-premium reveal lightbox-trigger">
+      <div class="team-crest-strip" aria-hidden="true"></div>
       <div class="team-logo-box"><img src="output (1).png" alt="Jaguares de Maicao logo" loading="lazy" decoding="async"></div>
       <h3>Jaguares de Maicao</h3>
       <span class="team-league">Professional Hockey Club</span>
+      <p class="team-blurb">The Empire&rsquo;s flagship on ice. Built in Maicao, skated in the DHL leagues &mdash; fast forecheck, louder fans, and a crest that&rsquo;s seen more locker-room speeches than most pro franchises.</p>
+      <span class="team-tag">DHL Hockey</span>
     </div>
-    <div class="team-card reveal lightbox-trigger">
-      <div class="team-logo-box"><img src="jaguares-de-cordoba-logo-footylogos.png" alt="F.C Jaguares de Maicao logo" loading="lazy" decoding="async"></div>
-      <h3>F.C Jaguares de Maicao</h3>
-      <span class="team-league">National Soccer Team</span>
+    <div class="team-card team-card-premium reveal lightbox-trigger">
+      <div class="team-crest-strip" aria-hidden="true"></div>
+      <div class="team-logo-box"><img src="jaguares-de-cordoba-logo-footylogos.png" alt="F.C. Jaguares de Maicao logo" loading="lazy" decoding="async"></div>
+      <h3>F.C. Jaguares de Maicao</h3>
+      <span class="team-league">Soccer Club</span>
+      <p class="team-blurb">Same jaguar, different turf. The football side of the federation plays the beautiful game in gold and black &mdash; and welcomes anyone who can hold a formation for ninety minutes.</p>
+      <span class="team-tag">DHL Football</span>
+    </div>
+  </div>
+</section>
+
+<section class="section bg-alt">
+  <div class="container">
+    <div class="sports-cta reveal">
+      <span class="sub-title">Open Tryouts</span>
+      <h2 class="section-title">Wear the Jaguar</h2>
+      <p>Both rosters sign from the citizen pool &mdash; no academy, no agent, just show up to a scrims night in Discord and skate (or run) your way in. If you&rsquo;ve got a club idea the Federation doesn&rsquo;t have yet, the Cabinet listens to those too.</p>
+      <a class="btn btn-primary" href="https://discord.gg/YUyHgnpXwj" target="_blank" rel="noopener">Ask About Tryouts</a>
     </div>
   </div>
 </section>
@@ -849,7 +876,7 @@ const cmdkSections = [
   { icon: '📍', title: 'Wiki', sub: 'Official DMC wiki entry', href: 'index.html#wiki', tag: 'Section' },
   { icon: '📍', title: 'The Cabinet', sub: 'Sovereign council & departments', href: 'index.html#cabinet', tag: 'Section' },
   { icon: '📍', title: 'Citizen Roster', sub: 'Leadership and citizens', href: 'index.html#citizens', tag: 'Section' },
-  { icon: '📍', title: 'Grants & Law', sub: 'Funding and the Activity Law', href: 'index.html#expansion', tag: 'Section' },
+  { icon: '📍', title: 'Grants & Law', sub: 'Funding and the Activity Law', href: 'index.html#grants', tag: 'Section' },
 ];
 const cmdkPages = [
   { icon: '📄', title: 'Home', sub: 'The Colombian Empire', href: 'index.html', tag: 'Page' },
