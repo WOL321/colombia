@@ -25,11 +25,26 @@
         <span class="brand-crest" aria-hidden="true"></span>
         <span class="brand-name">Reino de&nbsp;Colombia</span>
       </a>
-      <nav class="site-nav" aria-label="Primary">
-        <!-- Nav links land with their sections in later steps -->
+      <nav class="site-nav" id="siteNav" aria-label="Primary">
+        <a href="#capital">The Capital</a>
+        <a href="#towns">Towns</a>
+        <a href="#map">Map</a>
+        <a href="#wiki">Wiki</a>
+        <a href="#cabinet">Cabinet</a>
+        <a href="#citizens">Citizens</a>
+        <a href="history.html">History</a>
+        <a href="diplomacy.html">Diplomacy</a>
+        <a href="join.html">Join&nbsp;Us</a>
+        <a href="sports.html">Sports</a>
+        <a href="casino.html">Casino</a>
+        <a class="nav-pill" href="https://discord.gg/YUyHgnpXwj" target="_blank" rel="noopener">Discord</a>
       </nav>
+      <button class="nav-toggle" id="navToggle" aria-label="Toggle menu" aria-controls="siteNav" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
+  <div class="nav-scrim" id="navScrim" aria-hidden="true"></div>
 
   <main>
 
@@ -68,6 +83,23 @@
             <a class="btn btn-gold" href="#grants">Found a Town</a>
             <a class="btn btn-ghost" href="https://discord.gg/YUyHgnpXwj"
                target="_blank" rel="noopener">Join Discord</a>
+          </div>
+
+          <!-- Live status bar: server, copy IP, Discord -->
+          <div class="live-bar reveal is-in" aria-label="Live server status">
+            <span class="status-pill">
+              <span class="status-dot" id="serverStatusDot"></span>
+              <span id="serverStatusText">Checking server status&hellip;</span>
+            </span>
+            <button class="copy-ip-btn" id="copyIpBtn" type="button"
+                    aria-label="Copy server IP to clipboard">
+              <span id="copyIpLabel">Copy Server IP</span>
+            </button>
+            <a class="status-pill" href="https://discord.gg/YUyHgnpXwj"
+               target="_blank" rel="noopener">
+              <span class="status-dot discord"></span>
+              <span id="discordStatusText">Loading Discord&hellip;</span>
+            </a>
           </div>
         </div>
 
@@ -111,12 +143,383 @@
       </div>
     </section>
 
-    <!-- Sections 2–7 (Maicao, Towns, Cabinet, Map, Directory, Grants) land next -->
+    <!-- ============================================================
+         2. THE CAPITAL — Maicao, split feature panel
+         ============================================================ -->
+    <section class="section capital-section reveal" id="capital">
+      <div class="container">
+        <div class="section-head">
+          <p class="kicker">Seat of the Crown</p>
+          <h2 class="section-title">Maicao</h2>
+          <p class="section-desc">
+            Main claim on the water. Streets and fa&ccedil;ades up top; under them,
+            the mall &mdash; shops, chests, the gold that pays town grants. The
+            capital of one of the most prestigious countries in Latin America.
+          </p>
+        </div>
+
+        <div class="capital-split">
+          <figure class="capital-media">
+            <img src="2026-05-23_17.30.55.webp" loading="lazy" decoding="async"
+                 alt="Maicao, capital of the Kingdom of Colombia">
+            <figcaption class="capital-badge">Capital &middot; Maicao</figcaption>
+          </figure>
+
+          <div class="capital-body">
+            <div class="district-tabs" role="tablist" aria-label="Maicao districts">
+              <button type="button" class="district-tab active" data-panel="coast" role="tab" aria-selected="true">Coastal surface</button>
+              <button type="button" class="district-tab" data-panel="mall" role="tab" aria-selected="false">Underground mall</button>
+            </div>
+            <div id="panel-coast" class="district-panel active">
+              <h3>Coastal surface</h3>
+              <p>Shoreline streets, lit windows, the square people actually use. Cartagena colour on a Minecraft budget &mdash; not a warehouse grid.</p>
+            </div>
+            <div id="panel-mall" class="district-panel">
+              <h3>Underground mall</h3>
+              <p>Down the stairs: player shops and storage. Rare gear, daily trade, and the treasury that keeps the Empire running.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         3. TOWNS — brochure carousel + featured town cards
+         ============================================================ -->
+    <section class="section towns-section reveal" id="towns">
+      <div class="container">
+        <div class="section-head">
+          <p class="kicker">Claims Across Two Regions</p>
+          <h2 class="section-title">The Empire's Towns</h2>
+          <p class="section-desc">Each claim has a job. Flip through the showcase &mdash; more towns can be added anytime (image + a short blurb).</p>
+        </div>
+
+        <div class="brochure" id="townBrochure" tabindex="0" aria-label="Town showcase carousel">
+          <button type="button" class="brochure-nav brochure-prev" id="brochurePrev" aria-label="Previous town">&#8249;</button>
+          <div class="brochure-viewport">
+            <div class="brochure-track" id="brochureTrack">
+              <!-- ADD A TOWN: copy one <article class="brochure-slide"> block, change image src, tag, title, meta, paragraph. Add a matching dot button below. -->
+              <article class="brochure-slide" data-town="tegucigalpa">
+                <div class="brochure-shot">
+                  <img src="2026-07-03_20.59.29.webp" alt="Tegucigalpa" loading="lazy" decoding="async">
+                  <span class="brochure-tag tag-central">Central America</span>
+                </div>
+                <div class="brochure-copy">
+                  <h3>Tegucigalpa</h3>
+                  <p class="brochure-meta">Joined when Zaity1 aligned with ueq_</p>
+                  <p>Was its own beautiful country before it came under Colombia as the Central American region. Still the anchor on the isthmus &mdash; the claim that makes Central America real on the map.</p>
+                </div>
+              </article>
+
+              <article class="brochure-slide" data-town="salento">
+                <div class="brochure-shot">
+                  <img src="2026-07-03_21.15.17.webp" alt="Salento" loading="lazy" decoding="async">
+                  <span class="brochure-tag tag-colombia">Colombian Region</span>
+                </div>
+                <div class="brochure-copy">
+                  <h3>Salento</h3>
+                  <p class="brochure-meta">Inland &middot; wax-palm country energy</p>
+                  <p>Bright fa&ccedil;ades, timber trim, the Cocora mood without the tourist bus. Built to be looked at &mdash; screenshot bait on purpose.</p>
+                </div>
+              </article>
+
+              <article class="brochure-slide" data-town="new-bahamas">
+                <div class="brochure-shot">
+                  <img src="image_2026-09-13_014300746.png" alt="New Bahamas" loading="lazy" decoding="async">
+                  <span class="brochure-tag tag-caribbean">Caribbean</span>
+                </div>
+                <div class="brochure-copy">
+                  <h3>New Bahamas</h3>
+                  <p class="brochure-meta">Caribbean island town made by Ueq before he moved to Colombia</p>
+                  <p>A Caribbean island that represents its region beautifully &mdash; a port town with British colonial architecture, just like the real Bahamas.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+          <button type="button" class="brochure-nav brochure-next" id="brochureNext" aria-label="Next town">&#8250;</button>
+        </div>
+
+        <div class="brochure-dots" id="brochureDots" role="tablist" aria-label="Town slides">
+          <button type="button" class="brochure-dot active" data-i="0" aria-label="Tegucigalpa"></button>
+          <button type="button" class="brochure-dot" data-i="1" aria-label="Salento"></button>
+          <button type="button" class="brochure-dot" data-i="2" aria-label="New Bahamas"></button>
+        </div>
+
+        <!-- Featured town cards -->
+        <div class="town-cards">
+          <article class="town-card reveal" tabindex="0">
+            <div class="town-shot">
+              <img src="2026-07-03_20.34.52.webp" alt="Maicao harbourfront" loading="lazy" decoding="async">
+              <span class="region-tag tag-caribbean">Caribbean Coast</span>
+            </div>
+            <div class="town-body">
+              <h3>Maicao <small class="mayor-line">ueq_</small></h3>
+              <p>Capital claim on the water. Shops above ground, the mall below, and the treasury that pays out grants.</p>
+              <a class="town-link" href="#citizens" data-jump-town="Maicao">See residents &rarr;</a>
+            </div>
+          </article>
+
+          <article class="town-card reveal" tabindex="0">
+            <div class="town-shot">
+              <img src="2026-07-03_21.19.47.webp" alt="Salento's bright façades" loading="lazy" decoding="async">
+              <span class="region-tag tag-colombia">Colombia</span>
+            </div>
+            <div class="town-body">
+              <h3>Salento <small class="mayor-line">zattercal</small></h3>
+              <p>Coffee-country fa&ccedil;ades and timber trim &mdash; screenshot bait on purpose. Run by the Interior Ministry.</p>
+              <a class="town-link" href="#citizens" data-jump-town="Salento">See residents &rarr;</a>
+            </div>
+          </article>
+
+          <article class="town-card reveal" tabindex="0">
+            <div class="town-shot">
+              <img src="2026-07-03_20.59.29.webp" alt="Tegucigalpa at dusk" loading="lazy" decoding="async">
+              <span class="region-tag tag-central">Central America</span>
+            </div>
+            <div class="town-body">
+              <h3>Tegucigalpa <small class="mayor-line">Zaity1</small></h3>
+              <p>Its own country before it came under Colombia. Still the anchor on the isthmus &mdash; the claim that makes Central America real on the map.</p>
+              <a class="town-link" href="#citizens" data-jump-town="Tegucigalpa">See residents &rarr;</a>
+            </div>
+          </article>
+
+          <article class="town-card reveal" tabindex="0">
+            <div class="town-shot">
+              <img src="image_2026-09-13_014300746.png" alt="New Bahamas port town" loading="lazy" decoding="async">
+              <span class="region-tag tag-caribbean">Caribbean</span>
+            </div>
+            <div class="town-body">
+              <h3>New Bahamas <small class="mayor-line">AnythingIsFinee</small></h3>
+              <p>An island port in colonial style &mdash; the Caribbean side of the Empire doing what the real Bahamas does.</p>
+              <a class="town-link" href="#citizens" data-jump-town="New Bahamas">See residents &rarr;</a>
+            </div>
+          </article>
+
+          <article class="town-card reveal" tabindex="0">
+            <div class="town-shot">
+              <img src="2026-07-03_21.54.36.webp" alt="Medellín hillside district" loading="lazy" decoding="async">
+              <span class="region-tag tag-colombia">Colombia</span>
+            </div>
+            <div class="town-body">
+              <h3>Medell&iacute;n Antioquia <small class="mayor-line">birdyboa</small></h3>
+              <p>Hillside builds in the Aburr&aacute; Valley. Where the Prime Minister actually lives, so policy meets terrain.</p>
+              <a class="town-link" href="#citizens" data-jump-town="Medellin Antioquia">See residents &rarr;</a>
+            </div>
+          </article>
+
+          <article class="town-card reveal" tabindex="0">
+            <div class="town-shot">
+              <img src="2026-07-03_21.59.12.webp" alt="Guatapé waterfront" loading="lazy" decoding="async">
+              <span class="region-tag tag-colombia">Colombia</span>
+            </div>
+            <div class="town-body">
+              <h3>Guatap&eacute; <small class="mayor-line">Pokeframe</small></h3>
+              <p>Colourful lakeside town. Small population, high charm &mdash; the kind of place people visit and don't leave.</p>
+              <a class="town-link" href="#citizens" data-jump-town="Guatape">See residents &rarr;</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         4. LIVE CLAIM MAP
+         ============================================================ -->
+    <section class="section map-section reveal" id="map">
+      <div class="container narrow">
+        <div class="section-head">
+          <p class="kicker">Where It All Sits</p>
+          <h2 class="section-title">Live Claim Map</h2>
+          <p class="section-desc">Every Colombian claim, straight from the DiplomaticaMC world map.</p>
+        </div>
+        <div class="map-box">
+          <iframe src="https://map.diplomaticamc.com/?worldname=minecraft_overworld&amp;mapname=surface&amp;zoom=1&amp;x=-17560&amp;z=-2824"
+                  width="100%" height="600" frameborder="0" loading="lazy" allowfullscreen
+                  title="Interactive claim map"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         5. WIDGET — official DMC wiki entry (loads on scroll)
+         ============================================================ -->
+    <section class="section wiki-section reveal" id="wiki">
+      <div class="container narrow">
+        <div class="section-head">
+          <p class="kicker">Outside Sources</p>
+          <h2 class="section-title">The Nueva Granada Wiki</h2>
+          <p class="section-desc">Live, pulled directly from the official DiplomaticaMC Wiki.</p>
+        </div>
+        <div class="wiki-widget">
+          <div class="wiki-widget-head">
+            <span class="wtag">Wiki Entry</span>
+            <span class="wlogo">wiki.diplomaticamc.com</span>
+          </div>
+          <div class="wiki-widget-body" id="wikiWidgetBody">
+            <p class="muted">Loading&hellip;</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         6. CABINET
+         ============================================================ -->
+    <section class="section cabinet-section reveal" id="cabinet">
+      <div class="container">
+        <div class="section-head centered">
+          <p class="kicker">The Government</p>
+          <h2 class="section-title">Leadership &amp; the Cabinet</h2>
+        </div>
+
+        <div class="cabinet-grid">
+          <div class="gov-pill reveal">
+            <div class="medallion" aria-hidden="true">&#127963;</div>
+            <h4>Min. of Interior</h4>
+            <p class="minister-name">Novum_Vetus</p>
+            <p>Coordinates town placements and regional borders.</p>
+          </div>
+          <div class="gov-pill reveal">
+            <div class="medallion" aria-hidden="true">&#9878;&#65039;</div>
+            <h4>Min. of Justice and Law</h4>
+            <p class="minister-name">K_NightFall</p>
+            <p>Enforces imperial code and settles legal matters.</p>
+          </div>
+          <div class="gov-pill reveal">
+            <div class="medallion" aria-hidden="true">&#127806;</div>
+            <h4>Min. of Agriculture</h4>
+            <p class="minister-name">Respawn34</p>
+            <p>Manages resource farming for the populace.</p>
+          </div>
+          <div class="gov-pill reveal">
+            <div class="medallion" aria-hidden="true">&#127912;</div>
+            <h4>Min. of Culture</h4>
+            <p class="minister-name">ThyCoolio</p>
+            <p>Preserves history and cultural heritage.</p>
+          </div>
+          <div class="gov-pill reveal">
+            <div class="medallion" aria-hidden="true">&#128187;</div>
+            <h4>Min. of Technology</h4>
+            <p class="minister-name">Moumen11</p>
+            <p>Oversees automation, redstone systems, and technical infrastructure.</p>
+          </div>
+          <div class="gov-pill reveal">
+            <div class="medallion" aria-hidden="true">&#128737;&#65039;</div>
+            <h4>Min. of Defence</h4>
+            <p class="minister-name">Crowlia</p>
+            <p>Oversees the nation's army, maintains peace with foreign powers, and safeguards national security.</p>
+          </div>
+          <div class="gov-pill reveal gov-pill-wide">
+            <div class="medallion" aria-hidden="true">&#128176;</div>
+            <h4>Min. of Finance</h4>
+            <p class="minister-name">Maximilian_____I</p>
+            <p>Manages the national treasury, taxation, trade, and economic policy.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         7. CITIZENS — live roster directory with search
+         ============================================================ -->
+    <section class="section citizens-section reveal" id="citizens">
+      <div class="container">
+        <div class="section-head centered">
+          <p class="kicker">The People</p>
+          <h2 class="section-title">Citizens &amp; the Towns They Keep Alive</h2>
+          <p class="section-desc">
+            The leadership and towns that make up the Empire &mdash;
+            <span data-stat="towns">&mdash;</span> towns,
+            <span data-stat="citizens">&mdash;</span> citizens.
+            <span class="roster-live-badge" id="rosterLiveBadge">Syncing&hellip;</span>
+          </p>
+        </div>
+
+        <div class="roster-search-wrap">
+          <label for="citizenSearch" class="sr-only">Search citizens or towns by name or role</label>
+          <input type="text" id="citizenSearch" class="roster-search"
+                 placeholder="Search by citizen name, town, or role&hellip;" autocomplete="off">
+        </div>
+
+        <h3 class="roster-subhead">The Crown</h3>
+        <div class="leader-grid leader-grid-crown" id="leaderGridCrown"></div>
+
+        <h3 class="roster-subhead">The Leadership &amp; the Cabinet</h3>
+        <div class="leader-grid leader-grid-cabinet" id="leaderGridCabinet"></div>
+
+        <h3 class="roster-subhead">Towns &amp; Residents</h3>
+        <div class="towns-roster-grid" id="townsGrid"></div>
+        <p class="roster-empty" id="rosterEmpty">No citizens or towns match &quot;<span id="rosterEmptyQuery"></span>&quot;.</p>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         8. GRANTS
+         ============================================================ -->
+    <section class="section grants-section reveal" id="grants">
+      <div class="container">
+        <div class="grant-card">
+          <p class="kicker">Gold for new towns that stay active</p>
+          <p class="grant-amount">100 &ndash; 200 GOLD</p>
+          <p class="grant-note">Approved citizens establishing a colony town receive starting capital from leadership.</p>
+          <a class="btn btn-gold" href="https://discord.gg/YUyHgnpXwj" target="_blank" rel="noopener">Apply For a Grant</a>
+        </div>
+      </div>
+    </section>
 
   </main>
 
+  <!-- ============================================================
+       FOOTER
+       ============================================================ -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <p class="brand-name footer-brand">Reino de&nbsp;Colombia</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="#capital">The Capital</a>
+        <a href="#towns">Towns</a>
+        <a href="#map">Map</a>
+        <a href="#cabinet">Cabinet</a>
+        <a href="#citizens">Citizens</a>
+        <a href="history.html">History</a>
+        <a href="diplomacy.html">Diplomacy</a>
+        <a href="join.html">Join Us</a>
+        <a href="sports.html">Sports Hub</a>
+        <a href="casino.html">Casino</a>
+        <a href="https://discord.gg/YUyHgnpXwj" target="_blank" rel="noopener">Discord</a>
+      </nav>
+      <p class="footer-copy">&copy; 2026 Reino de Colombia &middot; DiplomaticaMC. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <button class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
+
+  <!-- Profile modal (opens from any citizen card / resident chip) -->
+  <div class="profile-overlay" id="profileOverlay" role="dialog" aria-modal="true" aria-labelledby="pName">
+    <div class="profile-modal">
+      <div class="profile-head">
+        <button class="profile-close" id="profileClose" type="button" aria-label="Close profile">&#10005;</button>
+        <img id="pImg" src="" alt="">
+        <div class="p-name" id="pName"></div>
+        <div class="p-role" id="pRole"></div>
+      </div>
+      <div class="profile-body">
+        <p class="p-bio" id="pBio"></p>
+        <div class="profile-facts">
+          <div class="fact"><div class="fk">Town</div><div class="fv" id="pTown"></div></div>
+          <div class="fact"><div class="fk">Joined</div><div class="fv" id="pJoined"></div></div>
+        </div>
+        <p class="profile-unverified">Profile info added by Crown staff &mdash; not yet self-verified by the player.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
   <script src="js/config.js"></script>
   <script src="js/live-data.js"></script>
+  <script src="js/sections.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>
