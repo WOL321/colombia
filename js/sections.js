@@ -313,8 +313,6 @@
   const crownLeaders = [
     { username: 'ueq_',         role: 'King of Colombia',             town: 'Maicao',            joined: 'Est. 2026', bio: 'Founder and King of the Colombian Empire.' },
     { username: 'OliveTree315', role: 'Prime Minister of Colombia',   town: 'Medellin Antioquia', joined: '2026', bio: '' },
-    { username: 'pikagamer55',  role: 'King of Central America',      town: 'Puerto Lempira',     joined: '2025', bio: '' },
-    { username: 'zaity1',       role: 'Prime Minister of Central America', town: 'Tegucigalpa',   joined: '2025', bio: '' },
   ];
   // Kept in sync with the Cabinet section on index.html — tier order matters:
   // Crown first, Senior Ministry next, then the ministries.

@@ -880,6 +880,32 @@ a { color: inherit; }
 .gov-pill-crown h4 { color: var(--gold-bright); }
 @media (max-width: 640px) { .gov-pill-crown { grid-column: 1 / -1; } }
 
+/* The Crown row holds exactly two sovereign pills. Force it to two equal
+   tracks and cap the row width, then center it with auto margins — same
+   pattern as .gov-pill-wide — so it can never sit off to the left. */
+.cabinet-grid:has(.gov-pill-crown) {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: calc((100% - 1.4rem) / 3 * 2 + 1.4rem); /* ≈ two full-width crown pills */
+  margin-inline: auto;
+}
+@media (max-width: 900px) {
+  .cabinet-grid:has(.gov-pill-crown) { max-width: 100%; }
+}
+@media (max-width: 640px) {
+  .cabinet-grid:has(.gov-pill-crown) { grid-template-columns: 1fr; }
+}
+/* Fallback for browsers without :has(): center the two crown pills by
+   capping each at half the row width with auto margins. */
+@supports not (selector(:has(*))) {
+  .gov-pill-crown { max-width: calc(50% - 0.7rem); margin-inline: auto; }
+}
+
+/* Citizen-list "The Crown" section — keep its cards centered too. */
+.leader-grid-crown {
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  justify-content: center;
+}
+
 .gov-pill {
   position: relative;
   padding: 1.8rem 1.6rem;
