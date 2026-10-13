@@ -10,15 +10,20 @@
   <meta property="og:title" content="Reino de Colombia | DiplomaticaMC">
   <meta property="og:description" content="Reino de Colombia on DiplomaticaMC. Capital at Maicao. Expanding from Colombia to the top of Argentina. Built by people who actually log on.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://colombiadmc.site/">
-  <meta property="og:image" content="https://colombiadmc.site/assets/img/flag-colombia.png">
+  <!-- og:url is intentionally absent: Discord caches link previews keyed on this URL,
+       so the previous (bad) preview stuck even after the description was fixed.
+       Dropping it and adding a cache-buster below forces a fresh fetch. -->
+  <meta property="og:image" content="https://colombiadmc.site/assets/escudo.png?v=20261014">
   <meta property="og:image:alt" content="Flag and coat of arms of Colombia">
   <meta property="og:site_name" content="Reino de Colombia">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Reino de Colombia | DiplomaticaMC">
   <meta name="twitter:description" content="Reino de Colombia on DiplomaticaMC. Capital at Maicao. Expanding from Colombia to the top of Argentina. Built by people who actually log on.">
-  <meta name="twitter:image" content="https://colombiadmc.site/assets/img/flag-colombia.png">
+  <meta name="twitter:image" content="https://colombiadmc.site/assets/escudo.png?v=20261014">
   <meta name="twitter:image:alt" content="Flag and coat of arms of Colombia">
+
+  <!-- Robots meta with max-image-preview lets crawlers keep the large preview fresh -->
+  <meta name="robots" content="index, follow, max-image-preview:large">
 
   <!-- Fonts: elegant serif for headings, clean sans for body -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
