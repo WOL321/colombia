@@ -902,6 +902,42 @@ a { color: inherit; }
 .gov-pill:hover, .gov-pill:focus-within { transform: translateY(-4px); border-color: var(--gold-line-strong); }
 .gov-pill > * { position: relative; }
 
+/* Cabinet tiers — Crown / Senior Ministry / Ministries */
+.cabinet-tier {
+  display: flex; align-items: center; gap: 1.1rem;
+  margin: 2.6rem 0 1.3rem;
+}
+.cabinet-grid + .cabinet-tier { margin-top: 3rem; }
+.cabinet-tier:first-of-type { margin-top: 0; }
+.tier-label {
+  font-size: 0.72rem; font-weight: 700;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--gold-bright); white-space: nowrap;
+}
+.tier-rule {
+  flex: 1; height: 1px;
+  background: linear-gradient(90deg, var(--gold-line-strong), transparent);
+}
+.cabinet-grid-senior { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+.gov-pill-senior {
+  border-color: rgba(212, 160, 23, 0.35);
+  background:
+    radial-gradient(420px 160px at 80% 0%, rgba(212, 160, 23, 0.08), transparent 70%),
+    linear-gradient(180deg, var(--surface-raised), var(--surface));
+}
+/* Pills wired to the profile modal (js/sections.js) */
+.gov-pill-link { cursor: pointer; }
+.gov-pill-link:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; }
+.gov-pill-link::after {
+  content: "View profile \2192";
+  position: absolute; right: 1.4rem; bottom: 1.2rem;
+  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--gold-bright);
+  opacity: 0; transform: translateY(4px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+.gov-pill-link:hover::after, .gov-pill-link:focus-visible::after { opacity: 0.9; transform: none; }
+
 .medallion {
   width: 52px; height: 52px;
   display: grid; place-items: center;
@@ -1045,6 +1081,17 @@ a { color: inherit; }
 }
 .citizen-card .name { font-weight: 600; font-size: 0.95rem; }
 .citizen-card .role { font-size: 0.75rem; color: var(--text-muted); line-height: 1.35; }
+.citizen-tier {
+  margin-top: 0.15rem;
+  padding: 0.18rem 0.6rem;
+  font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  border-radius: 999px;
+  border: 1px solid var(--gold-line);
+  color: var(--gold-bright);
+  background: rgba(212, 160, 23, 0.08);
+}
+.citizen-tier-ministry { color: var(--text-muted); background: transparent; }
 .leader-grid-crown .citizen-card { border-color: var(--gold-line-strong); }
 .leader-grid-crown .citizen-card .role { color: var(--gold-bright); }
 .citizen-card.hidden { display: none; }
@@ -1179,7 +1226,30 @@ a { color: inherit; }
   border-radius: var(--radius);
   box-shadow: var(--shadow-card);
 }
-.grant-form { padding: clamp(1.6rem, 4vw, 2.4rem); }
+.grant-form {
+  padding: clamp(1.6rem, 4vw, 2.4rem);
+  border-color: var(--gold-line-strong);
+  box-shadow: var(--shadow-card), 0 0 80px -34px var(--gold-glow);
+}
+.grant-form-title {
+  display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  margin-bottom: 1.6rem;
+}
+.grant-form-title h3 {
+  font-family: var(--font-serif);
+  font-size: 1.45rem; font-weight: 600; margin: 0;
+}
+.grant-step-badge {
+  flex-shrink: 0;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--gold-bright);
+  border: 1px solid var(--gold-line-strong);
+  border-radius: 999px;
+  background: rgba(212, 160, 23, 0.08);
+  white-space: nowrap;
+}
 
 .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
 @media (max-width: 640px) { .field-row { grid-template-columns: 1fr; } }

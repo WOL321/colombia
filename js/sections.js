@@ -316,14 +316,16 @@
     { username: 'pikagamer55',  role: 'King of Central America',      town: 'Puerto Lempira',     joined: '2025', bio: '' },
     { username: 'zaity1',       role: 'Prime Minister of Central America', town: 'Tegucigalpa',   joined: '2025', bio: '' },
   ];
+  // Kept in sync with the Cabinet section on index.html — tier order matters:
+  // Crown first, Senior Ministry next, then the ministries.
   const cabinetLeaders = [
-    { username: 'Novum_Vetus', role: 'Min. of Interior',       town: 'Antillara',   joined: '2026', bio: 'Elected Minister of Interior. Holds down the home front, keeps order, and makes sure daily operations don\'t fall apart.' },
-    { username: 'ThyCoolio',   role: 'Min. of Culture',        town: 'El Salvador', joined: '2026', bio: 'Elected Minister of Culture with 7 votes. Keeps the community vibe alive, runs events, and preserves the Empire\'s cultural identity.' },
-    { username: 'Respawn34',   role: 'Min. of Agriculture',    town: 'Canollia',    joined: '2026', bio: 'Elected Minister of Agriculture with 4 votes. Takes charge of resources and internal growth as the backbone of the economy.' },
-    { username: 'Moumen11',    role: 'Min. of Technology',     town: 'Haiti',       joined: '2026', bio: 'Elected Minister of Technology. Manages infrastructure and automation, keeping the Empire\'s tech systems a step ahead.' },
-    { username: 'K_NightFall', role: 'Min. of Justice and Law', town: 'Maicao',     joined: '2026', bio: 'Elected Minister of Justice and Law. Upholds the rules, keeps legal proceedings fair, and ensures justice is distributed properly.' },
-    { username: 'Crowlia',     role: 'Min. of Defence',        town: 'Barbados',    joined: '2026', bio: 'Oversees the nation\'s army, maintains peace with foreign powers, and safeguards national security.' },
-    { username: 'Maximilian_____I', role: 'Min. of Finance',   town: 'Maicao',      joined: '2026', bio: 'Manages the national treasury, taxation, trade, and economic policy.' },
+    { username: 'Novum_Vetus', role: 'Min. of Foreign & Internal Affairs', tier: 'senior', town: 'Antillara', joined: '2026', bio: 'Represents the Empire abroad and coordinates town placements and internal borders at home.' },
+    { username: 'Crowlia',     role: 'Min. of Defense',        tier: 'senior', town: 'Barbados',    joined: '2026', bio: 'Commands the imperial army, guards the claims, and keeps the peace with foreign powers.' },
+    { username: 'Maximilian_____I', role: 'Min. of Finance',   tier: 'senior', town: 'Maicao',      joined: '2026', bio: 'Manages the national treasury, taxation, trade, and the gold behind every town grant.' },
+    { username: 'qulipzz',     role: 'Min. of Justice and Law', tier: 'ministry', town: 'Maicao',   joined: '2026', bio: 'Enforces imperial code and settles legal matters across the realm.' },
+    { username: 'pato541',     role: 'Min. of Culture',        tier: 'ministry', town: 'El Salvador', joined: '2026', bio: "Preserves the Empire's history, runs events, and keeps its identity alive." },
+    { username: 'Respawn34',   role: 'Min. of Agriculture',    tier: 'ministry', town: 'Canollia',  joined: '2026', bio: 'Elected Minister of Agriculture. Takes charge of resources and internal growth as the backbone of the economy.' },
+    { username: 'Moumen11',    role: 'Min. of Technology',     tier: 'ministry', town: 'Haiti',     joined: '2026', bio: "Elected Minister of Technology. Manages infrastructure and automation, keeping the Empire's tech systems a step ahead." },
   ];
 
   function makeAvatarImg(username, size) {
@@ -362,6 +364,12 @@
       role.className = 'role';
       role.textContent = c.role;
       el.appendChild(role);
+      if (c.tier) {
+        const tierTag = document.createElement('div');
+        tierTag.className = 'citizen-tier citizen-tier-' + c.tier;
+        tierTag.textContent = c.tier === 'senior' ? 'Senior Ministry' : 'Ministry';
+        el.appendChild(tierTag);
+      }
       el.addEventListener('click', () => openProfile(c));
       el.addEventListener('mousemove', spotlightMove);
       el.addEventListener('keydown', (e) => {
@@ -614,6 +622,22 @@
 
   renderPlayerCards(crownLeaders, 'leaderGridCrown');
   renderPlayerCards(cabinetLeaders, 'leaderGridCabinet');
+
+  /* ---------- Cabinet pills: hover spotlight + open profile on click --------*/
+  document.querySelectorAll('.gov-pill[data-jump]').forEach((pill) => {
+    const username = pill.dataset.jump;
+    const person = crownLeaders.concat(cabinetLeaders).find((p) => p.username === username);
+    if (!person) return;
+    pill.classList.add('gov-pill-link');
+    pill.setAttribute('tabindex', '0');
+    pill.setAttribute('role', 'button');
+    pill.setAttribute('aria-label', 'View profile: ' + person.username + ', ' + person.role);
+    pill.addEventListener('mousemove', spotlightMove);
+    pill.addEventListener('click', () => openProfile(person));
+    pill.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openProfile(person); }
+    });
+  });
 
   if (window.LiveData && typeof window.LiveData.subscribe === 'function') {
     window.LiveData.subscribe(renderRoster);
