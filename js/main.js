@@ -39,7 +39,13 @@
     towns: document.querySelector('[data-stat="towns"]'),
     citizens: document.querySelector('[data-stat="citizens"]'),
     leaders: document.querySelector('[data-stat="leaders"]'),
+    council: document.querySelector('[data-stat="council"]'),
   };
+
+  // Fixed headline numbers: one Leader (the King) and the five-seat
+  // Council of Ministers. These are set by hand, not derived from the roster.
+  if (statEls.leaders) statEls.leaders.textContent = '1';
+  if (statEls.council) statEls.council.textContent = '5';
   const updatedEl = document.querySelector('[data-stat-updated]');
 
   function relTime(date) {
@@ -72,7 +78,7 @@
     if (!stats) return;
     setStat(statEls.towns, stats.towns);
     setStat(statEls.citizens, stats.citizens);
-    setStat(statEls.leaders, stats.leaders);
+    // "Leader" and "Council of Ministers" are fixed numbers (1 / 5) — see above.
 
     const stamp = state.data.updatedAt
       ? new Date(state.data.updatedAt)
