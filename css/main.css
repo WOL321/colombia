@@ -908,6 +908,20 @@ a { color: inherit; }
 /* Citizen-list "The Crown" section — same clean ordering/centering as the
    Cabinet list: two equal sovereign cards, evenly spaced and centered. */
 .leader-grid-crown {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: calc((100% - 1.1rem) / 3 * 2 + 1.1rem); /* ≈ two full-width crown cards */
+  margin-inline: auto;
+}
+@media (max-width: 900px) {
+  .leader-grid-crown { max-width: 100%; }
+}
+@media (max-width: 560px) {
+  .leader-grid-crown { grid-template-columns: 1fr; }
+}
+
+/* Cabinet citizen-list — four equal minister cards, evenly spaced and
+   centered (auto-fit collapses empty tracks so the row stays symmetric). */
+.leader-grid-cabinet {
   grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   max-width: 430px; /* two cabinet-style cards + the 1.1rem gap */
   margin-inline: auto;
