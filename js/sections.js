@@ -357,12 +357,7 @@
       role.className = 'role';
       role.textContent = c.role;
       el.appendChild(role);
-      if (c.tier) {
-        const tierTag = document.createElement('div');
-        tierTag.className = 'citizen-tier citizen-tier-' + c.tier;
-        tierTag.textContent = c.tier === 'senior' ? 'Senior Cabinet' : 'Cabinet';
-        el.appendChild(tierTag);
-      }
+      // No tier tags ("Senior Cabinet" / "Cabinet") on the cards anymore.
       el.addEventListener('click', () => openProfile(c));
       el.addEventListener('mousemove', spotlightMove);
       el.addEventListener('keydown', (e) => {

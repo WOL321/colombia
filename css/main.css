@@ -370,9 +370,12 @@ a { color: inherit; }
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 0.15rem;
   min-width: 84px;
+  text-align: center;
 }
+.stat-label { white-space: nowrap; }
 .stat-value {
   font-family: var(--font-serif);
   font-size: clamp(1.9rem, 3.4vw, 2.6rem);
@@ -431,6 +434,8 @@ a { color: inherit; }
     justify-content: space-between;
   }
   .stat { min-width: 0; }
+  /* On very narrow screens the long labels may wrap — keep them centered. */
+  .stat-label { white-space: normal; text-align: center; }
   .stat-divider { height: 36px; }
 }
 
@@ -900,10 +905,26 @@ a { color: inherit; }
   .gov-pill-crown { max-width: calc(50% - 0.7rem); margin-inline: auto; }
 }
 
-/* Citizen-list "The Crown" section — keep its cards centered too. */
+/* Citizen-list "The Crown" section — exactly two sovereign cards on one
+   even row, capped in width and centered so they can never look lopsided. */
 .leader-grid-crown {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: calc((100% - 1.1rem) / 3 * 2 + 1.1rem); /* ≈ two full-width crown cards */
+  margin-inline: auto;
+}
+@media (max-width: 900px) {
+  .leader-grid-crown { max-width: 100%; }
+}
+@media (max-width: 560px) {
+  .leader-grid-crown { grid-template-columns: 1fr; }
+}
+
+/* Cabinet citizen-list — four equal minister cards, evenly spaced and
+   centered (auto-fit collapses empty tracks so the row stays symmetric). */
+.leader-grid-cabinet {
   grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
-  justify-content: center;
+  max-width: 860px;
+  margin-inline: auto;
 }
 
 .gov-pill {
@@ -1427,8 +1448,19 @@ a { color: inherit; }
 /* ============================================================
    V. CABINET TIERS (final pass) — Crown / Cabinet, clean hierarchy
    ============================================================ */
-.cabinet-grid-ministers { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+/* Four ministries on one even row: four equal tracks, capped width and
+   centered — no leftover gap columns, no uneven spacing. */
+.cabinet-grid-ministers {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  max-width: 1120px;
+  margin-inline: auto;
+}
+@media (max-width: 1100px) { .cabinet-grid-ministers { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 760px) { .cabinet-grid-ministers { grid-template-columns: 1fr; } }
+
+/* "Senior" vs regular ministry pills are no longer distinguished — the
+   Senior Cabinet labels are gone, so all four minister cards look alike. */
+.gov-pill-senior { border-color: var(--gold-line); background: linear-gradient(180deg, var(--surface-raised), var(--surface)); }
 
 /* ============================================================
    VI. DIPLOMACY SUBPAGE — China-only relations, premium cards
