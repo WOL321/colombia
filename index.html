@@ -245,80 +245,12 @@
           <button type="button" class="brochure-dot" data-i="2" aria-label="New Bahamas"></button>
         </div>
 
-        <!-- Featured town cards -->
-        <div class="town-cards">
-          <article class="town-card reveal" tabindex="0">
-            <div class="town-shot">
-              <img src="2026-07-03_20.34.52.webp" alt="Maicao harbourfront" loading="lazy" decoding="async">
-              <span class="region-tag tag-caribbean">Caribbean Coast</span>
-            </div>
-            <div class="town-body">
-              <h3>Maicao <small class="mayor-line">ueq_</small></h3>
-              <p>Capital claim on the water. Shops above ground, the mall below, and the treasury that pays out grants.</p>
-              <a class="town-link" href="#citizens" data-jump-town="Maicao">See residents &rarr;</a>
-            </div>
-          </article>
-
-          <article class="town-card reveal" tabindex="0">
-            <div class="town-shot">
-              <img src="2026-07-03_21.19.47.webp" alt="Salento's bright façades" loading="lazy" decoding="async">
-              <span class="region-tag tag-colombia">Colombia</span>
-            </div>
-            <div class="town-body">
-              <h3>Salento <small class="mayor-line">zattercal</small></h3>
-              <p>Coffee-country fa&ccedil;ades and timber trim &mdash; screenshot bait on purpose. Run by the Interior Ministry.</p>
-              <a class="town-link" href="#citizens" data-jump-town="Salento">See residents &rarr;</a>
-            </div>
-          </article>
-
-          <article class="town-card reveal" tabindex="0">
-            <div class="town-shot">
-              <img src="2026-07-03_20.59.29.webp" alt="Tegucigalpa at dusk" loading="lazy" decoding="async">
-              <span class="region-tag tag-central">Central America</span>
-            </div>
-            <div class="town-body">
-              <h3>Tegucigalpa <small class="mayor-line">Zaity1</small></h3>
-              <p>Its own country before it came under Colombia. Still the anchor on the isthmus &mdash; the claim that makes Central America real on the map.</p>
-              <a class="town-link" href="#citizens" data-jump-town="Tegucigalpa">See residents &rarr;</a>
-            </div>
-          </article>
-
-          <article class="town-card reveal" tabindex="0">
-            <div class="town-shot">
-              <img src="image_2026-09-13_014300746.png" alt="New Bahamas port town" loading="lazy" decoding="async">
-              <span class="region-tag tag-caribbean">Caribbean</span>
-            </div>
-            <div class="town-body">
-              <h3>New Bahamas <small class="mayor-line">AnythingIsFinee</small></h3>
-              <p>An island port in colonial style &mdash; the Caribbean side of the Empire doing what the real Bahamas does.</p>
-              <a class="town-link" href="#citizens" data-jump-town="New Bahamas">See residents &rarr;</a>
-            </div>
-          </article>
-
-          <article class="town-card reveal" tabindex="0">
-            <div class="town-shot">
-              <img src="2026-07-03_21.54.36.webp" alt="Medellín hillside district" loading="lazy" decoding="async">
-              <span class="region-tag tag-colombia">Colombia</span>
-            </div>
-            <div class="town-body">
-              <h3>Medell&iacute;n Antioquia <small class="mayor-line">birdyboa</small></h3>
-              <p>Hillside builds in the Aburr&aacute; Valley. Where the Prime Minister actually lives, so policy meets terrain.</p>
-              <a class="town-link" href="#citizens" data-jump-town="Medellin Antioquia">See residents &rarr;</a>
-            </div>
-          </article>
-
-          <article class="town-card reveal" tabindex="0">
-            <div class="town-shot">
-              <img src="2026-07-03_21.59.12.webp" alt="Guatapé waterfront" loading="lazy" decoding="async">
-              <span class="region-tag tag-colombia">Colombia</span>
-            </div>
-            <div class="town-body">
-              <h3>Guatap&eacute; <small class="mayor-line">Pokeframe</small></h3>
-              <p>Colourful lakeside town. Small population, high charm &mdash; the kind of place people visit and don't leave.</p>
-              <a class="town-link" href="#citizens" data-jump-town="Guatape">See residents &rarr;</a>
-            </div>
-          </article>
-        </div>
+        <!-- One classy bridge into the full directory (small card grid removed) -->
+        <p class="towns-footnote">
+          The showcase above is a highlight reel &mdash; the full register of all
+          <span data-stat="towns">&mdash;</span> imperial towns and their residents
+          lives in the <a href="#citizens">Citizens directory</a> below.
+        </p>
       </div>
     </section>
 
@@ -332,10 +264,17 @@
           <h2 class="section-title">Live Claim Map</h2>
           <p class="section-desc">Every Colombian claim, straight from the DiplomaticaMC world map.</p>
         </div>
-        <div class="map-box">
-          <iframe src="https://map.diplomaticamc.com/?worldname=minecraft_overworld&amp;mapname=surface&amp;zoom=1&amp;x=-17560&amp;z=-2824"
-                  width="100%" height="600" frameborder="0" loading="lazy" allowfullscreen
-                  title="Interactive claim map"></iframe>
+        <div class="map-frame">
+          <div class="map-frame-head">
+            <span class="wtag">Live</span>
+            <span class="map-frame-title">DiplomaticaMC World Map</span>
+            <span class="map-frame-coords">Overworld &middot; 18&deg;N trade route</span>
+          </div>
+          <div class="map-box">
+            <iframe src="https://map.diplomaticamc.com/?worldname=minecraft_overworld&amp;mapname=surface&amp;zoom=1&amp;x=-17560&amp;z=-2824"
+                    width="100%" height="600" frameborder="0" loading="lazy" allowfullscreen
+                    title="Interactive claim map"></iframe>
+          </div>
         </div>
       </div>
     </section>
@@ -373,6 +312,20 @@
         </div>
 
         <div class="cabinet-grid">
+          <!-- Crown: the two heads of state, same glass-pill language -->
+          <div class="gov-pill gov-pill-crown reveal">
+            <div class="medallion" aria-hidden="true">&#128081;</div>
+            <h4>King of Colombia</h4>
+            <p class="minister-name">ueq_</p>
+            <p>Founder of the Empire and sovereign of the Caribbean seat. The crown sets direction; the cabinet carries it out.</p>
+          </div>
+          <div class="gov-pill gov-pill-crown reveal">
+            <div class="medallion" aria-hidden="true">&#128220;</div>
+            <h4>Prime Minister of Colombia</h4>
+            <p class="minister-name">OliveTree315</p>
+            <p>Runs day-to-day government between the throne and the ministries, based in Medell&iacute;n Antioquia.</p>
+          </div>
+
           <div class="gov-pill reveal">
             <div class="medallion" aria-hidden="true">&#127963;</div>
             <h4>Min. of Interior</h4>
@@ -435,10 +388,25 @@
           </p>
         </div>
 
-        <div class="roster-search-wrap">
-          <label for="citizenSearch" class="sr-only">Search citizens or towns by name or role</label>
-          <input type="text" id="citizenSearch" class="roster-search"
-                 placeholder="Search by citizen name, town, or role&hellip;" autocomplete="off">
+        <div class="roster-toolbar">
+          <div class="roster-search-wrap">
+            <svg class="roster-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.5" y2="16.5"></line>
+            </svg>
+            <label for="citizenSearch" class="sr-only">Search citizens or towns by name or role</label>
+            <input type="text" id="citizenSearch" class="roster-search"
+                   placeholder="Search by citizen name, town, or role&hellip;" autocomplete="off">
+            <button type="button" class="roster-clear" id="rosterClear" aria-label="Clear search">&#10005;</button>
+          </div>
+          <div class="region-filters" id="regionFilters" role="group" aria-label="Filter towns by region">
+            <button type="button" class="region-chip active" data-region="all">All regions</button>
+            <button type="button" class="region-chip" data-region="caribbean">Caribbean</button>
+            <button type="button" class="region-chip" data-region="colombia">Colombia</button>
+            <button type="button" class="region-chip" data-region="central-america">Central America</button>
+            <button type="button" class="region-chip" data-region="south-america">South America</button>
+            <button type="button" class="region-chip" data-region="other">Other claims</button>
+          </div>
         </div>
 
         <h3 class="roster-subhead">The Crown</h3>
@@ -454,15 +422,111 @@
     </section>
 
     <!-- ============================================================
-         8. GRANTS
+         8. GRANTS — real application form (posts to a Discord
+         webhook when one is configured in js/config.js; otherwise
+         validates, copies the application and hands off to Discord).
          ============================================================ -->
     <section class="section grants-section reveal" id="grants">
       <div class="container">
-        <div class="grant-card">
-          <p class="kicker">Gold for new towns that stay active</p>
-          <p class="grant-amount">100 &ndash; 200 GOLD</p>
-          <p class="grant-note">Approved citizens establishing a colony town receive starting capital from leadership.</p>
-          <a class="btn btn-gold" href="https://discord.gg/YUyHgnpXwj" target="_blank" rel="noopener">Apply For a Grant</a>
+        <div class="section-head centered">
+          <p class="kicker">Imperial Settlement Programme</p>
+          <h2 class="section-title">Town Grants</h2>
+          <p class="section-desc">
+            Approved citizens establishing a colony town receive starting
+            capital from leadership. Fill the petition &mdash; the Crown reviews
+            every submission.
+          </p>
+        </div>
+
+        <div class="grant-grid">
+          <aside class="grant-terms">
+            <p class="grant-amount">&ge; 100 GOLD</p>
+            <ul class="grant-list">
+              <li><strong>Who can apply:</strong> any citizen in good standing, or an applicant moving to Colombia with the grant.</li>
+              <li><strong>What you get:</strong> 100&ndash;200 gold of starting capital wired to your town bank on approval.</li>
+              <li><strong>What we ask:</strong> a plan you can actually build, and an active presence once the claim is placed.</li>
+              <li><strong>Timeline:</strong> petitions are reviewed by the Crown and Finance Ministry &mdash; expect an answer in Discord.</li>
+            </ul>
+            <a class="town-link" href="https://discord.gg/YUyHgnpXwj" target="_blank" rel="noopener">Questions? Ask in Discord &rarr;</a>
+          </aside>
+
+          <form class="grant-form card-premium" id="grantForm" novalidate>
+            <div class="field-row">
+              <div class="field">
+                <label for="gMinecraft">Minecraft username <span class="req">*</span></label>
+                <input type="text" id="gMinecraft" name="minecraft" required maxlength="40"
+                       placeholder="e.g. ueq_" autocomplete="off">
+                <p class="field-error" data-error-for="gMinecraft"></p>
+              </div>
+              <div class="field">
+                <label for="gDiscord">Discord tag <span class="req">*</span></label>
+                <input type="text" id="gDiscord" name="discord" required maxlength="60"
+                       placeholder="e.g. username" autocomplete="off">
+                <p class="field-error" data-error-for="gDiscord"></p>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field">
+                <label for="gTown">Proposed town name <span class="req">*</span></label>
+                <input type="text" id="gTown" name="town" required maxlength="40"
+                       placeholder="e.g. Cartagena Nueva" autocomplete="off">
+                <p class="field-error" data-error-for="gTown"></p>
+              </div>
+              <div class="field">
+                <label for="gRegion">Target region</label>
+                <select id="gRegion" name="region">
+                  <option value="Caribbean Coast">Caribbean Coast</option>
+                  <option value="Colombian heartland">Colombian heartland</option>
+                  <option value="Central America">Central America</option>
+                  <option value="South America / Andes">South America / Andes</option>
+                  <option value="Wherever the Crown sees fit">Wherever the Crown sees fit</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field-row">
+              <div class="field field-half">
+                <label for="gAmount">Grant requested</label>
+                <select id="gAmount" name="amount">
+                  <option value="100 gold">100 gold &mdash; starter colony</option>
+                  <option value="150 gold">150 gold &mdash; established plan</option>
+                  <option value="200 gold">200 gold &mdash; ambitious build</option>
+                </select>
+              </div>
+              <div class="field field-half">
+                <label for="gStatus">Are you already a citizen?</label>
+                <select id="gStatus" name="status">
+                  <option value="Yes, active citizen">Yes, active citizen</option>
+                  <option value="New — joining with this grant">New &mdash; joining with this grant</option>
+                  <option value="Returning player">Returning player</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="gPlan">Your town plan <span class="req">*</span></label>
+              <textarea id="gPlan" name="plan" rows="5" required minlength="30" maxlength="1200"
+                        placeholder="What will you build, where, and how will the town stay active? Two honest sentences beat five paged ones."></textarea>
+              <p class="field-error" data-error-for="gPlan"></p>
+            </div>
+
+            <div class="grant-form-actions">
+              <button type="submit" class="btn btn-gold" id="grantSubmitBtn">Send Petition</button>
+              <p class="grant-form-note" aria-live="polite" id="grantFormNote"></p>
+            </div>
+          </form>
+
+          <div class="grant-success card-premium" id="grantSuccess" hidden>
+            <div class="grant-success-mark" aria-hidden="true">&#10003;</div>
+            <h3>Petition recorded</h3>
+            <p id="grantSuccessText">The Crown has your application.</p>
+            <div class="grant-success-actions">
+              <button type="button" class="btn btn-ghost" id="grantCopyBtn">Copy application</button>
+              <a class="btn btn-gold" href="https://discord.gg/YUyHgnpXwj" target="_blank" rel="noopener">Post it in Discord</a>
+            </div>
+            <button type="button" class="grant-again" id="grantAgainBtn">&larr; Submit another petition</button>
+          </div>
         </div>
       </div>
     </section>

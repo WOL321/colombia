@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-07T02:19:22.967Z",
+  "updatedAt": "2026-10-13T00:56:14.603Z",
   "nation": "Colombia",
   "townCount": 34,
   "residentCount": 64,
@@ -366,5 +366,6 @@
         }
       ]
     }
-  ]
+  ],
+  "schemaVersion": 2
 }
