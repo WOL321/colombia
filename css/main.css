@@ -225,6 +225,32 @@ a { color: inherit; }
   gap: clamp(2.5rem, 5vh, 4rem);
 }
 
+/* ---------- Homepage entrance animation (index page only) ----------------
+   Soft, calm fade-and-rise. The whole hero starts slightly faded and a few
+   pixels lower, then eases into place. The flag / coat of arms card appears
+   first, followed by a light stagger: title, tagline, buttons, live bar,
+   then the stats strip. No bounce, no spin. */
+@keyframes heroRise {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.page-home .hero-item {
+  animation: heroRise 0.8s var(--ease-out) both;
+}
+/* Crest (flag + coat of arms) leads the entrance */
+.page-home .hero-item-crest   { animation-delay: 0.05s; }
+/* Then the copy, in a gentle staggered order */
+.page-home .hero-item-kicker  { animation-delay: 0.18s; }
+.page-home .hero-item-title   { animation-delay: 0.28s; }
+.page-home .hero-item-tagline { animation-delay: 0.40s; }
+.page-home .hero-item-actions { animation-delay: 0.52s; }
+.page-home .hero-item-livebar { animation-delay: 0.64s; }
+/* Stats close out the sequence */
+.page-home .hero-item-stats   { animation-delay: 0.78s; }
+@media (prefers-reduced-motion: reduce) {
+  .page-home .hero-item { animation: none; }
+}
+
 /* Atmosphere: two soft gold lights + engraved contour lines */
 .hero-atmos { position: absolute; inset: 0; pointer-events: none; }
 
