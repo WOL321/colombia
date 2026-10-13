@@ -350,6 +350,9 @@
       el.setAttribute('tabindex', '0');
       el.setAttribute('role', 'button');
       el.setAttribute('aria-label', 'View profile: ' + c.username + ', ' + c.role);
+      // Region data so the roster region filters work on leaders too.
+      el.dataset.town = (c.town || '').toLowerCase();
+      el.dataset.region = townRegion(c.town || '');
       el.appendChild(makeAvatarImg(c.username, 64));
       const name = document.createElement('div');
       name.className = 'name';
@@ -371,6 +374,30 @@
   /* ---------- Towns & residents roster --------------------------------------*/
   let allResidents = [];
 
+  // Region mapping for the 34 in-game towns — one place to edit when the
+  // Empire claims new ground. Anything unmapped falls into "Other claims".
+  const TOWN_REGIONS = {
+    caribbean:      ['Maicao', 'New Bahamas', 'Trinidad', 'Golopigi', 'George Town',
+                     'Dominican Republic', 'Paramaribo', 'Bismuna Tara'],
+    colombia:       ['Aldama', 'Cabada Vera', 'Cali', 'Canollia', 'Cordoba', 'Guatape',
+                     'Iza', 'Jardin', 'Medellin Antioquia', 'Santa Ana', 'Santa Maria',
+                     'Santa Marta', 'Zircon', 'El Estrella', 'Intuto', 'Salento'],
+    'central-america': ['Tegucigalpa', 'Puerto Lempira', 'Managua', 'Esteli', 'Panama',
+                        'Guatemala', 'El Salvador', 'Mexico City'],
+    'south-america':   ['Quito', 'Caracas', 'Goiania'],
+  };
+  const REGION_LABELS = {
+    caribbean: 'Caribbean', colombia: 'Colombia',
+    'central-america': 'Central America', 'south-america': 'South America',
+    other: 'Other claims',
+  };
+  function townRegion(name) {
+    for (const key of Object.keys(TOWN_REGIONS)) {
+      if (TOWN_REGIONS[key].includes(name)) return key;
+    }
+    return 'other';
+  }
+
   function renderTownsRoster(list) {
     const grid = document.getElementById('townsGrid');
     if (!grid) return;
@@ -380,10 +407,12 @@
       if (!residents.length) return;
       const mayor = Object.assign({}, residents[0], { role: 'Mayor of ' + t.name, town: t.name });
       const others = residents.slice(1);
+      const region = townRegion(t.name);
 
       const card = document.createElement('div');
       card.className = 'town-roster-card';
       card.dataset.town = t.name.toLowerCase();
+      card.dataset.region = region;
 
       const head = document.createElement('div');
       head.className = 'town-roster-head';
@@ -395,6 +424,14 @@
       head.appendChild(h4);
       head.appendChild(count);
       card.appendChild(head);
+
+      const pill = document.createElement('span');
+      pill.className = 'region-pill tag-' + (region === 'central-america' ? 'central'
+        : region === 'colombia' ? 'colombia'
+        : region === 'caribbean' ? 'caribbean' : 'central');
+      pill.style.opacity = region === 'other' ? '0.55' : '1';
+      pill.textContent = REGION_LABELS[region];
+      head.appendChild(pill);
 
       const mayorRow = document.createElement('div');
       mayorRow.className = 'town-mayor-row';
@@ -440,26 +477,37 @@
     });
   }
 
-  /* ---------- Roster search / filter -----------------------------------------*/
+  /* ---------- Roster search / region filters --------------------------------*/
   const citizenSearch = document.getElementById('citizenSearch');
   const rosterEmpty = document.getElementById('rosterEmpty');
   const rosterEmptyQuery = document.getElementById('rosterEmptyQuery');
+  const rosterClearBtn = document.getElementById('rosterClear');
+  const regionFilterBtns = $$('#regionFilters .region-chip');
+  let activeRegion = 'all';
 
   function filterRoster() {
     if (!citizenSearch) return;
     const q = citizenSearch.value.trim().toLowerCase();
     let anyVisible = false;
 
+    // Leaders: match by name/role, and honour the region filter via their town.
     $$('#leaderGridCrown .citizen-card, #leaderGridCabinet .citizen-card').forEach(card => {
       const name = card.querySelector('.name').textContent.toLowerCase();
       const role = card.querySelector('.role').textContent.toLowerCase();
-      const match = !q || name.includes(q) || role.includes(q);
+      const town = (card.dataset.town || '').toLowerCase();
+      const regionOk = activeRegion === 'all' || card.dataset.region === activeRegion;
+      const match = (!q || name.includes(q) || role.includes(q) || town.includes(q)) && regionOk;
       card.classList.toggle('hidden', !match);
       if (match) anyVisible = true;
     });
 
     $$('#townsGrid .town-roster-card').forEach(card => {
       const townName = card.dataset.town || '';
+      const regionOk = activeRegion === 'all' || card.dataset.region === activeRegion;
+      if (!regionOk) {
+        card.classList.add('roster-hidden');
+        return;
+      }
       const mayorRow = card.querySelector('.town-mayor-row');
       const mayorName = mayorRow ? mayorRow.dataset.name || '' : '';
       const townOrMayorMatch = !q || townName.includes(q) || mayorName.includes(q);
@@ -478,17 +526,50 @@
     });
 
     if (rosterEmptyQuery) rosterEmptyQuery.textContent = citizenSearch.value.trim();
-    if (rosterEmpty) rosterEmpty.classList.toggle('show', q.length > 0 && !anyVisible);
+    if (rosterEmpty) rosterEmpty.classList.toggle('show', !anyVisible);
+    if (citizenSearch.parentElement) {
+      citizenSearch.parentElement.classList.toggle('has-value', q.length > 0);
+    }
   }
   if (citizenSearch) citizenSearch.addEventListener('input', filterRoster);
 
-  /* ---------- "See residents →" jumps pre-fill the search --------------------*/
-  $$('[data-jump-town]').forEach(link => {
-    link.addEventListener('click', () => {
-      if (!citizenSearch) return;
-      citizenSearch.value = link.dataset.jumpTown;
+  if (rosterClearBtn) {
+    rosterClearBtn.addEventListener('click', () => {
+      citizenSearch.value = '';
+      filterRoster();
+      citizenSearch.focus();
+    });
+  }
+
+  regionFilterBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      regionFilterBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      activeRegion = btn.dataset.region;
       filterRoster();
     });
+  });
+
+  /* ---------- Deep links: #citizens / town?person=X / town=X ---------------*/
+  // Applies a search term from the URL (?person= or ?town=) or from an
+  // in-page jump link, then scrolls the directory into view.
+  function applyJumpTerm(term) {
+    if (!citizenSearch || !term) return;
+    citizenSearch.value = term;
+    filterRoster();
+  }
+  $$('[data-jump-town]').forEach(link => {
+    link.addEventListener('click', () => applyJumpTerm(link.dataset.jumpTown));
+  });
+  (function handleUrlParams() {
+    const params = new URLSearchParams(location.search);
+    const term = params.get('person') || params.get('town');
+    if (term) applyJumpTerm(term);
+  })();
+  window.addEventListener('hashchange', () => {
+    const params = new URLSearchParams(location.search);
+    const term = params.get('person') || params.get('town');
+    if (term) applyJumpTerm(term);
   });
 
   /* ---------- Render everything whenever LiveData updates ---------------------*/
@@ -496,16 +577,30 @@
 
   function setRosterBadge(state, detail) {
     if (!rosterLiveBadge) return;
+    const stamp = detail ? shortStamp(new Date(detail)) : 'recently';
     if (state === 'live') {
-      rosterLiveBadge.textContent = '● Live from server';
+      rosterLiveBadge.textContent = '● Live · synced ' + relFreshness(new Date(detail || Date.now()));
       rosterLiveBadge.title = 'Fetched live from the roster feed.';
     } else if (state === 'fallback') {
-      const stamp = detail ? new Date(detail).toLocaleString() : 'recently';
-      rosterLiveBadge.textContent = '● Synced snapshot';
-      rosterLiveBadge.title = 'Live feed unavailable — showing the committed snapshot from ' + stamp + '.';
+      rosterLiveBadge.textContent = '● Synced snapshot · ' + stamp;
+      rosterLiveBadge.title = 'Live feed unavailable — showing the committed snapshot from ' + stamp + '. Refreshes automatically with every deploy.';
     } else {
       rosterLiveBadge.textContent = '○ Syncing…';
     }
+  }
+
+  function shortStamp(date) {
+    if (isNaN(date)) return 'recently';
+    return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) +
+           ', ' + date.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+  }
+  function relFreshness(date) {
+    const mins = Math.max(0, Math.round((Date.now() - date.getTime()) / 60000));
+    if (mins < 1) return 'just now';
+    if (mins < 60) return mins + 'm ago';
+    const hours = Math.floor(mins / 60);
+    if (hours < 24) return hours + 'h ago';
+    return Math.floor(hours / 24) + 'd ago';
   }
 
   function renderRoster(state) {
@@ -523,4 +618,142 @@
   if (window.LiveData && typeof window.LiveData.subscribe === 'function') {
     window.LiveData.subscribe(renderRoster);
   }
+
+  /* ---------- Grants petition form -----------------------------------------*/
+  (function grantForm() {
+    const form = document.getElementById('grantForm');
+    if (!form) return;
+    const successCard = document.getElementById('grantSuccess');
+    const successText = document.getElementById('grantSuccessText');
+    const submitBtn = document.getElementById('grantSubmitBtn');
+    const noteEl = document.getElementById('grantFormNote');
+    const copyBtn = document.getElementById('grantCopyBtn');
+    const againBtn = document.getElementById('grantAgainBtn');
+    let lastPayload = null;
+
+    function fieldError(input, message) {
+      const err = form.querySelector('[data-error-for="' + input.id + '"]');
+      if (message) {
+        input.setAttribute('aria-invalid', 'true');
+        if (err) err.textContent = message;
+      } else {
+        input.removeAttribute('aria-invalid');
+        if (err) err.textContent = '';
+      }
+      return !message;
+    }
+
+    function validate() {
+      const v = {
+        minecraft: form.elements.minecraft.value.trim(),
+        discord: form.elements.discord.value.trim(),
+        town: form.elements.town.value.trim(),
+        region: form.elements.region.value,
+        amount: form.elements.amount.value,
+        status: form.elements.status.value,
+        plan: form.elements.plan.value.trim(),
+      };
+      let ok = true;
+      ok = fieldError(form.elements.minecraft, v.minecraft ? '' : 'Your Minecraft username is required.') && ok;
+      ok = fieldError(form.elements.discord, v.discord ? '' : 'A Discord tag lets the Crown reach you.') && ok;
+      ok = fieldError(form.elements.town, v.town ? '' : 'Name the town you want to found.') && ok;
+      ok = fieldError(form.elements.plan,
+        !v.plan ? 'Tell us what you plan to build.'
+        : v.plan.length < 30 ? 'A little more detail please — at least a sentence or two.'
+        : '') && ok;
+      return ok ? v : null;
+    }
+
+    // Live re-validation once a field has been flagged.
+    ['minecraft', 'discord', 'town', 'plan'].forEach(name => {
+      const el = form.elements[name];
+      el.addEventListener('input', () => { if (el.getAttribute('aria-invalid')) validate(); });
+    });
+
+    function buildMessage(v) {
+      return [
+        '**Town Grant Petition — Reino de Colombia**',
+        '- **Minecraft:** ' + v.minecraft,
+        '- **Discord:** ' + v.discord,
+        '- **Proposed town:** ' + v.town,
+        '- **Region:** ' + v.region,
+        '- **Grant requested:** ' + v.amount,
+        '- **Status:** ' + v.status,
+        '- **Plan:**',
+        '> ' + v.plan.replace(/\n/g, '\n> '),
+      ].join('\n');
+    }
+
+    function showSuccess(message) {
+      form.hidden = true;
+      successCard.hidden = false;
+      successText.textContent = message;
+      successCard.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth', block: 'center' });
+    }
+
+    async function copyText(text) {
+      try { await navigator.clipboard.writeText(text); return true; }
+      catch (e) {
+        const ta = document.createElement('textarea');
+        ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+        document.body.appendChild(ta); ta.select();
+        let done = false;
+        try { done = document.execCommand('copy'); } catch (e2) { done = false; }
+        document.body.removeChild(ta);
+        return done;
+      }
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const v = validate();
+      if (!v) {
+        noteEl.textContent = 'Please fix the highlighted fields.';
+        noteEl.classList.add('error');
+        return;
+      }
+      noteEl.textContent = '';
+      noteEl.classList.remove('error');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending…';
+      lastPayload = buildMessage(v);
+
+      const webhook = (config.WEBHOOK_URL || '').trim();
+      if (/^https:\/\/(discord\.com|discordapp\.com)\/api\/webhooks\//.test(webhook)) {
+        try {
+          const res = await fetch(webhook, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username: 'Grant Petitions', content: lastPayload }),
+          });
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          showSuccess('Your petition was delivered straight to the Crown’s review channel. Expect an answer in Discord.');
+        } catch (err) {
+          showSuccess('The direct line to the Crown is busy right now, so your petition is ready to paste instead.');
+        }
+      } else {
+        // No webhook configured yet — guarantee the application survives.
+        const copied = await copyText(lastPayload);
+        showSuccess(copied
+          ? 'Your petition is on your clipboard. Paste it in #grant-applications on Discord and the Crown will review it.'
+          : 'Select the copied text below if the clipboard did not cooperate, then post it in #grant-applications on Discord.');
+      }
+
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Send Petition';
+    });
+
+    if (copyBtn) copyBtn.addEventListener('click', async () => {
+      if (!lastPayload) return;
+      const ok = await copyText(lastPayload);
+      showToast(ok ? 'Application copied to clipboard' : 'Copy failed — select it manually');
+    });
+
+    if (againBtn) againBtn.addEventListener('click', () => {
+      form.reset();
+      form.hidden = false;
+      successCard.hidden = true;
+      form.elements.minecraft.focus();
+    });
+  })();
 })();

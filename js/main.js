@@ -78,6 +78,11 @@
       ? new Date(state.data.updatedAt)
       : state.fetchedAt;
     updatedEl.textContent = 'Updated ' + relTime(stamp);
+
+    // The towns-section footnote uses the same trusted town count.
+    document.querySelectorAll('[data-stat="towns"]').forEach(function (el) {
+      if (el !== statEls.towns) el.textContent = stats.towns;
+    });
   }
 
   LiveData.subscribe(renderStats);
