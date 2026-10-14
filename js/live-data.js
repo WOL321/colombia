@@ -32,6 +32,7 @@ window.LiveData = (function () {
     fetchedAt: null,   // Date (browser clock) of the last successful fetch
     serverUpdatedAt: null, // roster.updatedAt from the sync bot, for tooltips
     error: null,       // last error message, shown honestly in the status text
+    empireStatus: loadStatusFromCache(), // {status, note, updatedAt} or null
   };
 
   /* ---------- helpers ---------- */
@@ -127,6 +128,71 @@ window.LiveData = (function () {
       if (!parsed || !isUsable(parsed.roster)) return null;
       return parsed;
     } catch (e) { return null; }
+  }
+
+  /* ---------- Empire Status (Stable / Expanding / Quiet) ---------- */
+
+  // Single source of truth for the status indicator: data/empire-status.json
+  // (edit that file and push — live first, committed snapshot as fallback).
+  // Every page renders from here so the label can never disagree between them.
+  const STATUS_KEY   = 'colombiadmc:empireStatus';
+  const STATUS_VALID = ['Stable', 'Expanding', 'Quiet'];
+
+  function normalizeStatus(obj) {
+    if (!obj) return null;
+    const s = typeof obj === 'string' ? { status: obj } : obj;
+    let status = String(s.status || '').trim();
+    STATUS_VALID.forEach(function (v) { if (v.toLowerCase() === status.toLowerCase()) status = v; });
+    if (STATUS_VALID.indexOf(status) === -1) return null;
+    return {
+      status: status,
+      note: typeof s.note === 'string' ? s.note.slice(0, 240) : '',
+      updatedAt: s.updatedAt || null,
+    };
+  }
+
+  function saveStatus(value) {
+    try { window.localStorage.setItem(STATUS_KEY, JSON.stringify(value)); } catch (e) {}
+  }
+
+  function loadStatusFromCache() {
+    try { return normalizeStatus(JSON.parse(window.localStorage.getItem(STATUS_KEY))); }
+    catch (e) { return null; }
+  }
+
+  async function tryLoadStatusLive() {
+    const roster = await fetchJsonWithTimeout(bustedUrl(config.EMPIRE_STATUS_URL));
+    const value = normalizeStatus(roster);
+    if (!value) throw new Error('status file unusable');
+    return value;
+  }
+
+  async function tryLoadStatusFallback() {
+    const roster = await fetchJsonWithTimeout(config.EMPIRE_STATUS_FALLBACK_URL);
+    const value = normalizeStatus(roster);
+    if (!value) throw new Error('status snapshot unusable');
+    return value;
+  }
+
+  async function loadStatus() {
+    try {
+      const value = await tryLoadStatusLive();
+      state.empireStatus = value;
+      saveStatus(value);
+      notify();
+      return;
+    } catch (e) { /* fall through to snapshot */ }
+    try {
+      const value = await tryLoadStatusFallback();
+      state.empireStatus = value;
+      saveStatus(value);
+      notify();
+      return;
+    } catch (e2) {
+      console.warn('[LiveData] empire status unavailable; keeping last known value.', e2);
+      // Keep whatever we already had (in-memory or cached at boot) — never blank it.
+      notify();
+    }
   }
 
   /* ---------- applying data ---------- */
@@ -244,13 +310,15 @@ window.LiveData = (function () {
   /* ---------- kick off + background refresh ---------- */
 
   load(true);
+  loadStatus();
 
   setInterval(function () { load(false); }, config.REFRESH_INTERVAL_MS || 120000);
+  setInterval(function () { loadStatus(); }, config.STATUS_REFRESH_INTERVAL_MS || 600000);
 
   // Re-sync as soon as the visitor comes back to the tab — they should
   // never stare at hours-old numbers after switching away and back.
   document.addEventListener('visibilitychange', function () {
-    if (!document.hidden) load(false);
+    if (!document.hidden) { load(false); loadStatus(); }
   });
 
   return { subscribe, getStats, getState, refresh: function () { load(false); } };

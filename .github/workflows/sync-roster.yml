@@ -32,3 +32,17 @@ jobs:
           git add roster.json data/roster.snapshot.json
           git commit -m "chore: sync roster.json [skip ci]"
           git push
+
+      - name: Keep the committed Empire Status snapshot in sync
+        run: |
+          # The root file is what visitors fetch live; data/ is the
+          # committed fallback. They must never disagree.
+          mkdir -p data
+          cp empire-status.json data/empire-status.json
+          if ! git diff --quiet -- data/empire-status.json; then
+            git config user.name "roster-sync-bot"
+            git config user.email "actions@users.noreply.github.com"
+            git add data/empire-status.json
+            git commit -m "chore: sync empire status snapshot [skip ci]"
+            git push
+          fi
