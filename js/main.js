@@ -49,8 +49,10 @@
   const updatedEl = document.querySelector('[data-stat-updated]');
 
   function relTime(date) {
-    const mins = Math.max(0, Math.round((Date.now() - date.getTime()) / 60000));
-    if (mins < 1) return 'just now';
+    if (!date || isNaN(date)) return 'just now';
+    const secs = Math.max(0, Math.round((Date.now() - date.getTime()) / 1000));
+    if (secs < 60) return secs <= 5 ? 'just now' : secs + ' seconds ago';
+    const mins = Math.round(secs / 60);
     if (mins < 60) return mins + (mins === 1 ? ' minute ago' : ' minutes ago');
     const hours = Math.floor(mins / 60);
     if (hours < 24) return hours + (hours === 1 ? ' hour ago' : ' hours ago');
@@ -75,15 +77,30 @@
 
   function renderStats(state) {
     const stats = LiveData.getStats();
-    if (!stats) return;
+    if (!stats) {
+      if (updatedEl) {
+        updatedEl.textContent = state.error
+          ? 'Live data temporarily unavailable — retrying automatically.'
+          : 'Syncing live data…';
+      }
+      return;
+    }
     setStat(statEls.towns, stats.towns);
     setStat(statEls.citizens, stats.citizens);
-    // "Leaders" and "Council of Ministers" are fixed numbers (2 / 5) — see above.
+    // "Leaders" and "Council of Ministers" are fixed numbers (1 / 5) — see above.
 
-    const stamp = state.data.updatedAt
-      ? new Date(state.data.updatedAt)
-      : state.fetchedAt;
-    updatedEl.textContent = 'Updated ' + relTime(stamp);
+    // Honest timestamp: when THIS browser last successfully fetched good
+    // data (state.fetchedAt), not a possibly-stale stamp inside the file.
+    if (updatedEl) {
+      if (state.source === 'cache') {
+        updatedEl.textContent = 'Showing saved copy · loaded ' + relTime(state.fetchedAt);
+      } else {
+        updatedEl.textContent = 'Updated ' + relTime(state.fetchedAt);
+      }
+      updatedEl.title = state.serverUpdatedAt
+        ? 'Roster source last synced by the server at ' + state.serverUpdatedAt.toLocaleString() + '.'
+        : 'Fetched directly from the live roster feed.';
+    }
 
     // The towns-section footnote uses the same trusted town count.
     document.querySelectorAll('[data-stat="towns"]').forEach(function (el) {
@@ -97,5 +114,5 @@
   setInterval(function () {
     const state = LiveData.getState();
     if (state.data) renderStats(state);
-  }, 60 * 1000);
+  }, 30 * 1000);
 })();

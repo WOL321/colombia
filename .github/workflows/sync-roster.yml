@@ -26,6 +26,9 @@ jobs:
           fi
           git config user.name "roster-sync-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add roster.json
+          # Keep the committed fallback snapshot byte-identical to the live
+          # file so stats, directory and badge can never disagree.
+          cp roster.json data/roster.snapshot.json
+          git add roster.json data/roster.snapshot.json
           git commit -m "chore: sync roster.json [skip ci]"
           git push
