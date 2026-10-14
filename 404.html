@@ -76,6 +76,34 @@ p { color: #9a8f7c; font-size: 1.02rem; margin-bottom: 2rem; line-height: 1.5; }
   border: 1px solid rgba(201,162,39,0.4);
 }
 .btn-secondary:hover { border-color: #c9a227; color: #f3e9d7; }
+#sound-toggle {
+  position: fixed;
+  left: 1.4rem; bottom: 1.4rem;
+  z-index: 45;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.6rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid rgba(201,162,39,0.45);
+  background: rgba(21,17,14,0.85);
+  backdrop-filter: blur(6px);
+  color: #e0b83a;
+  font-family: "Instrument Sans", system-ui, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 8px 22px -12px rgba(0,0,0,0.8);
+  transition: all 0.35s ease;
+}
+#sound-toggle:hover { background: #c9a227; color: #1c1612; }
+#sound-toggle .snd-icon { display: none; flex-shrink: 0; }
+html:not(.is-muted) #sound-toggle .snd-on { display: block; }
+html.is-muted #sound-toggle .snd-off { display: block; }
+@media (max-width: 560px) {
+  #sound-toggle { left: 1rem; bottom: 1rem; padding: 0.55rem 0.8rem; }
+  #sound-toggle .snd-label { display: none; }
+}
 </style>
 </head>
 <body>
@@ -95,5 +123,6 @@ p { color: #9a8f7c; font-size: 1.02rem; margin-bottom: 2rem; line-height: 1.5; }
       <a class="btn btn-secondary" href="https://discord.gg/YUyHgnpXwj" target="_blank" rel="noopener">Discord</a>
     </div>
   </div>
+  <script src="js/sound.js" defer></script>
 </body>
 </html>

@@ -1415,6 +1415,37 @@ a { color: inherit; }
 .back-to-top.visible { opacity: 1; transform: none; pointer-events: auto; }
 .back-to-top:hover { background: var(--gold); color: #17120a; }
 
+/* ---------- Imperial sound system (site-wide) ----------------------------*/
+#sound-toggle {
+  position: fixed;
+  left: 1.4rem; bottom: 1.4rem;
+  z-index: 45;
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  padding: 0.6rem 0.95rem;
+  border-radius: 999px;
+  border: 1px solid var(--gold-line-strong);
+  background: rgba(14, 16, 21, 0.85);
+  backdrop-filter: blur(6px);
+  color: var(--gold-bright);
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 8px 22px -12px rgba(0, 0, 0, 0.8);
+  transition: all 0.35s var(--ease-out);
+}
+#sound-toggle:hover { background: var(--gold); color: #17120a; }
+#sound-toggle:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; }
+#sound-toggle .snd-icon { display: none; flex-shrink: 0; }
+html:not(.is-muted) #sound-toggle .snd-on { display: block; }
+html.is-muted #sound-toggle .snd-off { display: block; }
+@media (max-width: 560px) {
+  #sound-toggle { left: 1rem; bottom: 1rem; padding: 0.55rem 0.8rem; }
+  #sound-toggle .snd-label { display: none; }
+}
+
 .toast {
   position: fixed;
   left: 50%; bottom: 2rem;
