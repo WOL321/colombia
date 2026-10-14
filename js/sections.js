@@ -521,38 +521,55 @@
   /* ---------- Render everything whenever LiveData updates ---------------------*/
   const rosterLiveBadge = document.getElementById('rosterLiveBadge');
 
-  function setRosterBadge(state, detail) {
+  function shortStamp(date) {
+    if (!date || isNaN(date)) return 'recently';
+    return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) +
+           ', ' + date.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
+  }
+  // Human freshness from a real timestamp: minutes first ("Updated 4
+  // minutes ago"), only escalating to hours/days when it's truly that old.
+  function relFreshness(date) {
+    if (!date || isNaN(date)) return 'just now';
+    const mins = Math.max(0, Math.round((Date.now() - date.getTime()) / 60000));
+    if (mins < 1) return 'just now';
+    if (mins < 60) return mins + (mins === 1 ? ' minute ago' : ' minutes ago');
+    const hours = Math.floor(mins / 60);
+    if (hours < 24) return hours + (hours === 1 ? ' hour ago' : ' hours ago');
+    const days = Math.floor(hours / 24);
+    return days + (days === 1 ? ' day ago' : ' days ago');
+  }
+
+  function setRosterBadge(state) {
     if (!rosterLiveBadge) return;
-    const stamp = detail ? shortStamp(new Date(detail)) : 'recently';
-    if (state === 'live') {
-      rosterLiveBadge.textContent = '● Live · synced ' + relFreshness(new Date(detail || Date.now()));
-      rosterLiveBadge.title = 'Fetched live from the roster feed.';
-    } else if (state === 'fallback') {
-      rosterLiveBadge.textContent = '● Synced snapshot · ' + stamp;
-      rosterLiveBadge.title = 'Live feed unavailable — showing the committed snapshot from ' + stamp + '. Refreshes automatically with every deploy.';
+    const fetchedAt = state.fetchedAt;
+    const serverAt = state.serverUpdatedAt;
+    const fresh = relFreshness(fetchedAt);
+
+    if (state.source === 'live') {
+      rosterLiveBadge.textContent = '● Live · updated ' + fresh;
+      rosterLiveBadge.title = 'Fetched live from the roster feed at ' + shortStamp(fetchedAt) +
+        (serverAt ? '. Source last synced by the server at ' + shortStamp(serverAt) + '.' : '.');
+    } else if (state.source === 'fallback') {
+      rosterLiveBadge.textContent = '● Snapshot · updated ' + fresh;
+      rosterLiveBadge.title = 'Live feed unavailable — showing the committed snapshot, loaded at ' +
+        shortStamp(fetchedAt) + '. The page retries automatically.';
+    } else if (state.source === 'cache') {
+      rosterLiveBadge.textContent = '● Saved copy · updated ' + fresh;
+      rosterLiveBadge.title = 'Network sources unavailable — showing the last data this browser ' +
+        'successfully loaded (' + shortStamp(fetchedAt) + '). Retrying automatically.';
+    } else if (state.error) {
+      rosterLiveBadge.textContent = '○ Data temporarily unavailable';
+      rosterLiveBadge.title = 'Could not reach the roster feed or the snapshot (' + state.error +
+        '). The page keeps retrying every couple of minutes.';
     } else {
       rosterLiveBadge.textContent = '○ Syncing…';
     }
   }
 
-  function shortStamp(date) {
-    if (isNaN(date)) return 'recently';
-    return date.toLocaleDateString(undefined, { month: 'short', day: 'numeric' }) +
-           ', ' + date.toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' });
-  }
-  function relFreshness(date) {
-    const mins = Math.max(0, Math.round((Date.now() - date.getTime()) / 60000));
-    if (mins < 1) return 'just now';
-    if (mins < 60) return mins + 'm ago';
-    const hours = Math.floor(mins / 60);
-    if (hours < 24) return hours + 'h ago';
-    return Math.floor(hours / 24) + 'd ago';
-  }
-
   function renderRoster(state) {
     const roster = state.data;
-    if (!roster) { setRosterBadge('pending'); return; }
-    setRosterBadge(state.source, roster.updatedAt);
+    if (!roster) { setRosterBadge(state); return; }
+    setRosterBadge(state);
     allResidents = roster.towns.flatMap(t => (t.residents || []).map(r => Object.assign({}, r, { town: t.name })));
     renderTownsRoster(roster.towns);
     filterRoster();

@@ -99,12 +99,16 @@ def find_nation_towns(markers_data: dict, nation: str) -> list[dict]:
 
 def build_roster(towns: list[dict], nation: str) -> dict:
     towns_out = [{"name": t["name"], "residents": t["residents"]} for t in towns]
+    # Counts are derived from the exact arrays written to the file, so the
+    # headline numbers can never disagree with what the site renders.
+    resident_count = sum(len(t["residents"]) for t in towns_out)
     return {
         "updatedAt": datetime.now(timezone.utc).isoformat(timespec="milliseconds").replace("+00:00", "Z"),
         "nation": nation,
         "townCount": len(towns_out),
-        "residentCount": sum(len(t["residents"]) for t in towns_out),
+        "residentCount": resident_count,
         "towns": towns_out,
+        "schemaVersion": 2,
     }
 
 
