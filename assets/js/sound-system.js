@@ -48,6 +48,10 @@
   var CLICK_PRIMARY   = BASE + '840321-robo9418-wooden-short-cli.mp3';
   var CLICK_SECONDARY = BASE + '370962-cabled-mess-click-01-mini.mp3';
 
+  /* ---------- public aliases (used by admin pages that load this file only) --- */
+  window.CO_SOUND_CLICK_PRIMARY   = CLICK_PRIMARY;
+  window.CO_SOUND_CLICK_SECONDARY = CLICK_SECONDARY;
+
   /* ---------- persisted state keys ---------- */
   var LS_STATE = 'co_sound_state'; // JSON: { muted, currentTime, paused }
   var LS_TS    = 'co_sound_ts';    // Date.now() when the snapshot was saved
@@ -58,7 +62,7 @@
   var FADE        = 4;              // s: crossfade between the two takes
   var ROTATE      = 45000;          // ms between gentle take rotations
   var STALE       = 15 * 60 * 1000; // trust a stored position for 15 min
-  var CLICK_VOL   = 0.18;           // click level (WebAudio gain)
+  var CLICK_VOL   = 0.55;           // click level (WebAudio gain) — clearly audible
   var CLICK_GAP   = 40;             // ms guard against double-fire bursts
 
   /* ================= small helpers ================= */
@@ -254,7 +258,13 @@
     if (clickBuffers[url]) return;
     clickBuffers[url] = 'loading';
     var c = ctx();
-    if (!c) return;
+    // No AudioContext yet (autoplay policy): fetch the bytes now so they are
+    // ready to decode on the first gesture, and remember them.
+    if (!c) { prefetchForDecode(url); return; }
+    decodeInto(c, url);
+  }
+
+  function decodeInto(c, url) {
     try {
       var xhr = new XMLHttpRequest();
       xhr.open('GET', url, true);
@@ -273,13 +283,48 @@
     } catch (e) { clickBuffers[url] = 'error'; }
   }
 
+  var rawClickBytes = {}; // url -> ArrayBuffer fetched before ctx existed
+  function prefetchForDecode(url) {
+    try {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', url, true);
+      xhr.responseType = 'arraybuffer';
+      xhr.onload = function () {
+        if (xhr.status >= 200 && xhr.status < 400 && xhr.response) {
+          rawClickBytes[url] = xhr.response;
+          // If a context appeared meanwhile, decode right away.
+          var c2 = ctx();
+          if (c2 && clickBuffers[url] === 'loading') decodeInto(c2, url);
+        } else {
+          clickBuffers[url] = 'error';
+        }
+      };
+      xhr.onerror = function () { clickBuffers[url] = 'error'; };
+      xhr.send();
+    } catch (e) { clickBuffers[url] = 'error'; }
+  }
+
   function spawnBuffer(c, buf) {
     try {
       var src = c.createBufferSource(); // fresh node per click: rapid clicks overlap cleanly
       src.buffer = buf;
       var gain = c.createGain();
+      // Soft-clip limiter: keeps the wooden click loud and crisp without
+      // harsh digital clipping on top of the ambience bed.
+      var comp = c.createDynamicsCompressor ? c.createDynamicsCompressor() : null;
       gain.gain.value = CLICK_VOL;
-      src.connect(gain).connect(c.destination);
+      if (comp) {
+        try {
+          comp.threshold.value = -12;
+          comp.knee.value = 6;
+          comp.ratio.value = 8;
+          comp.attack.value = 0.002;
+          comp.release.value = 0.1;
+        } catch (e) {}
+        src.connect(gain).connect(comp).connect(c.destination);
+      } else {
+        src.connect(gain).connect(c.destination);
+      }
       src.start(0);
       return true;
     } catch (e) { return false; }
@@ -291,9 +336,11 @@
     if (!clickEl) {
       clickEl = new Audio(CLICK_PRIMARY);
       clickEl.preload = 'auto';
-      clickEl.volume = CLICK_VOL;
     }
     if (clickEl.src.indexOf(url) === -1) clickEl.src = url;
+    // Volume is a perceptual loudness scale: map the WebAudio gain to a
+    // comfortable <audio> level so both paths feel identically loud.
+    clickEl.volume = Math.min(1, CLICK_VOL * 1.4);
     try {
       clickEl.currentTime = 0;
       clickEl.play().catch(function () {});
@@ -315,9 +362,14 @@
       if (buf && buf !== 'loading' && buf !== 'error') {
         if (spawnBuffer(c, buf)) return;
       }
-      loadBuffer(primary);
       var fb = clickBuffers[backup];
-      if (fb && fb !== 'loading' && fb !== 'error') spawnBuffer(c, fb);
+      if (fb && fb !== 'loading' && fb !== 'error') {
+        if (spawnBuffer(c, fb)) return;
+      }
+      // Buffers not ready yet (page just loaded / decode pending): play
+      // through the pooled <audio> right now — a click must never be lost.
+      loadBuffer(primary);
+      playViaElement(primary);
       return;
     }
     playViaElement(primary);
@@ -421,6 +473,24 @@
     loadBuffer(CLICK_SECONDARY);
   }
 
+  /* ---------- page-transition continuity ----------
+     Chrome reloads the whole document on navigation, so true cross-page
+     playback is impossible on a static site. The closest honest feel:
+     save the exact forest position on every outgoing click/navigation so
+     the next page resumes mid-breath with zero drift (beforeunload can
+     fire AFTER the last timeupdate tick otherwise). */
+  function armPageHandoff() {
+    document.addEventListener('click', function (e) {
+      var a = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+      if (!a) return;
+      var href = a.getAttribute('href') || '';
+      // Only same-tab navigations to real pages matter.
+      if (href === '' || href.charAt(0) === '#' || /^mailto:|^tel:/i.test(href)) return;
+      if (a.target && a.target !== '_self') return;
+      saveState();
+    }, true);
+  }
+
   function onFirstGesture() {
     cleanupGestures();
     primeAudio();
@@ -443,6 +513,14 @@
 
   function boot() {
     syncToggleButtons();
+    // Warm the AudioContext + decode both click buffers as early as the
+    // document allows. On a fresh page load the FIRST click used to be
+    // silent (ctx not yet created, buffer still downloading) — which made
+    // the wooden click feel like it "barely plays". Priming at parse time
+    // (this script is loaded in <head>) fixes that; browsers that block
+    // ctx creation before a gesture simply retry via onFirstGesture.
+    primeAudio();
+    armPageHandoff();
     if (!muted) {
       startAmbience();           // may succeed directly (returning visitors)
     }
@@ -452,6 +530,9 @@
 
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', boot);
+    // Also try immediately: scripts in <head> run before DOMContentLoaded,
+    // and clicking can already happen by then (e.g. restored focus + Enter).
+    if (AC) { try { audioCtx = new AC(); } catch (e) {} }
   } else {
     boot();
   }
