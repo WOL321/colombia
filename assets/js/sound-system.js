@@ -30,6 +30,13 @@
    aria-pressed, title, .is-muted / .sound-on classes on both
    the button and <html>.
 
+   EVENTS — pages may listen for custom events dispatched on
+   document: 'co:sound-click' ({ detail: { kind } }) fires when
+   a UI click sound plays; 'co:sound-mute' / 'co:sound-unmute'
+   fire when the global mute flips. The Imperial Casino uses
+   these to duck the forest ambience while the player is at the
+   table (window.duckAmbience(true|false)).
+
    Attribution (Creative Commons 0):
      https://freesound.org/people/fran_marenco/sounds/796625/
      https://freesound.org/people/fran_marenco/sounds/796623/
@@ -352,6 +359,9 @@
     var now = Date.now();
     if (now - lastClickAt < CLICK_GAP) return;
     lastClickAt = now;
+    try {
+      document.dispatchEvent(new CustomEvent('co:sound-click', { detail: { kind: kind } }));
+    } catch (e) {}
 
     var primary = (kind === 'secondary') ? CLICK_SECONDARY : CLICK_PRIMARY;
     var backup  = (kind === 'secondary') ? CLICK_PRIMARY   : CLICK_SECONDARY;
@@ -458,12 +468,31 @@
     syncToggleButtons();
     if (muted) {
       stopAmbience(FADE_UP);     // fade the forest out gracefully
+      try { document.dispatchEvent(new CustomEvent('co:sound-mute')); } catch (e) {}
     } else {
       primeAudio();
       startAmbience();           // resumes exactly where it left off
       playClick('primary');      // audible confirmation of unmute
+      try { document.dispatchEvent(new CustomEvent('co:sound-unmute')); } catch (e) {}
     }
     return !muted;               // true = sound is now ON
+  };
+
+  /* ---------- ambience ducking (used by the Imperial Casino) ---------- */
+  // While a hand is in progress the forest drops to a whisper so table
+  // feedback reads clearly; releasing restores the gentle level. No new
+  // sounds are introduced — this only rides the existing gain levels.
+  var ducked = false;
+  window.duckAmbience = function (on) {
+    on = !!on;
+    if (on === ducked) return;
+    ducked = on;
+    if (!running || muted) return;
+    [deckA, deckB].forEach(function (d) {
+      if (d.fadeIn || d.el.volume > 0.001) {
+        try { d.el.volume = Math.max(0, Math.min(MASTER, (on ? MASTER * 0.35 : MASTER))); } catch (e) {}
+      }
+    });
   };
 
   /* ================= interaction bootstrap (autoplay rules) ================= */
