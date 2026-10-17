@@ -299,6 +299,98 @@ html { scroll-padding-top: 90px; }
 }
 .bet-line span{color:var(--gold-bright);font-weight:700;letter-spacing:0.02em;}
 
+/* ---- streak & house edge stats ---- */
+.casino-stats{
+  display:flex;
+  justify-content:center;
+  gap:14px;
+  margin-top:16px;
+  flex-wrap:wrap;
+}
+.stat-box{
+  background:rgba(0,0,0,0.25);
+  border:1px solid var(--gold-line);
+  border-radius:var(--radius);
+  padding:8px 18px;
+  text-align:center;
+  min-width:110px;
+}
+.stat-box .label{
+  font-size:9px;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:var(--text-muted);
+  margin-bottom:2px;
+}
+.stat-box .value{
+  font-variant-numeric:tabular-nums;
+  font-size:15px;
+  color:var(--gold-bright);
+  font-weight:600;
+}
+.streak-flame{font-style:normal;color:var(--gold);}
+.stat-box.hot .value{color:#ffd97a;text-shadow:0 0 10px var(--gold-glow);}
+
+/* ---- royal split pair banner ---- */
+.split-banner{
+  display:none;
+  margin:0 auto 12px;
+  padding:6px 18px;
+  width:max-content;
+  max-width:100%;
+  font-family:var(--font-serif);
+  font-weight:600;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  font-size:12px;
+  color:var(--gold-bright);
+  border:1px solid var(--gold);
+  border-radius:999px;
+  background:linear-gradient(180deg, rgba(212,160,23,0.14), rgba(0,0,0,0.2));
+  box-shadow:0 0 14px var(--gold-glow);
+  animation:stamp 0.4s cubic-bezier(.2,1.4,.4,1);
+}
+.split-banner.show{display:block;}
+
+/* ---- coin-fall celebration overlay ---- */
+.coinfall{position:fixed;inset:0;pointer-events:none;z-index:1200;overflow:hidden;}
+.coinfall .coin{
+  position:absolute;top:-32px;
+  width:18px;height:18px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, #ffe9a8, var(--gold) 60%, #8a6508);
+  box-shadow:0 0 8px var(--gold-glow);
+  animation:coin-drop linear forwards;
+}
+@keyframes coin-drop{
+  to{transform:translateY(110vh) rotate(720deg);opacity:0.4;}
+}
+
+/* ---- soft shake on bust / defeat ---- */
+@keyframes table-shake{
+  0%,100%{transform:translateX(0);}
+  20%{transform:translateX(-5px);}
+  40%{transform:translateX(5px);}
+  60%{transform:translateX(-3px);}
+  80%{transform:translateX(3px);}
+}
+.table-felt.shake{animation:table-shake 0.4s ease;}
+
+/* ---- treasury low warning + Crown relief grant ---- */
+.relief-note{
+  display:none;
+  text-align:center;
+  margin-top:14px;
+  font-size:12px;
+  color:rgba(236,229,216,0.65);
+}
+.relief-note.show{display:block;}
+.relief-note button{margin-left:8px;}
+.crest .mark.low{animation:pulse-low 1.6s ease-in-out infinite;}
+@keyframes pulse-low{
+  0%,100%{box-shadow:0 0 0 4px var(--gold-glow), 0 4px 14px rgba(0,0,0,0.5);}
+  50%{box-shadow:0 0 0 4px rgba(209,112,111,0.35), 0 4px 14px rgba(0,0,0,0.5);}
+}
+
 .edict{
   text-align:center;
   font-size:11px;
@@ -364,6 +456,7 @@ html { scroll-padding-top: 90px; }
   .playing-card, .seal{animation:none;}
 }
 </style>
+  <script src="/assets/js/sound-system.js"></script>
 </head>
 <body>
 
@@ -414,7 +507,9 @@ html { scroll-padding-top: 90px; }
     </div>
   </div>
 
-  <div class="table-felt">
+  <div class="table-felt" id="tableFelt">
+
+    <div class="split-banner" id="splitBanner" role="status"></div>
 
     <div class="zone">
       <div class="zone-label"><span>Crown&rsquo;s Hand</span><span class="score" id="dealerScore"></span></div>
@@ -434,6 +529,7 @@ html { scroll-padding-top: 90px; }
       <button class="casino-btn primary" id="hitBtn" disabled>Hit</button>
       <button class="casino-btn" id="standBtn" disabled>Stand</button>
       <button class="casino-btn" id="doubleBtn" disabled>Double</button>
+      <button class="casino-btn" id="splitBtn" disabled title="Split matching first cards into two hands (requires enough gold)">Split</button>
     </div>
 
     <div class="chip-rail" id="chipRail">
@@ -446,7 +542,28 @@ html { scroll-padding-top: 90px; }
 
     <div class="controls" style="margin-top:14px;">
       <button class="casino-btn" id="clearBetBtn">Clear Wager</button>
+      <button class="casino-btn" id="repeatBetBtn" disabled title="Re-stake the previous wager">Repeat Bet</button>
       <button class="casino-btn primary" id="dealBtn" disabled>Deal</button>
+    </div>
+
+    <div class="relief-note" id="reliefNote">
+      The treasury runs dry.<span class="relief-note-inner"></span>
+      <button class="casino-btn" id="reliefBtn">Petition the Crown &middot; +100</button>
+    </div>
+
+    <div class="casino-stats">
+      <div class="stat-box" id="streakBox">
+        <div class="label">Win Streak</div>
+        <div class="value"><span id="streakVal">0</span> <i class="streak-flame" id="streakFlame" hidden>&#9819;&#9819;</i></div>
+      </div>
+      <div class="stat-box">
+        <div class="label">Hands Played</div>
+        <div class="value" id="handsPlayed">0</div>
+      </div>
+      <div class="stat-box">
+        <div class="label">House Edge</div>
+        <div class="value" id="houseEdge">&mdash;</div>
+      </div>
     </div>
 
   </div>
@@ -459,7 +576,9 @@ html { scroll-padding-top: 90px; }
       <li><strong>Blackjack pays 3&colon;2.</strong> A natural beats everything the Crown can hold.</li>
       <li><strong>Dealer stands on 17.</strong> No appeals, no remakes, no &ldquo;one more card&rdquo;.</li>
       <li><strong>Doubling is legal.</strong> Double your wager after the first two cards &mdash; one extra card only.</li>
+      <li><strong>Splitting is royal.</strong> Two cards of equal value may be split into twin hands &mdash; one card each, no re-splitting. Aces receive exactly one card, as is proper.</li>
       <li><strong>Bust means bust.</strong> Gold over 21 stays on the felt. That&rsquo;s how the mall gets funded.</li>
+      <li><strong>The Crown shows mercy.</strong> Should your treasury run dry, petition once per session for a 100-gold relief grant.</li>
       <li><strong>Play money only.</strong> Imperial treasury, imaginary risk &mdash; zero real-world anything.</li>
     </ul>
   </div>
@@ -500,13 +619,39 @@ html { scroll-padding-top: 90px; }
   ];
   const RANKS = ['A','2','3','4','5','6','7','8','9','10','J','Q','K'];
 
-  let balance = 500;
+  /* ---------- persisted session state (survives page navigation) ---------- */
+  const LS_KEY = 'co_casino_session';
+  function loadSession(){
+    try {
+      const s = JSON.parse(localStorage.getItem(LS_KEY) || '{}');
+      if (typeof s.balance === 'number' && s.balance >= 0) return s;
+    } catch(e){}
+    return null;
+  }
+  function saveSession(){
+    try {
+      localStorage.setItem(LS_KEY, JSON.stringify({
+        balance, handsPlayed, netWagered, netReturned, streak, bestStreak, reliefGiven
+      }));
+    } catch(e){}
+  }
+  const saved = loadSession();
+  let balance     = saved ? saved.balance : 500;
+  let handsPlayed = saved ? saved.handsPlayed || 0 : 0;
+  let netWagered  = saved ? saved.netWagered  || 0 : 0;
+  let netReturned = saved ? saved.netReturned || 0 : 0;
+  let streak      = saved ? saved.streak      || 0 : 0;
+  let bestStreak  = saved ? saved.bestStreak  || 0 : 0;
+  let reliefGiven = saved ? !!saved.reliefGiven : false;
+
   let pendingBet = 0;
-  let currentBet = 0;
+  let currentBet = 0;          // per-hand stake (each split hand stakes currentBet)
+  let lastBet    = 0;          // previous total wager, for Repeat Bet
   let deck = [];
-  let playerHand = [];
+  let playerHands = [];        // array of hands (2 when split); each {cards, bet, done, doubled}
   let dealerHand = [];
-  let state = 'betting'; // betting | playing | dealer | done
+  let state = 'betting';       // betting | playing | dealer | done
+  let splitActive = false;
 
   const el = id => document.getElementById(id);
   const balanceEl = el('balance');
@@ -520,9 +665,62 @@ html { scroll-padding-top: 90px; }
   const hitBtn = el('hitBtn');
   const standBtn = el('standBtn');
   const doubleBtn = el('doubleBtn');
+  const splitBtn = el('splitBtn');
   const dealBtn = el('dealBtn');
   const clearBetBtn = el('clearBetBtn');
+  const repeatBetBtn = el('repeatBetBtn');
+  const tableFelt = el('tableFelt');
+  const splitBanner = el('splitBanner');
+  const reliefNote = el('reliefNote');
+  const reliefBtn = el('reliefBtn');
+  const streakVal = el('streakVal');
+  const streakFlame = el('streakFlame');
+  const streakBox = el('streakBox');
+  const handsPlayedEl = el('handsPlayed');
+  const houseEdgeEl = el('houseEdge');
+  const crestMark = document.querySelector('.crest .mark');
 
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---------- sound hooks (site-wide sound-system.js) ---------- */
+  // Soft synthesized feedback on the existing WebAudio context — no new
+  // audio files. Ducking rides the ambience gain API. All guarded so the
+  // page works even if the sound system failed to load or is muted.
+  let _ac = null;
+  function soundCtx(){
+    try {
+      if (!_ac) {
+        const AC = window.AudioContext || window.webkitAudioContext;
+        if (!AC) return null;
+        _ac = new AC();
+      }
+      if (_ac.state === 'suspended' && _ac.resume) _ac.resume().catch(function(){});
+      return _ac;
+    } catch(e){ return null; }
+  }
+  function tone(freq, dur, vol, delay, type){
+    const c = soundCtx();
+    if (!c) return;
+    try {
+      const t0 = c.currentTime + (delay || 0);
+      const o = c.createOscillator(), g = c.createGain();
+      o.type = type || 'triangle';
+      o.frequency.value = freq;
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(vol, t0 + 0.012);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+      o.connect(g).connect(c.destination);
+      o.start(t0); o.stop(t0 + dur + 0.05);
+    } catch(e){}
+  }
+  const isMuted = () => document.documentElement.classList.contains('is-muted');
+  const duck = on => { try { if (window.duckAmbience) window.duckAmbience(on); } catch(e){} };
+  function sfxChip(){ tone(880, 0.06, 0.05, 0); }                                  // coin tap
+  function sfxDeal(){ tone(620, 0.05, 0.045, 0); tone(760, 0.05, 0.045, 0.07); }   // two-card riffle
+  function sfxWin(){ tone(523, 0.16, 0.06, 0); tone(659, 0.16, 0.06, 0.12); tone(784, 0.24, 0.06, 0.24); }
+  function sfxBlackjack(){ tone(659, 0.14, 0.07, 0); tone(784, 0.14, 0.07, 0.1); tone(988, 0.14, 0.07, 0.2); tone(1319, 0.3, 0.07, 0.3); }
+  function sfxLose(){ tone(392, 0.2, 0.05, 0, 'sine'); tone(294, 0.3, 0.05, 0.16, 'sine'); }
+  function sfxPush(){ tone(440, 0.12, 0.04, 0, 'sine'); }
 
   function freshDeck(){
     const d = [];
@@ -564,22 +762,61 @@ html { scroll-padding-top: 90px; }
     return div;
   }
 
+  function activeIndex(){
+    for(let i=0;i<playerHands.length;i++){
+      if(!playerHands[i].done) return i;
+    }
+    return -1;
+  }
+
   function renderHands(revealDealer){
     dealerHandEl.innerHTML = '';
     dealerHand.forEach((c,i)=>{
       dealerHandEl.appendChild(renderCard(c, i===1 && !revealDealer));
     });
     playerHandEl.innerHTML = '';
-    playerHand.forEach(c=>playerHandEl.appendChild(renderCard(c,false)));
+    const multi = playerHands.length > 1;
+    playerHands.forEach((h, hi)=>{
+      if(multi){
+        const col = document.createElement('div');
+        col.className = 'hand' + (hi === activeIndex() && state === 'playing' ? ' hand-active' : '');
+        col.style.cssText = 'display:flex;gap:8px;align-items:center;padding:4px 6px;border-radius:10px;flex-wrap:wrap;' +
+          (hi === activeIndex() && state === 'playing' ? 'outline:1px solid var(--gold-line-strong);background:rgba(212,160,23,0.06);' : 'opacity:' + (h.done ? '0.85' : '1') + ';');
+        h.cards.forEach(c=>col.appendChild(renderCard(c,false)));
+        const tag = document.createElement('span');
+        tag.style.cssText = 'font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-muted);align-self:flex-start;margin-top:4px;';
+        tag.textContent = 'Hand ' + (hi+1) + ' · ' + handValue(h.cards);
+        col.appendChild(tag);
+        playerHandEl.appendChild(col);
+      } else {
+        h.cards.forEach(c=>playerHandEl.appendChild(renderCard(c,false)));
+      }
+    });
 
-    playerScoreEl.textContent = playerHand.length ? handValue(playerHand) : '';
-    dealerScoreEl.textContent = revealDealer ? handValue(dealerHand) : (dealerHand.length ? '?' : '');
+    const act = playerHands[activeIndex()] || playerHands[0];
+    const shownTotal = playerHands.length
+      ? (multi ? playerHands.map(h=>handValue(h.cards)).join(' / ') : handValue(act.cards))
+      : '';
+    playerScoreEl.textContent = playerHands.length ? shownTotal : '';
+    dealerScoreEl.textContent = revealDealer ? (dealerHand.length ? handValue(dealerHand) : '') : (dealerHand.length ? '?' : '');
   }
 
   function updateLedger(){
     balanceEl.textContent = balance;
-    currentBetEl.textContent = currentBet > 0 ? currentBet : '—';
+    const inPlay = playerHands.reduce((s,h)=>s+(h.bet||0),0);
+    currentBetEl.textContent = inPlay > 0 ? inPlay : '—';
     pendingBetEl.textContent = pendingBet;
+    streakVal.textContent = streak;
+    streakFlame.hidden = streak < 2;
+    streakBox.classList.toggle('hot', streak >= 3);
+    handsPlayedEl.textContent = handsPlayed;
+    houseEdgeEl.textContent = netWagered > 0
+      ? (((netWagered - netReturned) / netWagered) * 100).toFixed(1) + '%'
+      : '—';
+    // treasury health cues
+    if (crestMark) crestMark.classList.toggle('low', balance <= 50 && balance > 0);
+    reliefNote.classList.toggle('show', balance <= 0 && state === 'betting');
+    repeatBetBtn.disabled = !(state === 'betting' && lastBet > 0 && lastBet <= balance);
   }
 
   function setSeal(text, cls){
@@ -588,6 +825,33 @@ html { scroll-padding-top: 90px; }
   }
   function clearSeal(){
     sealEl.className = 'seal';
+  }
+
+  function shakeTable(){
+    if (reduceMotion) return;
+    tableFelt.classList.remove('shake');
+    void tableFelt.offsetWidth; // restart animation
+    tableFelt.classList.add('shake');
+    setTimeout(()=>tableFelt.classList.remove('shake'), 450);
+  }
+
+  function coinfall(count){
+    if (reduceMotion) return;
+    const layer = document.createElement('div');
+    layer.className = 'coinfall';
+    layer.setAttribute('aria-hidden','true');
+    for(let i=0;i<count;i++){
+      const c = document.createElement('div');
+      c.className = 'coin';
+      c.style.left = (Math.random()*100) + '%';
+      c.style.animationDuration = (1.1 + Math.random()*1.2) + 's';
+      c.style.animationDelay = (Math.random()*0.35) + 's';
+      const s = 12 + Math.random()*12;
+      c.style.width = c.style.height = s + 'px';
+      layer.appendChild(c);
+    }
+    document.body.appendChild(layer);
+    setTimeout(()=>layer.remove(), 3200);
   }
 
   function setChipsEnabled(on){
@@ -600,12 +864,21 @@ html { scroll-padding-top: 90px; }
 
   function resetTable(){
     dealerHand = [];
-    playerHand = [];
+    playerHands = [];
+    splitActive = false;
     dealerHandEl.innerHTML = '';
     playerHandEl.innerHTML = '';
     dealerScoreEl.textContent = '';
     playerScoreEl.textContent = '';
+    splitBanner.classList.remove('show');
     clearSeal();
+  }
+
+  function setPlayButtons(on){
+    hitBtn.disabled = !on;
+    standBtn.disabled = !on;
+    doubleBtn.disabled = true;
+    splitBtn.disabled = true;
   }
 
   // ---- betting ----
@@ -617,6 +890,7 @@ html { scroll-padding-top: 90px; }
       pendingBet += v;
       dealBtn.disabled = pendingBet <= 0;
       updateLedger();
+      if(!isMuted()) sfxChip();
     });
   });
 
@@ -627,68 +901,154 @@ html { scroll-padding-top: 90px; }
     updateLedger();
   });
 
+  repeatBetBtn.addEventListener('click', ()=>{
+    if(state !== 'betting' || lastBet <= 0 || lastBet > balance) return;
+    pendingBet = lastBet;
+    dealBtn.disabled = false;
+    updateLedger();
+    if(!isMuted()) sfxChip();
+  });
+
+  reliefBtn.addEventListener('click', ()=>{
+    if(reliefGiven || balance > 0) return;
+    reliefGiven = true;
+    balance += 100;
+    clearSeal();
+    updateLedger();
+    saveSession();
+    setSeal('THE CROWN PROVIDES — +100 GOLD', 'push');
+    setTimeout(clearSeal, 2000);
+  });
+
   dealBtn.addEventListener('click', ()=>{
     if(pendingBet <= 0 || pendingBet > balance) return;
     currentBet = pendingBet;
+    lastBet = pendingBet;
     balance -= currentBet;
+    netWagered += currentBet;
     pendingBet = 0;
     updateLedger();
+    saveSession();
     resetTable();
 
     deck = freshDeck();
-    playerHand = [deck.pop(), deck.pop()];
+    playerHands = [{ cards:[deck.pop(), deck.pop()], bet: currentBet, done:false, doubled:false }];
     dealerHand = [deck.pop(), deck.pop()];
 
     state = 'playing';
     setChipsEnabled(false);
     dealBtn.disabled = true;
-    hitBtn.disabled = false;
-    standBtn.disabled = false;
-    doubleBtn.disabled = (balance < currentBet);
-
     renderHands(false);
+    if(!isMuted()) sfxDeal();
+    duck(true);
+    refreshActionButtons();
 
-    if(handValue(playerHand) === 21){
+    if(handValue(playerHands[0].cards) === 21){
       finishRound(true); // natural blackjack, go straight to resolution
     }
   });
 
-  hitBtn.addEventListener('click', ()=>{
-    if(state !== 'playing') return;
-    playerHand.push(deck.pop());
+  function canSplit(){
+    if(splitActive || playerHands.length !== 1) return false;
+    const h = playerHands[0];
+    if(h.cards.length !== 2) return false;
+    if(cardValue(h.cards[0]) !== cardValue(h.cards[1])) return false;
+    return balance >= h.bet; // must cover the second stake
+  }
+
+  function refreshActionButtons(){
+    const act = playerHands[activeIndex()];
+    const playable = state === 'playing' && act && !act.done;
+    hitBtn.disabled = !playable;
+    standBtn.disabled = !playable;
+    doubleBtn.disabled = !(playable && act.cards.length === 2 && !act.doubled && balance >= act.bet);
+    splitBtn.disabled = !(playable && canSplit());
+  }
+
+  splitBtn.addEventListener('click', ()=>{
+    if(state !== 'playing' || !canSplit()) return;
+    const h = playerHands[0];
+    balance -= h.bet;
+    netWagered += h.bet;
+    const a = { cards:[h.cards[0]], bet:h.bet, done:false, doubled:false };
+    const b = { cards:[h.cards[1]], bet:h.bet, done:false, doubled:false };
+    a.cards.push(deck.pop());
+    b.cards.push(deck.pop());
+    playerHands = [a, b];
+    splitActive = true;
+    splitBanner.textContent = 'Royal Split — twin hands at the table';
+    splitBanner.classList.add('show');
+    if(!isMuted()) sfxWin();
+    // Aces receive exactly one card, as is proper.
+    if(a.cards[0].r === 'A'){ a.done = true; }
+    if(b.cards[0].r === 'A'){ b.done = true; }
+    updateLedger();
+    saveSession();
     renderHands(false);
-    doubleBtn.disabled = true;
-    if(handValue(playerHand) > 21){
-      finishRound(false);
-    } else if(handValue(playerHand) === 21){
-      standNow();
+    advanceOrFinish();
+  });
+
+  hitBtn.addEventListener('click', ()=>{
+    const i = activeIndex();
+    if(state !== 'playing' || i < 0) return;
+    const h = playerHands[i];
+    h.cards.push(deck.pop());
+    renderHands(false);
+    if(!isMuted()) sfxDeal();
+    if(handValue(h.cards) > 21){
+      h.done = true;
+      h.busted = true;
+      advanceOrFinish();
+    } else if(handValue(h.cards) === 21){
+      h.done = true;
+      advanceOrFinish();
+    } else {
+      refreshActionButtons();
     }
   });
 
   doubleBtn.addEventListener('click', ()=>{
-    if(state !== 'playing' || balance < currentBet) return;
-    balance -= currentBet;
-    currentBet *= 2;
+    const i = activeIndex();
+    if(state !== 'playing' || i < 0) return;
+    const h = playerHands[i];
+    if(h.cards.length !== 2 || balance < h.bet) return;
+    balance -= h.bet;
+    netWagered += h.bet;
+    h.bet *= 2;
+    h.doubled = true;
     updateLedger();
-    playerHand.push(deck.pop());
+    saveSession();
+    h.cards.push(deck.pop());
     renderHands(false);
-    if(handValue(playerHand) > 21){
-      finishRound(false);
-    } else {
-      standNow();
-    }
+    if(!isMuted()) sfxDeal();
+    h.done = true;
+    advanceOrFinish();
   });
 
   standBtn.addEventListener('click', ()=>{
-    if(state !== 'playing') return;
-    standNow();
+    const i = activeIndex();
+    if(state !== 'playing' || i < 0) return;
+    playerHands[i].done = true;
+    advanceOrFinish();
   });
+
+  function advanceOrFinish(){
+    renderHands(false);
+    if(activeIndex() >= 0){
+      refreshActionButtons();
+      return;
+    }
+    const allBust = playerHands.every(h => handValue(h.cards) > 21);
+    if(allBust){
+      finishAllBust();
+    } else {
+      standNow();
+    }
+  }
 
   function standNow(){
     state = 'dealer';
-    hitBtn.disabled = true;
-    standBtn.disabled = true;
-    doubleBtn.disabled = true;
+    setPlayButtons(false);
     dealerPlay();
   }
 
@@ -706,49 +1066,97 @@ html { scroll-padding-top: 90px; }
     setTimeout(step, 550);
   }
 
+  function finishAllBust(){
+    state = 'done';
+    setPlayButtons(false);
+    renderHands(true);
+    handsPlayed++;
+    streak = 0;
+    setSeal('BUST — THE CROWN COLLECTS', 'lose');
+    shakeTable();
+    if(!isMuted()){ sfxLose(); duck(false); }
+    saveSession();
+    updateLedger();
+    endRoundPause();
+  }
+
   function finishRound(playerHadBlackjack){
     state = 'done';
+    setPlayButtons(false);
     renderHands(true);
-    hitBtn.disabled = true;
-    standBtn.disabled = true;
-    doubleBtn.disabled = true;
 
-    const pScore = handValue(playerHand);
     const dScore = handValue(dealerHand);
-    const playerBJ = playerHadBlackjack && playerHand.length === 2;
-    const dealerBJ = dealerHand.length === 2 && handValue(dealerHand) === 21;
+    const dealerBJ = dealerHand.length === 2 && dScore === 21;
 
-    let payout = 0;
-    let text = '';
-    let cls = '';
+    let totalPayout = 0;
+    let wins = 0, losses = 0, pushes = 0;
+    let gotBlackjack = false, gotBust = false;
 
-    if(pScore > 21){
-      text = 'BUST — The Crown Collects'; cls = 'lose'; payout = 0;
-    } else if(playerBJ && !dealerBJ){
-      text = 'IMPERIAL TWENTY-ONE'; cls = 'win'; payout = Math.floor(currentBet * 2.5);
-    } else if(dScore > 21){
-      text = 'CROWN BUSTS — YOU WIN'; cls = 'win'; payout = currentBet * 2;
-    } else if(pScore > dScore){
-      text = 'VICTORY'; cls = 'win'; payout = currentBet * 2;
-    } else if(pScore === dScore){
-      text = 'STANDOFF — WAGER RETURNED'; cls = 'push'; payout = currentBet;
+    playerHands.forEach(h=>{
+      const p = handValue(h.cards);
+      const bj = playerHadBlackjack && h.cards.length === 2 && p === 21 && !splitActive;
+      if(p > 21){ losses++; gotBust = true; }                    // stake already on the felt
+      else if(bj && !dealerBJ){ wins++; gotBlackjack = true; totalPayout += Math.floor(h.bet * 2.5); }
+      else if(dealerBJ && !bj){ losses++; }
+      else if(dScore > 21){ wins++; totalPayout += h.bet * 2; }
+      else if(p > dScore){ wins++; totalPayout += h.bet * 2; }
+      else if(p === dScore){ pushes++; totalPayout += h.bet; }
+      else { losses++; }
+    });
+
+    handsPlayed += playerHands.length;
+    netReturned += totalPayout;
+    balance += totalPayout;
+
+    let text, cls;
+    if(wins > losses && wins > pushes){
+      text = gotBlackjack ? 'IMPERIAL TWENTY-ONE'
+           : (playerHands.length > 1 ? 'TWIN VICTORIES — THE CROWN PAYS' : 'VICTORY');
+      cls = 'win';
+      streak++;
+      if(streak > bestStreak) bestStreak = streak;
+    } else if(losses > wins && losses > pushes){
+      text = gotBust && playerHands.length === 1 ? 'BUST — THE CROWN COLLECTS' : 'DEFEAT — THE CROWN COLLECTS';
+      cls = 'lose';
+      streak = 0;
+    } else if(pushes > 0 && wins === losses){
+      text = 'STANDOFF — WAGER RETURNED';
+      cls = 'push';
     } else {
-      text = 'DEFEAT — THE CROWN COLLECTS'; cls = 'lose'; payout = 0;
+      text = 'DEFEAT — THE CROWN COLLECTS';
+      cls = 'lose';
+      streak = 0;
     }
 
-    balance += payout;
     setSeal(text, cls);
+    if(cls === 'win'){
+      if(!isMuted()) gotBlackjack ? sfxBlackjack() : sfxWin();
+      duck(false);
+      coinfall(gotBlackjack ? 26 : 14);
+    } else if(cls === 'lose'){
+      shakeTable();
+      if(!isMuted()){ sfxLose(); duck(false); }
+    } else {
+      if(!isMuted()){ sfxPush(); duck(false); }
+    }
+    saveSession();
     updateLedger();
+    endRoundPause();
+  }
 
+  function endRoundPause(){
     setTimeout(()=>{
       state = 'betting';
       currentBet = 0;
-      updateLedger();
-      dealBtn.disabled = true;
+      splitBanner.classList.remove('show');
+      dealBtn.disabled = pendingBet <= 0;
       setChipsEnabled(balance > 0);
+      setPlayButtons(false);
       if(balance <= 0){
-        setSeal('THE TREASURY IS EMPTY', 'lose');
+        setSeal(reliefGiven ? 'THE TREASURY IS EMPTY' : 'THE TREASURY IS EMPTY — PETITION THE CROWN', 'lose');
       }
+      updateLedger();
+      saveSession();
     }, 1400);
   }
 
