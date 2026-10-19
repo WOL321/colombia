@@ -1,17 +1,9 @@
 {
-  "updatedAt": "2026-10-13T00:56:14.603Z",
+  "updatedAt": "2026-10-19T05:08:45.863Z",
   "nation": "Colombia",
-  "townCount": 34,
-  "residentCount": 63,
+  "townCount": 28,
+  "residentCount": 48,
   "towns": [
-    {
-      "name": "Aldama",
-      "residents": [
-        {
-          "username": "Crowlia"
-        }
-      ]
-    },
     {
       "name": "Bismuna Tara",
       "residents": [
@@ -102,12 +94,6 @@
       "name": "George Town",
       "residents": [
         {
-          "username": "Carstendb"
-        },
-        {
-          "username": "Gregordb"
-        },
-        {
           "username": "OFVDEB"
         }
       ]
@@ -154,25 +140,6 @@
       ]
     },
     {
-      "name": "Intuto",
-      "residents": [
-        {
-          "username": "catboyHoratio"
-        }
-      ]
-    },
-    {
-      "name": "Iza",
-      "residents": [
-        {
-          "username": "OliveTree316"
-        },
-        {
-          "username": "VickyVenus9416"
-        }
-      ]
-    },
-    {
       "name": "Jardin",
       "residents": [
         {
@@ -187,25 +154,13 @@
           "username": "9_88"
         },
         {
-          "username": "_PinkLuna_"
+          "username": "ueq_"
         },
         {
           "username": "sarcasticbox"
         },
         {
-          "username": "sapinzinho"
-        },
-        {
-          "username": "Addychi01"
-        },
-        {
-          "username": "Scarioh"
-        },
-        {
           "username": "FutureLemon"
-        },
-        {
-          "username": "TheKrieger6774"
         },
         {
           "username": "hecolator27"
@@ -218,6 +173,27 @@
         },
         {
           "username": "Aquilla_AQ"
+        },
+        {
+          "username": "floomp"
+        },
+        {
+          "username": "LeonKennedy01"
+        },
+        {
+          "username": "moose178"
+        },
+        {
+          "username": "ToastEagle"
+        },
+        {
+          "username": "ProlwerJam"
+        },
+        {
+          "username": "ifeomalovesyou"
+        },
+        {
+          "username": "CookieBroiler"
         }
       ]
     },
@@ -226,17 +202,6 @@
       "residents": [
         {
           "username": "BoscGIaa"
-        }
-      ]
-    },
-    {
-      "name": "Medellin Antioquia",
-      "residents": [
-        {
-          "username": "birdyboa"
-        },
-        {
-          "username": "c0rrupt_Jelly"
         }
       ]
     },
@@ -300,50 +265,10 @@
       ]
     },
     {
-      "name": "Santa Maria",
-      "residents": [
-        {
-          "username": "Novum_Vetus"
-        },
-        {
-          "username": "Qulipzz"
-        },
-        {
-          "username": "stonebigman"
-        },
-        {
-          "username": "Tim0thyPlayzz"
-        }
-      ]
-    },
-    {
       "name": "Santa Marta",
       "residents": [
         {
           "username": "tigerm354"
-        }
-      ]
-    },
-    {
-      "name": "Tegucigalpa",
-      "residents": [
-        {
-          "username": "Zaity1"
-        },
-        {
-          "username": "ItsEnes"
-        },
-        {
-          "username": "Atrocizzare_"
-        },
-        {
-          "username": "FabioVortex"
-        },
-        {
-          "username": "Lunes2015"
-        },
-        {
-          "username": "talety"
         }
       ]
     },
