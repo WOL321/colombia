@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-19T21:28:50.827Z",
+  "updatedAt": "2026-10-20T00:29:57.108Z",
   "nation": "Colombia",
   "townCount": 28,
-  "residentCount": 48,
+  "residentCount": 47,
   "towns": [
     {
       "name": "Bismuna Tara",
@@ -182,9 +182,6 @@
         },
         {
           "username": "moose178"
-        },
-        {
-          "username": "ToastEagle"
         },
         {
           "username": "ProlwerJam"
