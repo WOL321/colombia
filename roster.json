@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-20T00:29:57.108Z",
+  "updatedAt": "2026-10-20T05:07:18.334Z",
   "nation": "Colombia",
-  "townCount": 28,
-  "residentCount": 47,
+  "townCount": 27,
+  "residentCount": 46,
   "towns": [
     {
       "name": "Bismuna Tara",
@@ -136,14 +136,6 @@
         },
         {
           "username": "LDude2345"
-        }
-      ]
-    },
-    {
-      "name": "Jardin",
-      "residents": [
-        {
-          "username": "Mrspancake4343"
         }
       ]
     },
