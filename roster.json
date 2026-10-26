@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-26T10:47:39.970Z",
+  "updatedAt": "2026-10-26T17:00:41.466Z",
   "nation": "Colombia",
-  "townCount": 26,
-  "residentCount": 45,
+  "townCount": 25,
+  "residentCount": 43,
   "towns": [
     {
       "name": "Bismuna Tara",
@@ -44,14 +44,6 @@
       "residents": [
         {
           "username": "INeedBagels"
-        }
-      ]
-    },
-    {
-      "name": "Cordoba",
-      "residents": [
-        {
-          "username": "Meshly"
         }
       ]
     },
@@ -147,9 +139,6 @@
         },
         {
           "username": "ueq_"
-        },
-        {
-          "username": "sarcasticbox"
         },
         {
           "username": "FutureLemon"
