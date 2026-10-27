@@ -1,17 +1,9 @@
 {
-  "updatedAt": "2026-10-27T10:49:32.774Z",
+  "updatedAt": "2026-10-27T16:02:52.543Z",
   "nation": "Colombia",
-  "townCount": 25,
-  "residentCount": 43,
+  "townCount": 24,
+  "residentCount": 42,
   "towns": [
-    {
-      "name": "Bismuna Tara",
-      "residents": [
-        {
-          "username": "Bosi45"
-        }
-      ]
-    },
     {
       "name": "Cabada Vera",
       "residents": [
