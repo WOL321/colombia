@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-10-29T00:39:53.610Z",
+  "updatedAt": "2026-10-29T06:25:36.012Z",
   "nation": "Colombia",
-  "townCount": 24,
-  "residentCount": 42,
+  "townCount": 23,
+  "residentCount": 41,
   "towns": [
     {
       "name": "Cabada Vera",
@@ -71,14 +71,6 @@
       "residents": [
         {
           "username": "IcyStraw9509602"
-        }
-      ]
-    },
-    {
-      "name": "George Town",
-      "residents": [
-        {
-          "username": "OFVDEB"
         }
       ]
     },
