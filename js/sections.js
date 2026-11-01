@@ -289,6 +289,7 @@
     document.getElementById('pBio').textContent = c.bio || 'No bio has been added for this citizen yet.';
     document.getElementById('pTown').textContent = c.town || 'Unassigned';
     document.getElementById('pJoined').textContent = c.joined || 'Unknown';
+    profileOverlay.hidden = false;
     profileOverlay.classList.add('open');
     document.body.style.overflow = 'hidden';
     document.getElementById('profileClose').focus();
@@ -296,6 +297,7 @@
   function closeProfile() {
     if (!profileOverlay) return;
     profileOverlay.classList.remove('open');
+    profileOverlay.hidden = true;
     document.body.style.overflow = '';
     if (lastProfileTrigger) lastProfileTrigger.focus();
   }
