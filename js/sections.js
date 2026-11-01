@@ -528,15 +528,20 @@
   /* ---------- Render everything whenever LiveData updates ---------------------*/
   const rosterLiveBadge = document.getElementById('rosterLiveBadge');
 
-  function setRosterBadge(state, detail) {
+  function setRosterBadge(state, detail, note) {
     if (!rosterLiveBadge) return;
     const stamp = detail ? shortStamp(new Date(detail)) : 'recently';
     if (state === 'live') {
       rosterLiveBadge.textContent = '● Live · synced ' + relFreshness(new Date(detail || Date.now()));
       rosterLiveBadge.title = 'Fetched live from the roster feed.';
     } else if (state === 'fallback') {
-      rosterLiveBadge.textContent = '● Synced snapshot · ' + stamp;
-      rosterLiveBadge.title = 'Live feed unavailable — showing the committed snapshot from ' + stamp + '. Refreshes automatically with every deploy.';
+      // The sync bot stamps the snapshot with a note whenever the map's
+      // anti-bot protection blocks it — surface that honestly to visitors.
+      const stale = /blocked|anti-bot/i.test(note || '');
+      rosterLiveBadge.textContent = (stale ? '○ Last verified data · ' : '● Synced snapshot · ') + stamp;
+      rosterLiveBadge.title = note
+        ? note
+        : 'Live feed unavailable — showing the committed snapshot from ' + stamp + '. Refreshes automatically with every deploy.';
     } else {
       rosterLiveBadge.textContent = '○ Syncing…';
     }
@@ -559,7 +564,7 @@
   function renderRoster(state) {
     const roster = state.data;
     if (!roster) { setRosterBadge('pending'); return; }
-    setRosterBadge(state.source, roster.updatedAt);
+    setRosterBadge(state.source, roster.updatedAt, roster.snapshotNote);
     allResidents = roster.towns.flatMap(t => (t.residents || []).map(r => Object.assign({}, r, { town: t.name })));
     renderTownsRoster(roster.towns);
     filterRoster();

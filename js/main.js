@@ -83,7 +83,13 @@
     const stamp = state.data.updatedAt
       ? new Date(state.data.updatedAt)
       : state.fetchedAt;
-    updatedEl.textContent = 'Updated ' + relTime(stamp);
+    // When the sync bot was blocked by the map's anti-bot protection it
+    // leaves a snapshotNote on the fallback data — say "Last verified"
+    // instead of implying a fresher scrape than actually happened.
+    const note = state.data.snapshotNote || '';
+    const stale = /blocked|anti-bot/i.test(note);
+    updatedEl.textContent = (stale ? 'Last verified ' : 'Updated ') + relTime(stamp);
+    if (note) updatedEl.title = note;
 
     // The towns-section footnote uses the same trusted town count.
     document.querySelectorAll('[data-stat="towns"]').forEach(function (el) {
