@@ -1,25 +1,9 @@
 {
-  "updatedAt": "2026-10-13T00:56:14.604Z",
+  "updatedAt": "2026-11-01T14:31:33.748Z",
   "nation": "Colombia",
-  "townCount": 34,
-  "residentCount": 64,
+  "townCount": 23,
+  "residentCount": 41,
   "towns": [
-    {
-      "name": "Aldama",
-      "residents": [
-        {
-          "username": "Crowlia"
-        }
-      ]
-    },
-    {
-      "name": "Bismuna Tara",
-      "residents": [
-        {
-          "username": "Bosi45"
-        }
-      ]
-    },
     {
       "name": "Cabada Vera",
       "residents": [
@@ -56,14 +40,6 @@
       ]
     },
     {
-      "name": "Cordoba",
-      "residents": [
-        {
-          "username": "zattercal"
-        }
-      ]
-    },
-    {
       "name": "Dominican Republic",
       "residents": [
         {
@@ -95,20 +71,6 @@
       "residents": [
         {
           "username": "IcyStraw9509602"
-        }
-      ]
-    },
-    {
-      "name": "George Town",
-      "residents": [
-        {
-          "username": "Carstendb"
-        },
-        {
-          "username": "Gregordb"
-        },
-        {
-          "username": "OFVDEB"
         }
       ]
     },
@@ -154,33 +116,6 @@
       ]
     },
     {
-      "name": "Intuto",
-      "residents": [
-        {
-          "username": "catboyHoratio"
-        }
-      ]
-    },
-    {
-      "name": "Iza",
-      "residents": [
-        {
-          "username": "OliveTree316"
-        },
-        {
-          "username": "VickyVenus9416"
-        }
-      ]
-    },
-    {
-      "name": "Jardin",
-      "residents": [
-        {
-          "username": "Mrspancake4343"
-        }
-      ]
-    },
-    {
       "name": "Maicao",
       "residents": [
         {
@@ -190,25 +125,7 @@
           "username": "ueq_"
         },
         {
-          "username": "_PinkLuna_"
-        },
-        {
-          "username": "sarcasticbox"
-        },
-        {
-          "username": "sapinzinho"
-        },
-        {
-          "username": "Addychi01"
-        },
-        {
-          "username": "Scarioh"
-        },
-        {
           "username": "FutureLemon"
-        },
-        {
-          "username": "TheKrieger6774"
         },
         {
           "username": "hecolator27"
@@ -221,6 +138,24 @@
         },
         {
           "username": "Aquilla_AQ"
+        },
+        {
+          "username": "floomp"
+        },
+        {
+          "username": "LeonKennedy01"
+        },
+        {
+          "username": "moose178"
+        },
+        {
+          "username": "ProlwerJam"
+        },
+        {
+          "username": "ifeomalovesyou"
+        },
+        {
+          "username": "CookieBroiler"
         }
       ]
     },
@@ -229,17 +164,6 @@
       "residents": [
         {
           "username": "BoscGIaa"
-        }
-      ]
-    },
-    {
-      "name": "Medellin Antioquia",
-      "residents": [
-        {
-          "username": "birdyboa"
-        },
-        {
-          "username": "c0rrupt_Jelly"
         }
       ]
     },
@@ -256,14 +180,6 @@
       "residents": [
         {
           "username": "AnythingIsFinee"
-        }
-      ]
-    },
-    {
-      "name": "Panama",
-      "residents": [
-        {
-          "username": "__Jyro__"
         }
       ]
     },
@@ -303,50 +219,10 @@
       ]
     },
     {
-      "name": "Santa Maria",
-      "residents": [
-        {
-          "username": "Novum_Vetus"
-        },
-        {
-          "username": "Qulipzz"
-        },
-        {
-          "username": "stonebigman"
-        },
-        {
-          "username": "Tim0thyPlayzz"
-        }
-      ]
-    },
-    {
       "name": "Santa Marta",
       "residents": [
         {
           "username": "tigerm354"
-        }
-      ]
-    },
-    {
-      "name": "Tegucigalpa",
-      "residents": [
-        {
-          "username": "Zaity1"
-        },
-        {
-          "username": "ItsEnes"
-        },
-        {
-          "username": "Atrocizzare_"
-        },
-        {
-          "username": "FabioVortex"
-        },
-        {
-          "username": "Lunes2015"
-        },
-        {
-          "username": "talety"
         }
       ]
     },
@@ -366,6 +242,5 @@
         }
       ]
     }
-  ],
-  "schemaVersion": 2
+  ]
 }

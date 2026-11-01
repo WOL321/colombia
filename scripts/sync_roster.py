@@ -27,7 +27,11 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
+import random
 import sys
+import time
+import urllib.error
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
@@ -35,7 +39,16 @@ from pathlib import Path
 MAP_BASE = "https://map.diplomaticamc.com"
 MAP_WORLD = "minecraft_overworld"
 NATION_FILTER = "Colombia"
-OUTPUT_PATH = Path(__file__).resolve().parent.parent / "roster.json"
+REPO_ROOT = Path(__file__).resolve().parent.parent
+OUTPUT_PATH = REPO_ROOT / "roster.json"
+SNAPSHOT_PATH = REPO_ROOT / "data" / "roster.snapshot.json"
+LASTGOOD_PATH = REPO_ROOT / "data" / "roster.lastgood.json"
+
+# Optional cookie copied from a browser that passed the map's Cloudflare
+# challenge (e.g. via a GitHub Actions secret). Without it the map may
+# answer 403 — in that case the script keeps the last known good roster
+# instead of failing the workflow.
+CF_COOKIE = os.environ.get("MAP_COOKIE", "").strip()
 
 USER_AGENT = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
@@ -43,13 +56,67 @@ USER_AGENT = (
 )
 
 
-def fetch_markers_json(url: str) -> dict:
-    """Fetch markers.json from the live map."""
-    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
-    with urllib.request.urlopen(req, timeout=30) as resp:
-        if resp.status != 200:
-            raise RuntimeError(f"markers.json responded with HTTP {resp.status}")
-        return json.loads(resp.read().decode("utf-8"))
+class BlockedByWaf(Exception):
+    """The map answered with an HTML anti-bot page instead of JSON."""
+
+
+def _looks_like_challenge(body: bytes) -> bool:
+    head = body[:2048].lstrip()
+    return head.startswith(b"<") or b"Just a moment" in body or b"cloudflare" in body.lower()
+
+
+def fetch_markers_json(url: str, attempts: int = 3) -> dict:
+    """Fetch markers.json from the live map, with retries and jitter.
+
+    Scheduled GitHub Actions runners get IPs that Cloudflare sometimes
+    flags, so a few spaced-out retries are worthwhile. If every attempt
+    comes back with an HTML challenge page we raise BlockedByWaf so the
+    caller can fall back to the last known good data rather than commit
+    garbage (or fail the whole run).
+    """
+    headers = {
+        "User-Agent": USER_AGENT,
+        "Accept": "application/json",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Referer": MAP_BASE + "/",
+    }
+    if CF_COOKIE:
+        headers["Cookie"] = CF_COOKIE
+
+    last_status = None
+    for attempt in range(1, attempts + 1):
+        req = urllib.request.Request(url, headers=headers)
+        try:
+            with urllib.request.urlopen(req, timeout=30) as resp:
+                if resp.status != 200:
+                    raise RuntimeError(f"markers.json responded with HTTP {resp.status}")
+                body = resp.read()
+        except urllib.error.HTTPError as err:
+            body = err.read() if err.fp else b""
+            last_status = err.code
+            if _looks_like_challenge(body):
+                # Anti-bot page: retrying from the same IP rarely helps,
+                # but one more spaced attempt is cheap.
+                if attempt < attempts:
+                    time.sleep(5 * attempt + random.uniform(0, 3))
+                    continue
+                raise BlockedByWaf(
+                    f"map returned an anti-bot page (HTTP {err.code}). "
+                    "Consider setting the MAP_COOKIE secret."
+                ) from None
+            raise RuntimeError(f"markers.json responded with HTTP {err.code}") from None
+
+        if _looks_like_challenge(body):
+            if attempt < attempts:
+                time.sleep(5 * attempt + random.uniform(0, 3))
+                continue
+            raise BlockedByWaf(
+                f"map returned an anti-bot page (HTTP 200). "
+                "Consider setting the MAP_COOKIE secret."
+            )
+        return json.loads(body.decode("utf-8"))
+
+    raise RuntimeError(f"markers.json fetch failed after {attempts} attempts (last HTTP {last_status})")
 
 
 def load_markers_json(path: Path) -> dict:
@@ -108,6 +175,43 @@ def build_roster(towns: list[dict], nation: str) -> dict:
     }
 
 
+def write_json(path: Path, roster: dict) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(roster, indent=2) + "\n", encoding="utf-8")
+
+
+def load_last_good() -> dict | None:
+    """Return the last successfully scraped roster, if we have one."""
+    for candidate in (LASTGOOD_PATH, OUTPUT_PATH):
+        try:
+            data = json.loads(candidate.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        if isinstance(data, dict) and data.get("towns"):
+            return data
+    return None
+
+
+def keep_last_good(reason: str) -> None:
+    """Scrape unavailable: keep the last known good numbers untouched and
+    only refresh the committed fallback snapshot's note so the site's
+    "Synced snapshot · <date>" badge stays honest. Never fabricate data."""
+    last = load_last_good()
+    if not last:
+        print(f"BLOCKED: {reason} — and no previous roster exists to fall back to.",
+              file=sys.stderr)
+        sys.exit(1)
+    note = ("Automated scrape blocked by the map's anti-bot protection; this "
+            f"is the last verified data (originally synced {last.get('updatedAt', 'unknown')}).")
+    stamped = dict(last)
+    stamped["snapshotNote"] = note
+    write_json(SNAPSHOT_PATH, stamped)
+    print(f"WARN: {reason}", file=sys.stderr)
+    print(f"WARN: kept last known good roster "
+          f"({stamped.get('townCount')} towns / {stamped.get('residentCount')} residents).",
+          file=sys.stderr)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--file", type=Path, help="Parse a local markers.json instead of fetching live")
@@ -115,14 +219,25 @@ def main() -> None:
     parser.add_argument("--output", type=Path, default=OUTPUT_PATH, help=f"Output path (default: {OUTPUT_PATH})")
     args = parser.parse_args()
 
-    markers_data = load_markers_json(args.file) if args.file else fetch_markers_json(
-        f"{MAP_BASE}/tiles/{MAP_WORLD}/markers.json"
-    )
+    try:
+        markers_data = load_markers_json(args.file) if args.file else fetch_markers_json(
+            f"{MAP_BASE}/tiles/{MAP_WORLD}/markers.json"
+        )
+    except BlockedByWaf as err:
+        if args.file:
+            raise
+        keep_last_good(str(err))
+        return
 
     towns = find_nation_towns(markers_data, args.nation)
     roster = build_roster(towns, args.nation)
 
-    args.output.write_text(json.dumps(roster, indent=2) + "\n", encoding="utf-8")
+    write_json(args.output, roster)
+    # Keep the fallback snapshot and last-good copy in step with every
+    # successful scrape, so the files can never drift from reality.
+    if args.output == OUTPUT_PATH:
+        write_json(SNAPSHOT_PATH, roster)
+        write_json(LASTGOOD_PATH, roster)
     print(f"Wrote {roster['townCount']} towns ({roster['residentCount']} residents) to {args.output}")
 
 

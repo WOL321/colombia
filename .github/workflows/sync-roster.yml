@@ -2,8 +2,16 @@ name: Sync Colombia roster from map
 
 on:
   schedule:
+    # Runs roughly every 5 minutes. GitHub does not guarantee exact timing —
+    # under load it can be delayed by a few minutes. This is the practical
+    # limit for free scheduled workflows, not a bug in this setup.
     - cron: "*/5 * * * *"
-  workflow_dispatch: {}
+  workflow_dispatch: {} # lets you trigger it manually from the Actions tab
+
+# Two syncs must never push over each other; skip queued duplicates.
+concurrency:
+  group: roster-sync
+  cancel-in-progress: false
 
 permissions:
   contents: write
@@ -16,16 +24,22 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run roster sync
+        # MAP_COOKIE (repo secret, optional): copy of cf_clearance + cookies
+        # from a browser that passed the map's Cloudflare challenge. Needed
+        # only if GitHub runners' IPs get blocked; without it the script
+        # keeps the last known good roster instead of failing.
+        env:
+          MAP_COOKIE: ${{ secrets.MAP_COOKIE }}
         run: python3 scripts/sync_roster.py
 
-      - name: Commit roster.json if it changed
+      - name: Commit roster files if they changed
         run: |
-          if git diff --quiet -- roster.json; then
-            echo "No changes to roster.json — skipping commit."
+          if git diff --quiet -- roster.json data/roster.snapshot.json data/roster.lastgood.json; then
+            echo "No changes to commit — skipping."
             exit 0
           fi
           git config user.name "roster-sync-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add roster.json
+          git add roster.json data/roster.snapshot.json data/roster.lastgood.json
           git commit -m "chore: sync roster.json [skip ci]"
           git push

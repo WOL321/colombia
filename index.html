@@ -5,6 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Reino de Colombia — DiplomaticaMC</title>
   <meta name="description" content="The Colombian Empire on DiplomaticaMC. A Caribbean nation built out of a fishing town, an underground mall, and thirty-odd towns that actually show up when it counts.">
+  <meta name="theme-color" content="#07080b">
+
+  <!-- Social preview cards (match history/sports/casino) -->
+  <meta property="og:title" content="Reino de Colombia | The Colombian Empire">
+  <meta property="og:description" content="A Caribbean nation on DiplomaticaMC — Maicao's markets, thirty-odd towns, and a cabinet that shows up when it counts.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://colombiadmc.site/download.png">
+  <meta property="og:url" content="https://colombiadmc.site/">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://colombiadmc.site/download.png">
+  <link rel="canonical" href="https://colombiadmc.site/">
 
   <!-- Fonts: elegant serif for headings, clean sans for body -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,6 +27,19 @@
   <!-- Favicon (same mark as every other page of the site) -->
   <link rel="icon" type="image/x-icon" href="85a75eff-17b3-45b3-9636-bbbb34f43c23-removebg-preview.png">
   <link rel="apple-touch-icon" href="85a75eff-17b3-45b3-9636-bbbb34f43c23-removebg-preview.png">
+  <link rel="manifest" href="manifest.json">
+
+  <!-- Structured data so search engines understand the subject -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Reino de Colombia",
+    "alternateName": "The Colombian Empire",
+    "url": "https://colombiadmc.site/",
+    "description": "Official site of the Colombian Empire on the Minecraft server DiplomaticaMC."
+  }
+  </script>
 </head>
 <body>
 
@@ -36,6 +60,7 @@
         <a href="#wiki">Wiki</a>
         <a href="#cabinet">Cabinet</a>
         <a href="#citizens">Citizens</a>
+        <a href="#grants">Grants</a>
         <a href="history.html">Chronicles</a>
         <a href="sports.html">Sports</a>
         <a href="casino.html">Casino</a>
@@ -116,7 +141,7 @@
             <img class="crest-img"
                  src="assets/escudo.png"
                  alt="Coat of arms of the Reino de Colombia"
-                 width="260" height="260"
+                 fetchpriority="high" decoding="async"
                  onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/6/69/Coat_of_arms_of_Colombia.svg'">
           </div>
           <p class="crest-caption">Plus Ultra &mdash; further beyond</p>
@@ -536,8 +561,10 @@
         <a href="#capital">The Capital</a>
         <a href="#towns">Towns</a>
         <a href="#map">Map</a>
+        <a href="#wiki">Wiki</a>
         <a href="#cabinet">Cabinet</a>
         <a href="#citizens">Citizens</a>
+        <a href="#grants">Grants</a>
         <a href="history.html">Chronicles</a>
         <a href="sports.html">Sports Hub</a>
         <a href="casino.html">Casino</a>
@@ -550,11 +577,11 @@
   <button class="back-to-top" id="backToTop" aria-label="Back to top">&uarr;</button>
 
   <!-- Profile modal (opens from any citizen card / resident chip) -->
-  <div class="profile-overlay" id="profileOverlay" role="dialog" aria-modal="true" aria-labelledby="pName">
+  <div class="profile-overlay" id="profileOverlay" role="dialog" aria-modal="true" aria-labelledby="pName" hidden>
     <div class="profile-modal">
       <div class="profile-head">
         <button class="profile-close" id="profileClose" type="button" aria-label="Close profile">&#10005;</button>
-        <img id="pImg" src="" alt="">
+        <img id="pImg" src="" alt="" width="64" height="64">
         <div class="p-name" id="pName"></div>
         <div class="p-role" id="pRole"></div>
       </div>
