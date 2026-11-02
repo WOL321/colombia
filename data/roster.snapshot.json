@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-11-01T22:17:11.521Z",
+  "updatedAt": "2026-11-02T01:31:29.241Z",
   "nation": "Colombia",
-  "townCount": 23,
-  "residentCount": 41,
+  "townCount": 24,
+  "residentCount": 42,
   "towns": [
     {
       "name": "Cabada Vera",
@@ -71,6 +71,14 @@
       "residents": [
         {
           "username": "IcyStraw9509602"
+        }
+      ]
+    },
+    {
+      "name": "George Town",
+      "residents": [
+        {
+          "username": "OFVDEB"
         }
       ]
     },
@@ -176,7 +184,7 @@
       ]
     },
     {
-      "name": "New Bahamas",
+      "name": "Nassau",
       "residents": [
         {
           "username": "AnythingIsFinee"
