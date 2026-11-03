@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-11-03T15:14:17.627Z",
+  "updatedAt": "2026-11-03T20:58:43.231Z",
   "nation": "Colombia",
-  "townCount": 24,
-  "residentCount": 42,
+  "townCount": 22,
+  "residentCount": 40,
   "towns": [
     {
       "name": "Cabada Vera",
@@ -71,14 +71,6 @@
       "residents": [
         {
           "username": "IcyStraw9509602"
-        }
-      ]
-    },
-    {
-      "name": "George Town",
-      "residents": [
-        {
-          "username": "OFVDEB"
         }
       ]
     },
@@ -180,14 +172,6 @@
       "residents": [
         {
           "username": "Cryolyte"
-        }
-      ]
-    },
-    {
-      "name": "Nassau",
-      "residents": [
-        {
-          "username": "AnythingIsFinee"
         }
       ]
     },
