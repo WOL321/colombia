@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-11-04T07:17:40.316Z",
+  "updatedAt": "2026-11-04T15:28:05.208Z",
   "nation": "Colombia",
   "townCount": 22,
-  "residentCount": 40,
+  "residentCount": 39,
   "towns": [
     {
       "name": "Cabada Vera",
@@ -180,9 +180,6 @@
       "residents": [
         {
           "username": "OnlyADonut"
-        },
-        {
-          "username": "Zericef"
         }
       ]
     },
