@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-11-05T08:18:28.097Z",
+  "updatedAt": "2026-11-05T16:30:13.184Z",
   "nation": "Colombia",
-  "townCount": 22,
-  "residentCount": 39,
+  "townCount": 21,
+  "residentCount": 37,
   "towns": [
     {
       "name": "Cabada Vera",
@@ -128,9 +128,6 @@
           "username": "FutureLemon"
         },
         {
-          "username": "hecolator27"
-        },
-        {
           "username": "AudioCrescent83"
         },
         {
@@ -172,14 +169,6 @@
       "residents": [
         {
           "username": "Cryolyte"
-        }
-      ]
-    },
-    {
-      "name": "Paramaribo",
-      "residents": [
-        {
-          "username": "OnlyADonut"
         }
       ]
     },
