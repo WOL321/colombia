@@ -1,8 +1,8 @@
 {
-  "updatedAt": "2026-11-10T01:59:44.678Z",
+  "updatedAt": "2026-11-10T09:18:28.178Z",
   "nation": "Colombia",
-  "townCount": 21,
-  "residentCount": 37,
+  "townCount": 20,
+  "residentCount": 36,
   "towns": [
     {
       "name": "Cabada Vera",
@@ -161,14 +161,6 @@
       "residents": [
         {
           "username": "BoscGIaa"
-        }
-      ]
-    },
-    {
-      "name": "Mexico City",
-      "residents": [
-        {
-          "username": "Ciptoprolol"
         }
       ]
     },
